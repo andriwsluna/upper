@@ -1,3 +1,3 @@
-## 1.0.0
+## 0.0.1-DEV
 
-- Initial version, created by Stagehand
+- PLANNING DEVELOPMENT
