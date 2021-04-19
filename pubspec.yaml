@@ -1,7 +1,7 @@
 name: upper
 description: A starting point for Dart libraries or applications.
 version: 0.0.1-dev
-homepage: https://www.example.com
+homepage: https://github.com/andriwsluna/upper/
 
 environment:
   sdk: '>=2.12.4 <3.0.0'

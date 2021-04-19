@@ -1,3 +1,3 @@
-## 0.0.1-DEV
+## 0.0.1-dev
 
 - PLANNING DEVELOPMENT
