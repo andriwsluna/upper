@@ -1,10 +1,10 @@
 name: upper
-description: A starting point for Dart libraries or applications.
-version: 0.0.1-dev
+description: Back-end framework for Dart. Make a automated GRPC API For Relational Databases.
+version: 0.0.2-dev
 homepage: https://github.com/andriwsluna/upper/
 
 environment:
-  sdk: '>=2.12.4 <3.0.0'
+  sdk: '>=2.12.0 <3.0.0'
 
 #dependencies:
 #  path: ^1.7.0
