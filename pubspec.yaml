@@ -8,7 +8,13 @@ environment:
 
 dependencies:
   postgres: ^2.3.2
+  file_utils: ^1.0.0
+  data_db: ^0.0.2
+  static_orm_generator: ^0.0.3-dev
+  static_postgres_orm: ^0.0.5-dev
   static_grpc: ^0.0.2-dev
+  static_grpc_generator: ^0.0.1-dev
+  
   dartz: ^0.10.0-nullsafety.1
 
 dev_dependencies:
