@@ -1,10 +1,9 @@
 import 'package:upper/src/io.dart';
 
 Future<bool> createProjectStructure(String path, String name) async {
-  var result = false;
   try {
     var projectpath = '$path/$name';
-    result = await createFold(projectpath, 'lib')
+    return await createFold(projectpath, 'lib')
         .then((value) => createFold(projectpath, 'bin'))
         .then((value) => createFold(projectpath, 'protos'))
         .then((value) => createFold(projectpath, 'test'))
@@ -13,8 +12,7 @@ Future<bool> createProjectStructure(String path, String name) async {
         .then((value) => writeFiles(projectpath, name));
   } on Exception catch (e) {
     print(e.toString());
-  } finally {
-    return result;
+    return false;
   }
 }
 

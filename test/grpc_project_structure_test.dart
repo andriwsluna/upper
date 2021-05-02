@@ -7,11 +7,11 @@ void main() {
     test('in outer folder', () async {
       var path = '/Volumes/MacDocs/dev/dart/projects';
       var name = 'upper_created_test';
-      // var projectpath = '$path/$name';
+      var projectpath = '$path/$name';
 
-      // if (Directory(projectpath).existsSync()) {
-      //   Directory(projectpath).deleteSync(recursive: true);
-      // }
+      if (Directory(projectpath).existsSync()) {
+        Directory(projectpath).deleteSync(recursive: true);
+      }
       var result = await (createProjectStructure(path, name));
 
       expect(result, true);
