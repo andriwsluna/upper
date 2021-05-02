@@ -11,12 +11,6 @@ void main() {
     var path = 'temp';
     var name = 'test_1';
 
-    setUp(() {
-      if (Directory('$path/$name').existsSync()) {
-        Directory('$path/$name').deleteSync(recursive: true);
-      }
-    });
-
     // tearDown(() {
     //   if (Directory('$path/$name').existsSync()) {
     //
@@ -28,6 +22,9 @@ void main() {
     test('test one', () async {
       path = '/Volumes/MacDocs/dev/dart/projects';
       name = 'test_one';
+      if (Directory('$path/$name').existsSync()) {
+        Directory('$path/$name').deleteSync(recursive: true);
+      }
       var r = await createProjectFromPostgresDatabase(pgConnection,
           path: path, name: name);
       expect(r, true);

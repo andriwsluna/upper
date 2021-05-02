@@ -9,11 +9,19 @@ Future<bool> createProjectFromPostgresDatabase(
   String path = '',
   String name = 'static_grpc_server',
 }) async {
-  return testConnection(connection).then((value) async =>
-      value &&
-      await createFold(path, name).then((value) async =>
-          value &&
-          await createProjectStructure(path, name).then((value) async =>
-              value &&
-              await createProjectFiles(connection, path: path, name: name))));
+  var schemaCount = 2;
+  return testConnection(connection, schemaCount).then((value) async {
+    schemaCount = value;
+    return value > 0 &&
+        await createFold(path, name).then((value) async =>
+            value &&
+            await createProjectStructure(path, name).then((value) async =>
+                value &&
+                await createProjectFiles(
+                  connection,
+                  path: path,
+                  name: name,
+                  schemaInName: schemaCount > 1,
+                )));
+  });
 }
