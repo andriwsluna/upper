@@ -1,8 +1,5 @@
-/// Support for doing something awesome.
-///
-/// More dartdocs go here.
+/// Back-end framework for Dart.
+/// Make a automated GRPC API For Relational Databases.
 library upper;
 
-export 'src/upper_base.dart';
-
-// TODO: Export any libraries intended for clients of this package.
+export 'src/static_grpc_framework.dart';
