@@ -1,5 +1,6 @@
 import 'package:postgres/postgres.dart';
 import 'package:static_grpc_generator/static_grpc_generator.dart';
+import 'package:static_orm_generator/static_orm_generator.dart';
 
 Future<bool> createProjectFiles(PostgreSQLConnection connection,
     {required String path,
@@ -18,5 +19,12 @@ Future<bool> createProjectFiles(PostgreSQLConnection connection,
         path: '$fullpath/lib/services',
         subPath: 'lib/src',
         schemaInName: schemaInName,
-      ));
+      ).then((value) async =>
+          value &&
+          await generatePgOrm(
+            connection,
+            path: '$fullpath/lib/services',
+            subPath: 'lib/src',
+            schemaInName: schemaInName,
+          )));
 }

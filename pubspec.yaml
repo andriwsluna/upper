@@ -11,15 +11,14 @@ dependencies:
   file_utils: ^1.0.0
   #data_db: #^0.0.2
      #path: /Volumes/MacDocs/dev/dart/packages/data_db
-  #static_orm_generator: #^0.0.3-dev
+  static_orm_generator: ^0.1.0
     #path: /Volumes/MacDocs/dev/dart/packages/static_orm_generator
   #static_postgres_orm: #^0.0.5-dev
     #path: /Volumes/MacDocs/dev/dart/packages/static_postgres_orm
   #static_grpc: #^0.0.2-dev
     #path: /Volumes/MacDocs/dev/dart/packages/static_grpc
-  static_grpc_generator: #^0.0.1-dev
-    path: /Volumes/MacDocs/dev/dart/packages/static_grpc_generator
-  
+  static_grpc_generator: ^0.1.1
+    #path: /Volumes/MacDocs/dev/dart/packages/static_grpc_generator
   dartz: ^0.10.0-nullsafety.1
 
 dev_dependencies:
