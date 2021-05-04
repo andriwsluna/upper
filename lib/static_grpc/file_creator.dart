@@ -1,6 +1,15 @@
+import 'dart:io';
+
 import 'package:postgres/postgres.dart';
 import 'package:static_grpc_generator/static_grpc_generator.dart';
 import 'package:static_orm_generator/static_orm_generator.dart';
+import 'package:upper/upper.dart';
+import 'package:strings/strings.dart';
+import 'package:upper/src/io.dart';
+import 'package:process_run/shell.dart';
+
+var _serviceList = '';
+var _importList = '';
 
 Future<bool> createProjectFiles(PostgreSQLConnection connection,
     {required String path,
@@ -26,5 +35,339 @@ Future<bool> createProjectFiles(PostgreSQLConnection connection,
             path: '$fullpath/lib/services',
             subPath: 'lib/src',
             schemaInName: schemaInName,
-          )));
+          ).then((value) async =>
+              value &&
+              await createProjectAdditionalFiles(
+                connection,
+                path: path,
+                name: name,
+                schemaInName: schemaInName,
+              ))));
+}
+
+Future<bool> createProjectAdditionalFiles(PostgreSQLConnection connection,
+    {required String path,
+    required String name,
+    bool schemaInName = false}) async {
+  return getTables(connection).then((dataset) async {
+    if (dataset.isNotempty) {
+      var result;
+
+      for (var record in dataset.records) {
+        var fullpath =
+            '$path/$name/lib/services/${getServicePath(record, schemaInName)}';
+        result = await createAdditionalFiles(
+          connection,
+          record,
+          path: fullpath,
+          packageName: name,
+          schemaInName: schemaInName,
+        );
+
+        if (!result) {
+          return false;
+        }
+
+        await Shell(
+                verbose: false,
+                workingDirectory: '$path/$name',
+                throwOnError: false)
+            .run('''
+          protoc --dart_out=grpc:lib/services/${getServicePath(record, schemaInName)}/lib/proto_generated -Iprotos protos/${getProtoFileName(record, schemaInName)}
+        ''');
+
+        await writeInFile('$path/$name', 'proto_command.txt',
+            getProtocCommand(record, schemaInName),
+            mode: FileMode.append);
+      }
+
+      await Shell(
+        verbose: false,
+        workingDirectory: '$path/$name',
+      ).run('pub get');
+
+      await writeInFile(
+        '$path/$name/lib/src',
+        'service_list.dart',
+        getServiceList(),
+      );
+
+      return true;
+    } else {
+      return false;
+    }
+  });
+}
+
+Future<bool> createAdditionalFiles(
+    PostgreSQLConnection connection, Map<String, DataField> record,
+    {required String path,
+    required bool schemaInName,
+    required String packageName}) async {
+  var serviceFileName = getServiceFileName(record, schemaInName);
+  var serviceClassName = getServiceClassName(record, schemaInName);
+  var serverFileName = getServerFileName(record, schemaInName);
+  var servicePath = getServicePath(record, schemaInName);
+  await createFold('$path/lib', 'proto_generated');
+  return await writeInFile(
+          '$path/bin/', 'server.dart', getServer(serverFileName)) &&
+      await writeInFile(
+          '$path/lib/src', 'connection.dart', getConnection(connection)) &&
+      await writeInFile('$path', 'Dockerfile', getDockerFile()) &&
+      await writeInFile(path, 'README.md', getReadMe()) &&
+      await writeInFile(path, 'pubspec.yaml', getPubSpec(serviceClassName)) &&
+      await writeInFile(path, 'CHANGELOG.md', getChangelog()) &&
+      await writeInFile(
+          '$path/lib/src',
+          serverFileName,
+          getTableService(
+              serviceFileName, serviceClassName, servicePath, packageName));
+}
+
+Future<Dataset> getTables(PostgreSQLConnection connection) async {
+  var sql = <String>[];
+
+  sql
+    ..add('select')
+    ..add('cast (table_schema as varchar),')
+    ..add('cast(table_name as varchar)')
+    ..add('from information_schema.tables')
+    ..add("where table_schema not in ('pg_catalog','information_schema')");
+  var con = newPGConnection(connection);
+  await con.open();
+  var r = pgSqlToDataset(await con.query(sql.asText()));
+  await con.close();
+  return r;
+}
+
+extension _StringList on List<String> {
+  String asText() {
+    var x = '';
+    forEach((element) {
+      x += '\n' + element;
+    });
+    return x.replaceFirst('\n', '');
+  }
+}
+
+String getServicePath(Map<String, DataField> record, bool schemaInName) {
+  var schema = getSchemaName(record);
+  var name = getTableName(record);
+
+  if (schemaInName) {
+    return '${capitalize(schema)}${capitalize(name).toLowerCase()}';
+  } else {
+    return '${capitalize(name).toLowerCase()}';
+  }
+}
+
+String getTableName(Map<String, DataField> record) {
+  var name = '';
+
+  record['table_name']?.tryGetValue((table_name) {
+    name = (table_name as String).toLowerCase();
+    return true;
+  });
+
+  return name;
+}
+
+String getSchemaName(Map<String, DataField> record) {
+  var name = '';
+
+  record['table_schema']?.tryGetValue((table_name) {
+    name = (table_name as String).toLowerCase();
+    return true;
+  });
+
+  return name;
+}
+
+extension Snake on String {
+  String add(String complement) {
+    return '$this\n$complement';
+  }
+
+  String capitalize() {
+    return '${this[0].toUpperCase()}${substring(1)}';
+  }
+}
+
+String getServiceFileName(Map<String, DataField> record, bool schemaInName) {
+  var schema = getSchemaName(record);
+  var name = getTableName(record);
+
+  if (schemaInName) {
+    return '${schema}_${name}_service.dart';
+  } else {
+    return '${name}_service.dart';
+  }
+}
+
+String getServerFileName(Map<String, DataField> record, bool schemaInName) {
+  var schema = getSchemaName(record);
+  var name = getTableName(record);
+
+  if (schemaInName) {
+    return '${schema}_${name}_server.dart';
+  } else {
+    return '${name}_server.dart';
+  }
+}
+
+String getProtoFileName(Map<String, DataField> record, bool schemaInName) {
+  var schema = getSchemaName(record).toLowerCase();
+  var name = getTableName(record).toLowerCase();
+
+  if (schemaInName) {
+    return '${schema}_$name.proto';
+  } else {
+    return '$name.proto';
+  }
+}
+
+String getServiceClassName(Map<String, DataField> record, bool schemaInName) {
+  var schema = getSchemaName(record);
+  var name = getTableName(record);
+
+  if (schemaInName) {
+    return '${schema.capitalize()}${name.capitalize()}Service';
+  } else {
+    return '${name.capitalize()}Service';
+  }
+}
+
+String getServer(String serverFileName) {
+  var content = '// ignore: avoid_relative_lib_imports'
+      .add("import '../lib/src/$serverFileName';")
+      .add('')
+      .add('Future<void> main(List<String> args) async {')
+      .add('  await Server().main(args);')
+      .add('}');
+  return content;
+}
+
+String getConnection(PostgreSQLConnection connection) {
+  var content = "import 'package:postgres/postgres.dart';"
+      .add('')
+      .add("var _pgConnection = PostgreSQLConnection('${connection.host}',")
+      .add("    ${connection.port}, '${connection.databaseName}',")
+      .add(
+          "    username: '${connection.username}', password: '${connection.password}');")
+      .add('')
+      .add('PostgreSQLConnection getConnection() => _pgConnection;');
+
+  return content;
+}
+
+String getTableService(String serviceFileNamse, String serviceClassName,
+    String servicePath, String packageName) {
+  var content = "import '../src/$serviceFileNamse';"
+      .add("import 'package:grpc/grpc.dart' as grpc;")
+      .add("import 'dart:io';")
+      .add("import 'connection.dart';")
+      .add('')
+      .add('class Server {')
+      .add('  Future<void> main(List<String> args) async {')
+      .add('    final server = grpc.Server(')
+      .add('      [$serviceClassName(getConnection())],')
+      .add('      const <grpc.Interceptor>[],')
+      .add('      grpc.CodecRegistry(codecs: [grpc.GzipCodec()]),')
+      .add('    );')
+      .add("    var sPort = Platform.environment['PORT'];")
+      .add('    var port = 443;')
+      .add('    if ((sPort != null) && (sPort.isNotEmpty)) {')
+      .add("      print('sPort: \$sPort');")
+      .add('      port = int.parse(sPort);')
+      .add('    }')
+      .add('    await server.serve(port: port);')
+      .add("    print('Server listening on port \${server.port}...');")
+      .add('  }')
+      .add('}');
+  _serviceList =
+      _serviceList.add('  list.add($serviceClassName(getConnection()));');
+  _importList = _importList.add(
+      "import 'package:$packageName/services/$servicePath/lib/src/$serviceFileNamse';");
+
+  return content;
+}
+
+String getDockerFile() {
+  var content = 'FROM google/dart AS dart-runtime'
+      .add('')
+      .add('WORKDIR /app')
+      .add('')
+      .add('ADD pubspec.* /app/')
+      .add('RUN pub get')
+      .add('ADD bin /app/bin/')
+      .add('ADD lib /app/lib/')
+      .add('RUN pub get --offline')
+      .add('RUN dart2native /app/bin/server.dart -o /app/server')
+      .add('')
+      .add('FROM frolvlad/alpine-glibc')
+      .add('')
+      .add('COPY --from=dart-runtime /app/server /server')
+      .add('')
+      .add('CMD []')
+      .add('ENTRYPOINT ["/server"]')
+      .add('')
+      .add('EXPOSE 443');
+  return content;
+}
+
+String getReadMe() {
+  var content =
+      'A GRPC micro service created by [Upper framework](https://pub.dev/packages/upper)';
+  return content;
+}
+
+String getPubSpec(String name) {
+  var content = 'name: $name'
+      .add('description: A GRPC micro service created by Upper framework.')
+      .add('# version: 1.0.0')
+      .add('# homepage: https://www.example.com')
+      .add('')
+      .add('environment:')
+      .add(" sdk: '>=2.12.0 <3.0.0'")
+      .add('')
+      .add('dependencies:')
+      .add('  postgres: ^2.3.2')
+      .add('  async: ^2.5.0')
+      .add('  grpc: ^3.0.0')
+      .add('  protobuf: ^2.0.0')
+      .add('  upper:')
+      .add('  static_postgres_orm:')
+      .add('  dartz:')
+      .add('  data_db:')
+      .add('  static_grpc:')
+      .add('')
+      .add('dev_dependencies:')
+      .add('  test: ^1.16.8')
+      .add('  pedantic: ^1.9.0');
+
+  return content;
+}
+
+String getChangelog() {
+  var content =
+      '## 1.0.0'.add('').add('- Initial version, created by Stagehand');
+  return content;
+}
+
+String getProtocCommand(Map<String, DataField> record, bool schemaInName) {
+  return ''.add(
+      'protoc --dart_out=grpc:lib/services/${getServicePath(record, schemaInName)}/lib/proto_generated -Iprotos protos/${getProtoFileName(record, schemaInName)}');
+}
+
+String getServiceList() {
+  var content = "import 'package:grpc/grpc.dart' as grpc;"
+      .add("import 'connection.dart';")
+      .add(_importList)
+      .add('')
+      .add('List<grpc.Service> getServices() {')
+      .add('  var list = <grpc.Service>[];')
+      .add(_serviceList)
+      .add('  return list;')
+      .add('}');
+  return content;
 }

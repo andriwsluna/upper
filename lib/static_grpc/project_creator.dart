@@ -15,13 +15,14 @@ Future<bool> createProjectFromPostgresDatabase(
     return value > 0 &&
         await createFold(path, name).then((value) async =>
             value &&
-            await createProjectStructure(path, name).then((value) async =>
-                value &&
-                await createProjectFiles(
-                  connection,
-                  path: path,
-                  name: name,
-                  schemaInName: schemaCount > 1,
-                )));
+            await createProjectStructure(path, name, connection)
+                .then((value) async =>
+                    value &&
+                    await createProjectFiles(
+                      connection,
+                      path: path,
+                      name: name,
+                      schemaInName: schemaCount > 1,
+                    )));
   });
 }

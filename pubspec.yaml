@@ -9,6 +9,8 @@ environment:
 dependencies:
   postgres: ^2.3.2
   file_utils: ^1.0.0
+  strings: ^0.2.1
+  process_run: ^0.12.1
   #data_db: #^0.0.2
      #path: /Volumes/MacDocs/dev/dart/packages/data_db
   static_orm_generator: ^0.1.0

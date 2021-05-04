@@ -1,6 +1,8 @@
 import 'package:upper/src/io.dart';
+import 'package:postgres/postgres.dart';
 
-Future<bool> createProjectStructure(String path, String name) async {
+Future<bool> createProjectStructure(
+    String path, String name, PostgreSQLConnection connection) async {
   try {
     var projectpath = '$path/$name';
     return await createFold(projectpath, 'lib')
@@ -9,7 +11,7 @@ Future<bool> createProjectStructure(String path, String name) async {
         .then((value) => createFold(projectpath, 'test'))
         .then((value) => createFold('$projectpath/lib', 'services'))
         .then((value) => createFold('$projectpath/lib', 'src'))
-        .then((value) => writeFiles(projectpath, name));
+        .then((value) => writeFiles(projectpath, name, connection));
   } on Exception catch (e) {
     print(e.toString());
     return false;
@@ -26,13 +28,13 @@ extension Snake on String {
   }
 }
 
-bool writeFiles(String path, String name) {
+bool writeFiles(String path, String name, PostgreSQLConnection connection) {
   var result = false;
   try {
     writeInFile(path, 'README.md', getReadMe());
     writeInFile(path, 'pubspec.yaml', getPubSpec(name));
     writeInFile(path, 'CHANGELOG.md', getChangelog());
-    writeInFile('$path/lib/src', 'connection.dart', getConnection());
+    writeInFile('$path/lib/src', 'connection.dart', getConnection(connection));
     writeInFile('$path/lib/src', 'service_list.dart', getEmptyServiceList());
     writeInFile('$path/lib/src', 'grpc_server.dart', getGrpcServer(name));
     writeInFile('$path/bin', 'server_mono.dart', getMonolithicServer(name));
@@ -83,12 +85,13 @@ String getChangelog() {
   return content;
 }
 
-String getConnection() {
+String getConnection(PostgreSQLConnection connection) {
   var content = "import 'package:postgres/postgres.dart';"
       .add('')
+      .add("var _pgConnection = PostgreSQLConnection('${connection.host}',")
+      .add("    ${connection.port}, '${connection.databaseName}',")
       .add(
-          "var _pgConnection = PostgreSQLConnection('127.0.0.1', 5432, 'db_test',")
-      .add("    username: 'postgres', password: '1234');")
+          "    username: '${connection.username}', password: '${connection.password}');")
       .add('')
       .add('PostgreSQLConnection getConnection() => _pgConnection;');
 

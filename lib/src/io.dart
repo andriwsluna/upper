@@ -11,7 +11,13 @@ Future<bool> createFold(String path, String name) {
   });
 }
 
-void writeInFile(String filePath, String fileName, String contents) {
+Future<bool> writeInFile(String filePath, String fileName, String contents,
+    {FileMode mode = FileMode.write}) async {
   FileUtils.mkdir([filePath]);
-  File(filePath + '/' + fileName).writeAsString(contents);
+
+  var x = await File(filePath + '/' + fileName).writeAsString(
+    contents,
+    mode: mode,
+  );
+  return await x.exists();
 }
