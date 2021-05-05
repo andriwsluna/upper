@@ -6,6 +6,10 @@ homepage: https://github.com/andriwsluna/upper/
 environment:
   sdk: '>=2.12.0 <3.0.0'
 
+executables:
+  create:
+  fvm:
+
 dependencies:
   postgres: ^2.3.2
   file_utils: ^1.0.0
