@@ -97,10 +97,6 @@ Future<bool> createProjectAdditionalFiles(PostgreSQLConnection connection,
             .run('''
           protoc --dart_out=grpc:lib/services/${getServicePath(record, schemaInName)}/lib/proto_generated -Iprotos protos/${getProtoFileName(record, schemaInName)}
         ''');
-
-        await writeInFile('$path/$name', 'proto_command.txt',
-            getProtocCommand(record, schemaInName),
-            mode: FileMode.append);
       }
 
       json.addAll({'services': services});
@@ -382,11 +378,6 @@ String getChangelog() {
   var content =
       '## 1.0.0'.add('').add('- Initial version, created by Stagehand');
   return content;
-}
-
-String getProtocCommand(Map<String, DataField> record, bool schemaInName) {
-  return ''.add(
-      'protoc --dart_out=grpc:lib/services/${getServicePath(record, schemaInName)}/lib/proto_generated -Iprotos protos/${getProtoFileName(record, schemaInName)}');
 }
 
 String getServiceList() {

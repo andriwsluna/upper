@@ -11,13 +11,11 @@ void main() {
     var path = 'temp';
     var name = 'test_1';
 
-    // tearDown(() {
-    //   if (Directory('$path/$name').existsSync()) {
-    //
-    //
-    //     Directory('$path/$name').deleteSync(recursive: true);
-    //   }
-    // });
+    tearDown(() {
+      if (Directory('$path/$name').existsSync()) {
+        Directory('$path/$name').deleteSync(recursive: true);
+      }
+    });
 
     test('test one', () async {
       path = '/Volumes/MacDocs/dev/dart/projects';

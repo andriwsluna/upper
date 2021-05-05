@@ -13,7 +13,8 @@ Future<int> testConnection(
       schemaCount = value.length;
       return schemaCount;
     });
-  } on Exception {
+  } on Exception catch (e) {
+    print('error during connect to postgres-${e.toString()}');
     return 0;
   }
 }

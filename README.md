@@ -1,16 +1,27 @@
 Back-end framework for Dart. Make a automated GRPC API For Relational Databases.
 
+## Prerequisites
 
-## Usage
+1- protoPlugin installed and configured.
 
-A simple usage example:
+## Installation
 
-```dart
-import 'package:upper/upper.dart';
+Run this command in terminal
 
-main() {
-  var awesome = new Awesome();
-}
+```bash
+pub global activate upper
+```
+
+## Create your upper project
+
+In destination path run:
+```bash
+upper create project_name -host hostname -port port_number -database database_name -user postgres_user_name -password password  
+```
+
+## Example
+```bash
+upper create grpc_server -host 127.0.0.1 -port 5432 -database mainDb -user postgres -password 1234  
 ```
 
 ## Features and bugs
