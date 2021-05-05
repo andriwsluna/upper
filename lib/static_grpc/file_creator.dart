@@ -1,5 +1,5 @@
+import 'dart:convert';
 import 'dart:io';
-
 import 'package:postgres/postgres.dart';
 import 'package:static_grpc_generator/static_grpc_generator.dart';
 import 'package:static_orm_generator/static_orm_generator.dart';
@@ -7,9 +7,12 @@ import 'package:upper/upper.dart';
 import 'package:strings/strings.dart';
 import 'package:upper/src/io.dart';
 import 'package:process_run/shell.dart';
+import 'package:pretty_json/pretty_json.dart';
 
 var _serviceList = '';
 var _importList = '';
+var json = <String, dynamic>{};
+List<Map<String, dynamic>> services = [];
 
 Future<bool> createProjectFiles(PostgreSQLConnection connection,
     {required String path,
@@ -49,6 +52,12 @@ Future<bool> createProjectAdditionalFiles(PostgreSQLConnection connection,
     {required String path,
     required String name,
     bool schemaInName = false}) async {
+  json.addAll({
+    'name': name,
+    'version': 1,
+    'docker_tag': camelize(name).toLowerCase(),
+    'gcloud_name': camelize(name).toLowerCase(),
+  });
   return getTables(connection).then((dataset) async {
     if (dataset.isNotempty) {
       var result;
@@ -56,6 +65,19 @@ Future<bool> createProjectAdditionalFiles(PostgreSQLConnection connection,
       for (var record in dataset.records) {
         var fullpath =
             '$path/$name/lib/services/${getServicePath(record, schemaInName)}';
+
+        services.add({
+          'name': getServiceClassName(record, schemaInName),
+          'version': 1,
+          'table_name': getTableName(record),
+          'path': 'lib/services/${getServicePath(record, schemaInName)}',
+          'proto_name': '${getTableName(record).toLowerCase()}.proto',
+          'proto_path':
+              'lib/services/${getServicePath(record, schemaInName)}/lib/proto_generated',
+          'docker_tag': camelize(getTableName(record)).toLowerCase(),
+          'gcloud_name': camelize(getTableName(record)).toLowerCase(),
+        });
+
         result = await createAdditionalFiles(
           connection,
           record,
@@ -70,6 +92,7 @@ Future<bool> createProjectAdditionalFiles(PostgreSQLConnection connection,
 
         await Shell(
                 verbose: false,
+                runInShell: Platform.isWindows,
                 workingDirectory: '$path/$name',
                 throwOnError: false)
             .run('''
@@ -81,8 +104,17 @@ Future<bool> createProjectAdditionalFiles(PostgreSQLConnection connection,
             mode: FileMode.append);
       }
 
+      json.addAll({'services': services});
+
+      await writeInFile(
+        '$path/$name/',
+        'upper.json',
+        prettyJson(json, indent: 2),
+      );
+
       await Shell(
         verbose: false,
+        runInShell: Platform.isWindows,
         workingDirectory: '$path/$name',
       ).run('pub get');
 
@@ -293,25 +325,24 @@ String getTableService(String serviceFileNamse, String serviceClassName,
 }
 
 String getDockerFile() {
-  var content = 'FROM google/dart AS dart-runtime'
-      .add('')
-      .add('WORKDIR /app')
-      .add('')
-      .add('ADD pubspec.* /app/')
-      .add('RUN pub get')
-      .add('ADD bin /app/bin/')
-      .add('ADD lib /app/lib/')
-      .add('RUN pub get --offline')
-      .add('RUN dart2native /app/bin/server.dart -o /app/server')
-      .add('')
-      .add('FROM frolvlad/alpine-glibc')
-      .add('')
-      .add('COPY --from=dart-runtime /app/server /server')
-      .add('')
-      .add('CMD []')
-      .add('ENTRYPOINT ["/server"]')
-      .add('')
-      .add('EXPOSE 443');
+  var content = '''
+FROM google/dart
+# uncomment the following if you want to ensure latest Dart and root CA bundle
+#RUN apt -y update && apt -y upgrade
+WORKDIR /app
+COPY pubspec.yaml .
+RUN dart pub get
+COPY . .
+RUN dart pub get --offline
+RUN dart compile exe /app/bin/server.dart -o /app/bin/server
+
+FROM subfuzion/dart:slim
+COPY --from=0 /app/bin/server /app/bin/server
+# COPY any other directories or files you may require at runtime, ex:
+#COPY --from=0 /app/static/ /app/static/
+EXPOSE 443
+ENTRYPOINT ["/app/bin/server"]
+  ''';
   return content;
 }
 

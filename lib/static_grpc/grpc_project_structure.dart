@@ -34,10 +34,11 @@ bool writeFiles(String path, String name, PostgreSQLConnection connection) {
     writeInFile(path, 'README.md', getReadMe());
     writeInFile(path, 'pubspec.yaml', getPubSpec(name));
     writeInFile(path, 'CHANGELOG.md', getChangelog());
+    writeInFile(path, 'Dockerfile', getDockerFile());
     writeInFile('$path/lib/src', 'connection.dart', getConnection(connection));
     writeInFile('$path/lib/src', 'service_list.dart', getEmptyServiceList());
     writeInFile('$path/lib/src', 'grpc_server.dart', getGrpcServer(name));
-    writeInFile('$path/bin', 'server_mono.dart', getMonolithicServer(name));
+    writeInFile('$path/bin', 'server.dart', getMonolithicServer(name));
     result = true;
   } on Exception catch (e) {
     print(e.toString());
@@ -142,5 +143,27 @@ String getMonolithicServer(String name) {
       .add('  await Server().main(args);')
       .add('}');
 
+  return content;
+}
+
+String getDockerFile() {
+  var content = '''
+FROM google/dart
+# uncomment the following if you want to ensure latest Dart and root CA bundle
+#RUN apt -y update && apt -y upgrade
+WORKDIR /app
+COPY pubspec.yaml .
+RUN dart pub get
+COPY . .
+RUN dart pub get --offline
+RUN dart compile exe /app/bin/server.dart -o /app/bin/server
+
+FROM subfuzion/dart:slim
+COPY --from=0 /app/bin/server /app/bin/server
+# COPY any other directories or files you may require at runtime, ex:
+#COPY --from=0 /app/static/ /app/static/
+EXPOSE 443
+ENTRYPOINT ["/app/bin/server"]
+  ''';
   return content;
 }
