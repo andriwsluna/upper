@@ -1,28 +1,28 @@
 name: upper
 description: Back-end framework for Dart. Make a automated GRPC API For Relational Databases.
-version: 0.0.2-dev
+version: 0.0.4-dev
 homepage: https://github.com/andriwsluna/upper/
 
 environment:
   sdk: '>=2.12.0 <3.0.0'
 
 executables:
-  create:
-  fvm:
+  upper: upper_tools
+
 
 dependencies:
   postgres: ^2.3.2
   file_utils: ^1.0.0
   strings: ^0.2.1
   process_run: ^0.12.1
-  pretty_json:
-  #data_db: #^0.0.2
+  pretty_json: ^2.0.0
+  data_db: ^0.0.3
      #path: /Volumes/MacDocs/dev/dart/packages/data_db
   static_orm_generator: ^0.1.0
     #path: /Volumes/MacDocs/dev/dart/packages/static_orm_generator
-  #static_postgres_orm: #^0.0.5-dev
+  static_postgres_orm: ^0.1.0
     #path: /Volumes/MacDocs/dev/dart/packages/static_postgres_orm
-  #static_grpc: #^0.0.2-dev
+  static_grpc: ^0.1.0
     #path: /Volumes/MacDocs/dev/dart/packages/static_grpc
   static_grpc_generator: ^0.1.1
     #path: /Volumes/MacDocs/dev/dart/packages/static_grpc_generator
