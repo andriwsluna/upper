@@ -22,4 +22,8 @@
 
 - upper_tools: Create, beta version. Not tested.
 
+## 0.0.7-dev
+
+- upper_tools: Create, flag useSSL added.
+
 
