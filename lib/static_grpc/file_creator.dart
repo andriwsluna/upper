@@ -17,6 +17,7 @@ Future<bool> createProjectFiles(PostgreSQLConnection connection,
     {required String path,
     required String name,
     bool schemaInName = false}) async {
+  print('Creating project files. . .');
   var fullpath = '$path/$name';
 
   return generatePgProto3(
@@ -51,6 +52,7 @@ Future<bool> createProjectAdditionalFiles(PostgreSQLConnection connection,
     {required String path,
     required String name,
     bool schemaInName = false}) async {
+  print('Creating additional project files. . .');
   json.addAll({
     'name': name,
     'version': 1,
@@ -275,15 +277,20 @@ String getServer(String serverFileName) {
 }
 
 String getConnection(PostgreSQLConnection connection) {
-  var content = "import 'package:postgres/postgres.dart';"
-      .add('')
-      .add("var _pgConnection = PostgreSQLConnection('${connection.host}',")
-      .add("    ${connection.port}, '${connection.databaseName}',")
-      .add(
-          "    username: '${connection.username}', password: '${connection.password}');")
-      .add('')
-      .add('PostgreSQLConnection getConnection() => _pgConnection;');
+  var content = '''
+import 'package:postgres/postgres.dart';
 
+var _pgConnection = PostgreSQLConnection(
+  '${connection.host}',
+  ${connection.port},
+  '${connection.databaseName}',
+  username: '${connection.username}',
+  password: '${connection.password}',
+  useSSL : ${connection.useSSL}
+);
+
+PostgreSQLConnection getConnection() => _pgConnection;
+  ''';
   return content;
 }
 

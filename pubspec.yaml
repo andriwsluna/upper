@@ -18,7 +18,7 @@ dependencies:
   pretty_json: ^2.0.0
   data_db: ^0.0.3
      #path: /Volumes/MacDocs/dev/dart/packages/data_db
-  static_orm_generator: ^0.1.1
+  static_orm_generator: ^0.1.2
     #path: /Volumes/MacDocs/dev/dart/packages/static_orm_generator
   static_postgres_orm: ^0.1.0
     #path: /Volumes/MacDocs/dev/dart/packages/static_postgres_orm

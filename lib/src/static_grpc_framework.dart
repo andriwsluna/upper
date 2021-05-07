@@ -3,23 +3,20 @@ import 'package:postgres/postgres.dart';
 import 'dart:io';
 
 Future<bool> create(List<String> args) async {
-  print(args);
   if (args.isNotEmpty) {
     if (_verifyObrigatoriesParams(args)) {
-      var name = args.first;
-
-      var path = getParam(args, '-path') ?? Directory.current.absolute.path;
-      var host = getParam(args, '-host') ?? '';
-      var port = getParam(args, '-port') ?? '5432';
-      var database = getParam(args, '-database') ?? '';
-      var user = getParam(args, '-user') ?? '';
-      var password = getParam(args, '-password') ?? '';
-
-      var pgConnection = PostgreSQLConnection(host, int.parse(port), database,
-          username: user, password: password, useSSL: true);
-
-      return (await createProjectFromPostgresDatabase(pgConnection,
-          path: path, name: name));
+      return (await createProjectFromPostgresDatabase(
+        PostgreSQLConnection(
+          getParam(args, '-host') ?? '',
+          int.parse(getParam(args, '-port') ?? '5432'),
+          getParam(args, '-database') ?? '',
+          username: getParam(args, '-user') ?? '',
+          password: getParam(args, '-password') ?? '',
+          useSSL: getFlag(args, '-useSSL'),
+        ),
+        path: getParam(args, '-path') ?? Directory.current.absolute.path,
+        name: args.first,
+      ));
     } else {
       return false;
     }

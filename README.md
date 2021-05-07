@@ -2,6 +2,7 @@ Back-end framework for Dart. Make a automated GRPC API For Relational Databases.
 
 ## Prerequisites
 
+2- proto compiller installed and configured.
 1- protoPlugin installed and configured.
 
 ## Installation

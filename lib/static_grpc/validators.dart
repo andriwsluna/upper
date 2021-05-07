@@ -4,6 +4,7 @@ import 'package:static_grpc/static_grpc.dart';
 Future<int> testConnection(
     PostgreSQLConnection connection, int schemaCount) async {
   var con = newPGConnection(connection);
+  print('Testing connection. . .');
   try {
     await con.open();
     var sql = 'select distinct(table_schema) from information_schema.tables'

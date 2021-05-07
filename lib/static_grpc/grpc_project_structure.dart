@@ -3,6 +3,7 @@ import 'package:postgres/postgres.dart';
 
 Future<bool> createProjectStructure(
     String path, String name, PostgreSQLConnection connection) async {
+  print('Creating project structure. . .');
   try {
     var projectpath = '$path/$name';
     return await createFold(projectpath, 'lib')
@@ -87,15 +88,20 @@ String getChangelog() {
 }
 
 String getConnection(PostgreSQLConnection connection) {
-  var content = "import 'package:postgres/postgres.dart';"
-      .add('')
-      .add("var _pgConnection = PostgreSQLConnection('${connection.host}',")
-      .add("    ${connection.port}, '${connection.databaseName}',")
-      .add(
-          "    username: '${connection.username}', password: '${connection.password}');")
-      .add('')
-      .add('PostgreSQLConnection getConnection() => _pgConnection;');
+  var content = '''
+import 'package:postgres/postgres.dart';
 
+var _pgConnection = PostgreSQLConnection(
+  '${connection.host}',
+  ${connection.port},
+  '${connection.databaseName}',
+  username: '${connection.username}',
+  password: '${connection.password}',
+  useSSL : ${connection.useSSL}
+);
+
+PostgreSQLConnection getConnection() => _pgConnection;
+  ''';
   return content;
 }
 
