@@ -137,6 +137,8 @@ Future<bool> createAdditionalFiles(
   var serviceClassName = getServiceClassName(record, schemaInName);
   var serverFileName = getServerFileName(record, schemaInName);
   var servicePath = getServicePath(record, schemaInName);
+
+  print('Generating additional files for $serviceClassName . . .');
   await createFold('$path/lib', 'proto_generated');
   return await writeInFile(
           '$path/bin/', 'server.dart', getServer(serverFileName)) &&
@@ -161,7 +163,8 @@ Future<Dataset> getTables(PostgreSQLConnection connection) async {
     ..add('cast (table_schema as varchar),')
     ..add('cast(table_name as varchar)')
     ..add('from information_schema.tables')
-    ..add("where table_schema not in ('pg_catalog','information_schema')");
+    ..add("where table_schema not in ('pg_catalog','information_schema')")
+    ..add("and tables.table_type = 'BASE TABLE'");
   var con = newPGConnection(connection);
   await con.open();
   var r = pgSqlToDataset(await con.query(sql.asText()));
