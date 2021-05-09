@@ -1,3 +1,5 @@
+![](https://github.com/andriwsluna/upper/blob/master/images/Card.png)
+
 # What is Upper?
 Upper is a open source back-end framework based on the Dart language.
 
