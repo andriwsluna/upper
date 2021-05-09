@@ -26,4 +26,8 @@
 
 - upper_tools: Create, flag useSSL added.
 
+## 0.0.8-dev
+
+- more data types mapped.
+
 
