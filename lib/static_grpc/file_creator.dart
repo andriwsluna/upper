@@ -92,7 +92,7 @@ Future<bool> createProjectAdditionalFiles(PostgreSQLConnection connection,
         }
 
         await Shell(
-                verbose: false,
+                verbose: true,
                 runInShell: Platform.isWindows,
                 workingDirectory: '$path/$name',
                 throwOnError: false)
@@ -110,7 +110,7 @@ Future<bool> createProjectAdditionalFiles(PostgreSQLConnection connection,
       );
 
       await Shell(
-        verbose: false,
+        verbose: true,
         runInShell: Platform.isWindows,
         workingDirectory: '$path/$name',
       ).run('pub get');
