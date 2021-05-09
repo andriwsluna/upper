@@ -1,4 +1,4 @@
-# What is upper?
+# What is Upper?
 Upper is a open source back-end framework based on the Dart language.
 
 With it, it is possible to automatically generate a gRPC API for your Postgres database.
