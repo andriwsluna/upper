@@ -28,3 +28,5 @@ Not yet. But we are working on it.
 
 # Can I use Upper in production?
 Yes, at your risk. Most operations with basic data types will work without a problem. But with complex data types (Array e.g.) bugs can occur.
+
+[Quick start](https://github.com/andriwsluna/upper/wiki/Quick-start)
