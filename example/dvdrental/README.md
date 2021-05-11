@@ -1,0 +1,1 @@
+A GRPC server project created by [Upper framework](https://pub.dev/packages/upper)

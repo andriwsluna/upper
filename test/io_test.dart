@@ -22,4 +22,14 @@ void main() {
       expect(result, true);
     });
   });
+
+  group('loadJson', () {
+    test('valid file', () {
+      var result = loadJson(
+        'example/dvdrental/upper.json',
+      );
+
+      expect(result.isSome(), true);
+    });
+  });
 }

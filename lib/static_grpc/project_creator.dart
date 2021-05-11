@@ -26,3 +26,14 @@ Future<bool> createProjectFromPostgresDatabase(
                     )));
   });
 }
+
+Future<bool> updateProject({
+  String path = '',
+}) async {
+  loadJson(path + 'upper.json').map((a) {
+    print('ok');
+    return true;
+  });
+
+  return false;
+}

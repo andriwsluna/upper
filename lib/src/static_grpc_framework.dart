@@ -51,3 +51,9 @@ bool _verifyObrigatoriesParams(List<String> args) {
   });
   return result;
 }
+
+Future<bool> update(List<String> args) async {
+  return updateProject(
+    path: '/Volumes/MacDocs/dev/dart/upper_projects/dvdrental',
+  );
+}

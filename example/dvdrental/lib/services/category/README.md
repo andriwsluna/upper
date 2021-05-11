@@ -1,0 +1,1 @@
+A GRPC micro service created by [Upper framework](https://pub.dev/packages/upper)
