@@ -129,7 +129,7 @@ String getGrpcServer(String name) {
       .add('      grpc.CodecRegistry(codecs: [grpc.GzipCodec()]),')
       .add('    );')
       .add("    var sPort = Platform.environment['PORT'];")
-      .add('    var port = 443;')
+      .add('    var port = 8080;')
       .add('    if ((sPort != null) && (sPort.isNotEmpty)) {')
       .add("      print('sPort: \$sPort');")
       .add('      port = int.parse(sPort);')
@@ -168,7 +168,7 @@ FROM subfuzion/dart:slim
 COPY --from=0 /app/bin/server /app/bin/server
 # COPY any other directories or files you may require at runtime, ex:
 #COPY --from=0 /app/static/ /app/static/
-EXPOSE 443
+EXPOSE 8080
 ENTRYPOINT ["/app/bin/server"]
   ''';
   return content;
