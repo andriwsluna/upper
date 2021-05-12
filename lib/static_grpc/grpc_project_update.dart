@@ -35,6 +35,7 @@ Future<bool> updateGrpcServer(
   required String path,
 }) async {
   print('updating grpc_server.dart . . .');
+
   return writeInFile(
     '$path/lib/src',
     'grpc_server.dart',
