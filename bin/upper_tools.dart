@@ -33,6 +33,7 @@ class _Command {
 final Map<String, _Command> _commandList = {
   'create': _Command('Create a GRPC Server project', static_grpc.create),
   'update': _Command('Update a GRPC Server project', static_grpc.update),
+  'compile': _Command('Compile all protos', static_grpc.compile),
 };
 
 void _printCommandList() {

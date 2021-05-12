@@ -60,3 +60,9 @@ Future<bool> update(List<String> args) async {
       //path: 'example/dvdrental',
       );
 }
+
+Future<bool> compile(List<String> args) async {
+  return compileProtos(
+      //path: 'example/dvdrental',
+      );
+}

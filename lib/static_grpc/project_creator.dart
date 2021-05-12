@@ -5,6 +5,7 @@ import 'package:upper/src/io.dart';
 import 'package:upper/static_grpc/grpc_project_structure.dart';
 import 'package:upper/static_grpc/file_creator.dart';
 import 'package:upper/static_grpc/grpc_project_update.dart';
+import 'grpc_compiler.dart';
 
 Future<bool> createProjectFromPostgresDatabase(
   PostgreSQLConnection connection, {
@@ -46,6 +47,30 @@ Future<bool> updateProject({
     },
     (r) {
       return executeProjectUpdate(
+        r,
+        path: workDir,
+      );
+    },
+  );
+}
+
+Future<bool> compileProtos({
+  String path = '',
+}) async {
+  var workDir = path;
+  if (path == '') {
+    workDir = Directory.current.path + '/';
+  } else {
+    workDir = path;
+  }
+  print('loading upper.json');
+  return loadJson(workDir + 'upper.json').fold(
+    (l) {
+      print(l);
+      return false;
+    },
+    (r) {
+      return executeCompileProtos(
         r,
         path: workDir,
       );
