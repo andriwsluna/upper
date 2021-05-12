@@ -1,5 +1,4 @@
-import 'package:process_run/shell.dart';
-import 'dart:io';
+import 'package:upper/src/io.dart';
 import 'package:upper/static_grpc/grpc_project_json.dart';
 
 Future<bool> compileProtoFile({
@@ -7,27 +6,12 @@ Future<bool> compileProtoFile({
   required String outPutPath,
   String workingDirectory = '',
 }) async {
-  var wDir = workingDirectory;
-  if (wDir == '') {
-    wDir = Directory.current.path;
-  }
-  if (Directory(wDir).existsSync()) {
-    try {
-      await Shell(
-              verbose: true,
-              runInShell: Platform.isWindows,
-              workingDirectory: wDir,
-              throwOnError: true)
-          .run('''
-            protoc --dart_out=grpc:$outPutPath -Iprotos $protoFile
-          ''');
-      return true;
-    } catch (e) {
-      return false;
-    }
-  } else {
-    return false;
-  }
+  return await executeCommand(
+    verbose: true,
+    command: 'protoc --dart_out=grpc:$outPutPath -Iprotos $protoFile',
+    workingDirectory: workingDirectory,
+    throwOnError: true,
+  );
 }
 
 Future<bool> compileProtoFileFromService({

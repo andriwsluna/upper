@@ -1,11 +1,9 @@
-import 'dart:io';
 import 'package:postgres/postgres.dart';
 import 'package:static_grpc_generator/static_grpc_generator.dart';
 import 'package:static_orm_generator/static_orm_generator.dart';
 import 'package:upper/upper.dart';
 import 'package:strings/strings.dart';
 import 'package:upper/src/io.dart';
-import 'package:process_run/shell.dart';
 import 'package:pretty_json/pretty_json.dart';
 
 var _serviceList = '';
@@ -95,14 +93,13 @@ Future<bool> createProjectAdditionalFiles(PostgreSQLConnection connection,
           return false;
         }
 
-        await Shell(
-                verbose: true,
-                runInShell: Platform.isWindows,
-                workingDirectory: '$path/$name',
-                throwOnError: false)
-            .run('''
-          protoc --dart_out=grpc:lib/services/${getServicePath(record, schemaInName)}/lib/proto_generated -Iprotos protos/${getProtoFileName(record, schemaInName)}
-        ''');
+        await executeCommand(
+            verbose: true,
+            command: '''
+            protoc --dart_out=grpc:lib/services/${getServicePath(record, schemaInName)}/lib/proto_generated -Iprotos protos/${getProtoFileName(record, schemaInName)}
+            ''',
+            workingDirectory: '$path/$name',
+            throwOnError: false);
       }
 
       json.addAll({'services': services});
@@ -113,11 +110,11 @@ Future<bool> createProjectAdditionalFiles(PostgreSQLConnection connection,
         prettyJson(json, indent: 2),
       );
 
-      await Shell(
+      await executeCommand(
         verbose: true,
-        runInShell: Platform.isWindows,
+        command: 'pub get',
         workingDirectory: '$path/$name',
-      ).run('pub get');
+      );
 
       await writeInFile(
         '$path/$name/lib/src',
