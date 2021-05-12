@@ -4,7 +4,10 @@ import 'dart:io';
 
 Future<bool> create(List<String> args) async {
   if (args.isNotEmpty) {
-    if (_verifyObrigatoriesParams(args)) {
+    if (_verifyObrigatoriesParams(
+      args,
+      'create',
+    )) {
       return (await createProjectFromPostgresDatabase(
         PostgreSQLConnection(
           getParam(args, '-host') ?? '',
@@ -39,14 +42,14 @@ bool getFlag(List<String> args, String name) {
   return args.contains(name);
 }
 
-bool _verifyObrigatoriesParams(List<String> args) {
+bool _verifyObrigatoriesParams(List<String> args, String comand) {
   var result = true;
 
   _requiredParams.forEach((element) {
     if (getParam(args, element) == null) {
       result = false;
       print(
-          '$element${' ' * (10 - element.length)} is required for create command');
+          '$element${' ' * (10 - element.length)} is required for $comand command');
     }
   });
   return result;
@@ -54,6 +57,6 @@ bool _verifyObrigatoriesParams(List<String> args) {
 
 Future<bool> update(List<String> args) async {
   return updateProject(
-    path: '/Volumes/MacDocs/dev/dart/upper_projects/dvdrental',
-  );
+      //path: 'example/dvdrental',
+      );
 }

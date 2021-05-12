@@ -24,17 +24,16 @@ Future<bool> writeInFile(String filePath, String fileName, String contents,
   return await x.exists();
 }
 
-Option<Map<String, dynamic>> loadJson(String fileName) {
+Either<String, Map<String, dynamic>> loadJson(String fileName) {
   if (File(fileName).existsSync()) {
     var fileContent = File(fileName).readAsStringSync();
     try {
-      return some(jsonDecode(fileContent));
+      return right(jsonDecode(fileContent));
     } on Exception catch (e) {
       print(e.toString());
-      return none();
+      return left(e.toString());
     }
   } else {
-    print('file "$fileName" not found');
-    return none();
+    return left('file "$fileName" not found');
   }
 }

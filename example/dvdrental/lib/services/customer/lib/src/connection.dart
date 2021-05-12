@@ -6,8 +6,7 @@ var _pgConnection = PostgreSQLConnection(
   'dvdrental',
   username: 'postgres',
   password: '1489',
-  useSSL : false
+  useSSL: true,
 );
 
 PostgreSQLConnection getConnection() => _pgConnection;
-  

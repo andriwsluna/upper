@@ -1,6 +1,6 @@
 import 'package:grpc/grpc.dart' as grpc;
 import 'dart:io';
-import '../src/service_list.dart';
+import 'service_list.dart';
 
 class Server {
   Future<void> main(List<String> args) async {
@@ -10,7 +10,7 @@ class Server {
       grpc.CodecRegistry(codecs: [grpc.GzipCodec()]),
     );
     var sPort = Platform.environment['PORT'];
-    var port = 8080;
+    var port = 3426;
     if ((sPort != null) && (sPort.isNotEmpty)) {
       print('sPort: $sPort');
       port = int.parse(sPort);

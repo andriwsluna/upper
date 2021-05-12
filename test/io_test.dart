@@ -29,7 +29,15 @@ void main() {
         'example/dvdrental/upper.json',
       );
 
-      expect(result.isSome(), true);
+      expect(result.isRight(), true);
+    });
+
+    test('invalid file', () {
+      var result = loadJson(
+        'example/upper.json',
+      );
+
+      expect(result.isRight(), false);
     });
   });
 }

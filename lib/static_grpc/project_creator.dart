@@ -3,6 +3,7 @@ import 'package:upper/static_grpc/validators.dart';
 import 'package:upper/src/io.dart';
 import 'package:upper/static_grpc/grpc_project_structure.dart';
 import 'package:upper/static_grpc/file_creator.dart';
+import 'package:upper/static_grpc/grpc_project_update.dart';
 
 Future<bool> createProjectFromPostgresDatabase(
   PostgreSQLConnection connection, {
@@ -30,10 +31,16 @@ Future<bool> createProjectFromPostgresDatabase(
 Future<bool> updateProject({
   String path = '',
 }) async {
-  loadJson(path + 'upper.json').map((a) {
-    print('ok');
-    return true;
-  });
-
-  return false;
+  return loadJson(path + 'upper.json').fold(
+    (l) {
+      print(l);
+      return false;
+    },
+    (r) {
+      return executeProjectUpdate(
+        r,
+        path: path,
+      );
+    },
+  );
 }

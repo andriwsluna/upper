@@ -73,6 +73,9 @@ Future<bool> createProjectAdditionalFiles(PostgreSQLConnection connection,
           'version': 1,
           'table_name': getTableName(record),
           'path': 'lib/services/${getServicePath(record, schemaInName)}',
+          'server_file_name': '${getServerFileName(record, schemaInName)}',
+          'service_file_name': '${getServiceFileName(record, schemaInName)}',
+          'service_class_name': '${getServiceClassName(record, schemaInName)}',
           'proto_name': '${getTableName(record).toLowerCase()}.proto',
           'proto_path':
               'lib/services/${getServicePath(record, schemaInName)}/lib/proto_generated',
@@ -299,7 +302,8 @@ PostgreSQLConnection getConnection() => _pgConnection;
 }
 
 String getTableService(String serviceFileNamse, String serviceClassName,
-    String servicePath, String packageName) {
+    String servicePath, String packageName,
+    {int port = 8080}) {
   var content = "import '../src/$serviceFileNamse';"
       .add("import 'package:grpc/grpc.dart' as grpc;")
       .add("import 'dart:io';")
@@ -313,7 +317,7 @@ String getTableService(String serviceFileNamse, String serviceClassName,
       .add('      grpc.CodecRegistry(codecs: [grpc.GzipCodec()]),')
       .add('    );')
       .add("    var sPort = Platform.environment['PORT'];")
-      .add('    var port = 8080;')
+      .add('    var port = $port;')
       .add('    if ((sPort != null) && (sPort.isNotEmpty)) {')
       .add("      print('sPort: \$sPort');")
       .add('      port = int.parse(sPort);')

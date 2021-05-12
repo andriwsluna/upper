@@ -116,10 +116,13 @@ String getEmptyServiceList() {
   return content;
 }
 
-String getGrpcServer(String name) {
+String getGrpcServer(
+  String name, {
+  int port = 8080,
+}) {
   var content = "import 'package:grpc/grpc.dart' as grpc;"
       .add("import 'dart:io';")
-      .add("import 'package:$name/src/service_list.dart';")
+      .add("import 'service_list.dart';")
       .add('')
       .add('class Server {')
       .add('  Future<void> main(List<String> args) async {')
@@ -129,7 +132,7 @@ String getGrpcServer(String name) {
       .add('      grpc.CodecRegistry(codecs: [grpc.GzipCodec()]),')
       .add('    );')
       .add("    var sPort = Platform.environment['PORT'];")
-      .add('    var port = 8080;')
+      .add('    var port = $port;')
       .add('    if ((sPort != null) && (sPort.isNotEmpty)) {')
       .add("      print('sPort: \$sPort');")
       .add('      port = int.parse(sPort);')
@@ -152,7 +155,7 @@ String getMonolithicServer(String name) {
   return content;
 }
 
-String getDockerFile() {
+String getDockerFile({int port = 8080}) {
   var content = '''
 FROM google/dart
 # uncomment the following if you want to ensure latest Dart and root CA bundle
@@ -168,7 +171,7 @@ FROM subfuzion/dart:slim
 COPY --from=0 /app/bin/server /app/bin/server
 # COPY any other directories or files you may require at runtime, ex:
 #COPY --from=0 /app/static/ /app/static/
-EXPOSE 8080
+EXPOSE $port
 ENTRYPOINT ["/app/bin/server"]
   ''';
   return content;
