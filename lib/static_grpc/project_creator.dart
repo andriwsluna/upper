@@ -1,4 +1,5 @@
 import 'package:postgres/postgres.dart';
+import 'dart:io';
 import 'package:upper/static_grpc/validators.dart';
 import 'package:upper/src/io.dart';
 import 'package:upper/static_grpc/grpc_project_structure.dart';
@@ -31,8 +32,14 @@ Future<bool> createProjectFromPostgresDatabase(
 Future<bool> updateProject({
   String path = '',
 }) async {
-  print('loading uppr.json');
-  return loadJson(path + 'upper.json').fold(
+  var workDir = path;
+  if (path == '') {
+    workDir = Directory.current.path + '/';
+  } else {
+    workDir = path;
+  }
+  print('loading upper.json');
+  return loadJson(workDir + 'upper.json').fold(
     (l) {
       print(l);
       return false;
@@ -40,7 +47,7 @@ Future<bool> updateProject({
     (r) {
       return executeProjectUpdate(
         r,
-        path: path,
+        path: workDir,
       );
     },
   );

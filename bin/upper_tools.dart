@@ -8,6 +8,7 @@ void main(List<String> args) async {
       var funct = _commandList[args.first]?.func;
       if (funct != null) {
         if (await (funct(args.sublist(1)))) {
+          print('completed');
           exit(0);
         } else {
           print('failed');
