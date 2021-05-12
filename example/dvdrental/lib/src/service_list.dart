@@ -1,21 +1,36 @@
 import 'package:grpc/grpc.dart' as grpc;
 import 'connection.dart';
 
-import 'package:dvdrental/services/film_actor/lib/src/film_actor_service.dart';
-import 'package:dvdrental/services/address/lib/src/address_service.dart';
-import 'package:dvdrental/services/city/lib/src/city_service.dart';
-import 'package:dvdrental/services/customer/lib/src/customer_service.dart';
-import 'package:dvdrental/services/actor/lib/src/actor_service.dart';
-import 'package:dvdrental/services/film_category/lib/src/film_category_service.dart';
-import 'package:dvdrental/services/inventory/lib/src/inventory_service.dart';
-import 'package:dvdrental/services/category/lib/src/category_service.dart';
-import 'package:dvdrental/services/country/lib/src/country_service.dart';
-import 'package:dvdrental/services/language/lib/src/language_service.dart';
-import 'package:dvdrental/services/rental/lib/src/rental_service.dart';
-import 'package:dvdrental/services/staff/lib/src/staff_service.dart';
-import 'package:dvdrental/services/store/lib/src/store_service.dart';
-import 'package:dvdrental/services/payment/lib/src/payment_service.dart';
-import 'package:dvdrental/services/film/lib/src/film_service.dart';
+// ignore: avoid_relative_lib_imports
+import '../services/film_actor/lib/src/film_actor_service.dart';
+// ignore: avoid_relative_lib_imports
+import '../services/address/lib/src/address_service.dart';
+// ignore: avoid_relative_lib_imports
+import '../services/city/lib/src/city_service.dart';
+// ignore: avoid_relative_lib_imports
+import '../services/customer/lib/src/customer_service.dart';
+// ignore: avoid_relative_lib_imports
+import '../services/actor/lib/src/actor_service.dart';
+// ignore: avoid_relative_lib_imports
+import '../services/film_category/lib/src/film_category_service.dart';
+// ignore: avoid_relative_lib_imports
+import '../services/inventory/lib/src/inventory_service.dart';
+// ignore: avoid_relative_lib_imports
+import '../services/category/lib/src/category_service.dart';
+// ignore: avoid_relative_lib_imports
+import '../services/country/lib/src/country_service.dart';
+// ignore: avoid_relative_lib_imports
+import '../services/language/lib/src/language_service.dart';
+// ignore: avoid_relative_lib_imports
+import '../services/rental/lib/src/rental_service.dart';
+// ignore: avoid_relative_lib_imports
+import '../services/staff/lib/src/staff_service.dart';
+// ignore: avoid_relative_lib_imports
+import '../services/store/lib/src/store_service.dart';
+// ignore: avoid_relative_lib_imports
+import '../services/payment/lib/src/payment_service.dart';
+// ignore: avoid_relative_lib_imports
+import '../services/film/lib/src/film_service.dart';
 
 List<grpc.Service> getServices() {
   var list = <grpc.Service>[];
