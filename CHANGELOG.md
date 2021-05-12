@@ -38,3 +38,7 @@
 ## 0.0.10-dev
 
 - upper update path bug corrected;
+
+## 0.1.0-dev
+
+- upper compile - added;
