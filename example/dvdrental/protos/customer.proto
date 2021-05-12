@@ -1,0 +1,161 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "static_grpc.customer";
+option java_outer_classname = "CustomerProto";
+option objc_class_prefix = "CUSTOMER";
+
+package static_grpc.customer;
+
+message IntegerValue{
+    int32 value = 1;  
+}
+message StringValue{
+    string value = 1;  
+}
+message NumericValue{
+    double value = 1; 
+}
+message BooleanValue{
+    bool value = 1; 
+}
+
+service CustomerService {
+    rpc get(GetRequest) returns (GetResponse);
+    rpc select(SelectRequest) returns (SelectResponse);
+    rpc insert(InsertRequest) returns (InsertResponse);
+    rpc update(UpdateRequest) returns (UpdateResponse);
+    rpc delete(DeleteRequest) returns (DeleteResponse);
+}
+
+message GetRequest{
+    int32 customerId = 1;
+}
+
+message GetResponse {
+    bool result = 1; 
+    oneof GetResponseResult 
+    {
+        Customer data = 2;
+        string errorMessage = 3;
+    }
+}
+
+message InsertRequest{
+    repeated CustomerToInsert data = 1;
+    InsertOptions options = 2;
+}
+
+message InsertOptions{
+    bool inTransaction = 1;
+}
+message InsertResponse{
+    bool result = 1;
+    int32 rowsToInsert = 2;
+    int32 rowsInserted = 3;
+    repeated string errorMessage = 4;
+}
+
+message UpdateRequest{
+    repeated Customer data = 1;
+    UpdateOptions options = 2;
+}
+
+message UpdateOptions{
+    bool inTransaction = 1;
+}
+
+message UpdateResponse{
+    bool result = 1;
+    int32 rowsToUpdate = 2;
+    int32 rowsUpdated = 3;
+    repeated string errorMessage = 4;
+}
+
+message DeleteRequest{
+    repeated CustomerPk data = 1;
+    DeleteOptions options = 2;
+}
+
+message DeleteOptions{
+    bool inTransaction = 1;
+}
+
+message DeleteResponse{
+    bool result = 1;
+    int32 rowsToDelete = 2;
+    int32 rowsDeleted = 3;
+    repeated string errorMessage = 4;
+}
+
+message SelectRequest{
+    repeated SelectableColumns columns = 1;
+    string where = 2;
+    repeated OrderByOperator orderBy = 3;
+    int32 limit = 4;
+    int32 offset = 5;
+}
+
+message SelectResponse{
+    bool result = 1;
+    int32 rowsSelected = 2;
+    int32 totalRowsCount = 3;
+    int32 limit = 4;
+    int32 offset = 5;
+    int32 nextOffset = 6;
+    repeated Customer data = 7; 
+    repeated string errorMessage = 8;
+}
+
+message Customer{
+    IntegerValue customerId = 1;
+    IntegerValue storeId = 2;
+    StringValue firstName = 3;
+    StringValue lastName = 4;
+    StringValue email = 5;
+    IntegerValue addressId = 6;
+    BooleanValue activebool = 7;
+    StringValue createDate = 8;
+    StringValue lastUpdate = 9;
+    IntegerValue active = 10;
+}
+
+message CustomerPk{
+    IntegerValue customerId = 1;
+}
+
+message CustomerToInsert{
+    IntegerValue storeId = 1;
+    StringValue firstName = 2;
+    StringValue lastName = 3;
+    StringValue email = 4;
+    IntegerValue addressId = 5;
+    BooleanValue activebool = 6;
+    StringValue createDate = 7;
+    StringValue lastUpdate = 8;
+    IntegerValue active = 9;
+}
+
+enum SelectableColumns {
+    allColumns = 0;
+    customerId = 1;
+    storeId = 2;
+    firstName = 3;
+    lastName = 4;
+    email = 5;
+    addressId = 6;
+    activebool = 7;
+    createDate = 8;
+    lastUpdate = 9;
+    active = 10;
+}
+
+enum OrderType {
+    asc = 0;
+    desc = 1;
+}
+
+message OrderByOperator{
+    SelectableColumns column = 1;
+    OrderType orderType = 2; 
+}

@@ -1,0 +1,143 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "static_grpc.store";
+option java_outer_classname = "StoreProto";
+option objc_class_prefix = "STORE";
+
+package static_grpc.store;
+
+message IntegerValue{
+    int32 value = 1;  
+}
+message StringValue{
+    string value = 1;  
+}
+message NumericValue{
+    double value = 1; 
+}
+message BooleanValue{
+    bool value = 1; 
+}
+
+service StoreService {
+    rpc get(GetRequest) returns (GetResponse);
+    rpc select(SelectRequest) returns (SelectResponse);
+    rpc insert(InsertRequest) returns (InsertResponse);
+    rpc update(UpdateRequest) returns (UpdateResponse);
+    rpc delete(DeleteRequest) returns (DeleteResponse);
+}
+
+message GetRequest{
+    int32 storeId = 1;
+}
+
+message GetResponse {
+    bool result = 1; 
+    oneof GetResponseResult 
+    {
+        Store data = 2;
+        string errorMessage = 3;
+    }
+}
+
+message InsertRequest{
+    repeated StoreToInsert data = 1;
+    InsertOptions options = 2;
+}
+
+message InsertOptions{
+    bool inTransaction = 1;
+}
+message InsertResponse{
+    bool result = 1;
+    int32 rowsToInsert = 2;
+    int32 rowsInserted = 3;
+    repeated string errorMessage = 4;
+}
+
+message UpdateRequest{
+    repeated Store data = 1;
+    UpdateOptions options = 2;
+}
+
+message UpdateOptions{
+    bool inTransaction = 1;
+}
+
+message UpdateResponse{
+    bool result = 1;
+    int32 rowsToUpdate = 2;
+    int32 rowsUpdated = 3;
+    repeated string errorMessage = 4;
+}
+
+message DeleteRequest{
+    repeated StorePk data = 1;
+    DeleteOptions options = 2;
+}
+
+message DeleteOptions{
+    bool inTransaction = 1;
+}
+
+message DeleteResponse{
+    bool result = 1;
+    int32 rowsToDelete = 2;
+    int32 rowsDeleted = 3;
+    repeated string errorMessage = 4;
+}
+
+message SelectRequest{
+    repeated SelectableColumns columns = 1;
+    string where = 2;
+    repeated OrderByOperator orderBy = 3;
+    int32 limit = 4;
+    int32 offset = 5;
+}
+
+message SelectResponse{
+    bool result = 1;
+    int32 rowsSelected = 2;
+    int32 totalRowsCount = 3;
+    int32 limit = 4;
+    int32 offset = 5;
+    int32 nextOffset = 6;
+    repeated Store data = 7; 
+    repeated string errorMessage = 8;
+}
+
+message Store{
+    IntegerValue storeId = 1;
+    IntegerValue managerStaffId = 2;
+    IntegerValue addressId = 3;
+    StringValue lastUpdate = 4;
+}
+
+message StorePk{
+    IntegerValue storeId = 1;
+}
+
+message StoreToInsert{
+    IntegerValue managerStaffId = 1;
+    IntegerValue addressId = 2;
+    StringValue lastUpdate = 3;
+}
+
+enum SelectableColumns {
+    allColumns = 0;
+    storeId = 1;
+    managerStaffId = 2;
+    addressId = 3;
+    lastUpdate = 4;
+}
+
+enum OrderType {
+    asc = 0;
+    desc = 1;
+}
+
+message OrderByOperator{
+    SelectableColumns column = 1;
+    OrderType orderType = 2; 
+}

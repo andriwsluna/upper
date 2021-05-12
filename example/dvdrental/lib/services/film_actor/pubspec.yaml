@@ -1,0 +1,22 @@
+name: Film_actorService
+description: A GRPC micro service created by Upper framework.
+# version: 1.0.0
+# homepage: https://www.example.com
+
+environment:
+ sdk: '>=2.12.0 <3.0.0'
+
+dependencies:
+  postgres: ^2.3.2
+  async: ^2.5.0
+  grpc: ^3.0.0
+  protobuf: ^2.0.0
+  upper:
+  static_postgres_orm:
+  dartz:
+  data_db:
+  static_grpc:
+
+dev_dependencies:
+  test: ^1.16.8
+  pedantic: ^1.9.0

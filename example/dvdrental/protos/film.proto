@@ -1,0 +1,173 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "static_grpc.film";
+option java_outer_classname = "FilmProto";
+option objc_class_prefix = "FILM";
+
+package static_grpc.film;
+
+message IntegerValue{
+    int32 value = 1;  
+}
+message StringValue{
+    string value = 1;  
+}
+message NumericValue{
+    double value = 1; 
+}
+message BooleanValue{
+    bool value = 1; 
+}
+
+service FilmService {
+    rpc get(GetRequest) returns (GetResponse);
+    rpc select(SelectRequest) returns (SelectResponse);
+    rpc insert(InsertRequest) returns (InsertResponse);
+    rpc update(UpdateRequest) returns (UpdateResponse);
+    rpc delete(DeleteRequest) returns (DeleteResponse);
+}
+
+message GetRequest{
+    int32 filmId = 1;
+}
+
+message GetResponse {
+    bool result = 1; 
+    oneof GetResponseResult 
+    {
+        Film data = 2;
+        string errorMessage = 3;
+    }
+}
+
+message InsertRequest{
+    repeated FilmToInsert data = 1;
+    InsertOptions options = 2;
+}
+
+message InsertOptions{
+    bool inTransaction = 1;
+}
+message InsertResponse{
+    bool result = 1;
+    int32 rowsToInsert = 2;
+    int32 rowsInserted = 3;
+    repeated string errorMessage = 4;
+}
+
+message UpdateRequest{
+    repeated Film data = 1;
+    UpdateOptions options = 2;
+}
+
+message UpdateOptions{
+    bool inTransaction = 1;
+}
+
+message UpdateResponse{
+    bool result = 1;
+    int32 rowsToUpdate = 2;
+    int32 rowsUpdated = 3;
+    repeated string errorMessage = 4;
+}
+
+message DeleteRequest{
+    repeated FilmPk data = 1;
+    DeleteOptions options = 2;
+}
+
+message DeleteOptions{
+    bool inTransaction = 1;
+}
+
+message DeleteResponse{
+    bool result = 1;
+    int32 rowsToDelete = 2;
+    int32 rowsDeleted = 3;
+    repeated string errorMessage = 4;
+}
+
+message SelectRequest{
+    repeated SelectableColumns columns = 1;
+    string where = 2;
+    repeated OrderByOperator orderBy = 3;
+    int32 limit = 4;
+    int32 offset = 5;
+}
+
+message SelectResponse{
+    bool result = 1;
+    int32 rowsSelected = 2;
+    int32 totalRowsCount = 3;
+    int32 limit = 4;
+    int32 offset = 5;
+    int32 nextOffset = 6;
+    repeated Film data = 7; 
+    repeated string errorMessage = 8;
+}
+
+message Film{
+    IntegerValue filmId = 1;
+    StringValue title = 2;
+    StringValue description = 3;
+    IntegerValue releaseYear = 4;
+    IntegerValue languageId = 5;
+    IntegerValue rentalDuration = 6;
+    NumericValue rentalRate = 7;
+    IntegerValue length = 8;
+    NumericValue replacementCost = 9;
+    StringValue rating = 10;
+    StringValue lastUpdate = 11;
+    StringValue specialFeatures = 12;
+    StringValue fulltext = 13;
+    StringValue squares = 14;
+}
+
+message FilmPk{
+    IntegerValue filmId = 1;
+}
+
+message FilmToInsert{
+    StringValue title = 1;
+    StringValue description = 2;
+    IntegerValue releaseYear = 3;
+    IntegerValue languageId = 4;
+    IntegerValue rentalDuration = 5;
+    NumericValue rentalRate = 6;
+    IntegerValue length = 7;
+    NumericValue replacementCost = 8;
+    StringValue rating = 9;
+    StringValue lastUpdate = 10;
+    StringValue specialFeatures = 11;
+    StringValue fulltext = 12;
+    StringValue squares = 13;
+}
+
+enum SelectableColumns {
+    allColumns = 0;
+    filmId = 1;
+    title = 2;
+    description = 3;
+    releaseYear = 4;
+    languageId = 5;
+    rentalDuration = 6;
+    rentalRate = 7;
+    length = 8;
+    replacementCost = 9;
+    rating = 10;
+    lastUpdate = 11;
+    specialFeatures = 12;
+    fulltext = 13;
+    squares = 14;
+}
+
+enum OrderType {
+    asc = 0;
+    desc = 1;
+}
+
+message OrderByOperator{
+    SelectableColumns column = 1;
+    OrderType orderType = 2; 
+}
