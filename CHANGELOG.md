@@ -34,3 +34,7 @@
 
 - Default port changed to 8080;
 - Added command tool "update";
+
+## 0.0.10-dev
+
+- upper update path bug corrected;
