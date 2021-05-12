@@ -4,15 +4,9 @@ import 'package:data_db/data_db.dart';
 import 'package:postgres/postgres.dart';
 import 'package:static_postgres_orm/src/domain/orm_filter.dart';
 
-enum _City {
-  city_id
-  ,city
-  ,country_id
-  ,last_update
-}
+enum _City { city_id, city, country_id, last_update }
 
 class _DataFields extends GenericDataFields {
-
   late final SerialField_PG _city_id;
   late final StringField_PG _city;
   late final IntegerField_PG _country_id;
@@ -36,7 +30,7 @@ class _DataFields extends GenericDataFields {
 
   GenericField getCooField(_DataFields origin, String field) {
     return origin.fields
-      .firstWhere((element) => getFieldName(element) == field);
+        .firstWhere((element) => getFieldName(element) == field);
   }
 
   void _cloneField(_DataFields origin) {
@@ -67,10 +61,9 @@ class _DataFields extends GenericDataFields {
   }
 }
 
-class City_ORM extends PostgressORM{
+class City_ORM extends PostgressORM {
   static final NewRecordEvent _addRecord = NewRecordEvent();
   _DataFields get _dataFields => getRecords(this)[rowIndex] as _DataFields;
-
 
   SerialField_PG get city_id => _dataFields._city_id;
   StringField_PG get city => _dataFields._city;
@@ -89,17 +82,16 @@ class City_ORM extends PostgressORM{
     getRecords(this).add(_DataFields());
   }
 
-  City_ORM.fromDataset(
-      Postgres_SqlConnection sqlConnection, Dataset dataset)
+  City_ORM.fromDataset(Postgres_SqlConnection sqlConnection, Dataset dataset)
       : super(sqlConnection, 'public', 'city', _addRecord) {
     _addRecord.action = _executeAddRecord;
     getRecords(this).add(_DataFields());
     if (dataset.isNotempty) {
       dataset.first();
       for (var i = 1; i <= dataset.count; i++) {
-      newRecord();
-      _dataFields.fields.forEach((element) {
-        element.loadDataFromDataset(dataset);
+        newRecord();
+        _dataFields.fields.forEach((element) {
+          element.loadDataFromDataset(dataset);
         });
         _dataFields.finalize();
         dataset.next();
@@ -107,28 +99,21 @@ class City_ORM extends PostgressORM{
     }
   }
 
-
-  Future<Either<ErrorSqlResult, Dataset>>
-  select(
-    {
-      Columns? columns,
+  Future<Either<ErrorSqlResult, Dataset>> select(
+      {Columns? columns,
       Where? where,
       OrderBy? orderBy,
-      int? limit, 
-      int? offset
-    }
-  ) async
-  {
+      int? limit,
+      int? offset}) async {
     var col = columns;
     col ??= Columns();
     var whe = where;
     whe ??= Where();
     var ordBy = orderBy;
     ordBy ??= OrderBy();
-    return (await sqlConnection.openQuery(
-      'select', getSelectSql(col, 
-      whe , ordBy, limit: limit, offset: offset)))
-    .fold((l) => left(l), (r) => right(r.dataset));
+    return (await sqlConnection.openQuery('select',
+            getSelectSql(col, whe, ordBy, limit: limit, offset: offset)))
+        .fold((l) => left(l), (r) => right(r.dataset));
   }
 
   Future<Either<ErrorSqlResult, City_ORM>> getCityWhere(
@@ -148,44 +133,44 @@ class City_ORM extends PostgressORM{
     return getMaterialize(
         this,
         (<GenericField>[])
-          ..add(SerialField_PG.clone(_dataFields._city_id)
-            ..setValue(city_id)));
+          ..add(SerialField_PG.clone(_dataFields._city_id)..setValue(city_id)));
   }
 
   Future<Either<ErrorSqlResult, ExecuteSuccesSqlResult>> deleteRecord(
-    int city_id) async{
+      int city_id) async {
     return getDeleteRecord(
-         this,
-         (<GenericField>[])
-          ..add(SerialField_PG.clone(_dataFields._city_id)
-            ..setValue(city_id)));
+        this,
+        (<GenericField>[])
+          ..add(SerialField_PG.clone(_dataFields._city_id)..setValue(city_id)));
   }
 
   Future<Either<ErrorSqlResult, SelectSuccesSqlResult>>
-    materializeFromProto3Json(Map<String, dynamic> proto3Json) async {
-  if (
-      (proto3Json.containsKey('cityId'))) {
-    return getMaterialize(
-        this,
-        (<GenericField>[])
-          ..add(SerialField_PG.clone(_dataFields._city_id)
-            ..setValue(proto3Json['cityId'])));
-  } else {
+      materializeFromProto3Json(Map<String, dynamic> proto3Json) async {
+    if ((proto3Json.containsKey('cityId'))) {
+      return getMaterialize(
+          this,
+          (<GenericField>[])
+            ..add(SerialField_PG.clone(_dataFields._city_id)
+              ..setValue(proto3Json['cityId'])));
+    } else {
       return left(ErrorSqlResult('City_ORM', 'materializeFromProto3Json', '',
-           ['Required fields not found']));
+          ['Required fields not found']));
+    }
   }
-  } 
 }
 
 class _FilterCityId extends IntegerFilter {
   _FilterCityId() : super('city.city_id');
 }
+
 class _FilterCity extends StringFilter {
   _FilterCity() : super('city.city');
 }
+
 class _FilterCountryId extends IntegerFilter {
   _FilterCountryId() : super('city.country_id');
 }
+
 class _FilterLastUpdate extends DateTimeFilter {
   _FilterLastUpdate() : super('city.last_update');
 }
@@ -207,8 +192,8 @@ class Where extends OrmSelectWhere {
     filters.add(_country_id);
     filters.add(_last_update);
   }
-
 }
+
 class Columns implements OrmSelectableColumns {
   final _columns = <_City>[];
   void get city_id => _columns.add(_City.city_id);
@@ -234,18 +219,20 @@ class Columns implements OrmSelectableColumns {
   }
 }
 
-class OrderBy with GenericOrderBy{
-
-  void city_id([ordType = OrdType.asc]){
+class OrderBy with GenericOrderBy {
+  void city_id([ordType = OrdType.asc]) {
     add(ColumnOrdenator('city.city_id', ordType));
   }
-  void city([ordType = OrdType.asc]){
+
+  void city([ordType = OrdType.asc]) {
     add(ColumnOrdenator('city.city', ordType));
   }
-  void country_id([ordType = OrdType.asc]){
+
+  void country_id([ordType = OrdType.asc]) {
     add(ColumnOrdenator('city.country_id', ordType));
   }
-  void last_update([ordType = OrdType.asc]){
+
+  void last_update([ordType = OrdType.asc]) {
     add(ColumnOrdenator('city.last_update', ordType));
   }
 }

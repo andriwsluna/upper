@@ -4,15 +4,9 @@ import 'package:data_db/data_db.dart';
 import 'package:postgres/postgres.dart';
 import 'package:static_postgres_orm/src/domain/orm_filter.dart';
 
-enum _Inventory {
-  inventory_id
-  ,film_id
-  ,store_id
-  ,last_update
-}
+enum _Inventory { inventory_id, film_id, store_id, last_update }
 
 class _DataFields extends GenericDataFields {
-
   late final SerialField_PG _inventory_id;
   late final IntegerField_PG _film_id;
   late final IntegerField_PG _store_id;
@@ -36,7 +30,7 @@ class _DataFields extends GenericDataFields {
 
   GenericField getCooField(_DataFields origin, String field) {
     return origin.fields
-      .firstWhere((element) => getFieldName(element) == field);
+        .firstWhere((element) => getFieldName(element) == field);
   }
 
   void _cloneField(_DataFields origin) {
@@ -67,10 +61,9 @@ class _DataFields extends GenericDataFields {
   }
 }
 
-class Inventory_ORM extends PostgressORM{
+class Inventory_ORM extends PostgressORM {
   static final NewRecordEvent _addRecord = NewRecordEvent();
   _DataFields get _dataFields => getRecords(this)[rowIndex] as _DataFields;
-
 
   SerialField_PG get inventory_id => _dataFields._inventory_id;
   IntegerField_PG get film_id => _dataFields._film_id;
@@ -97,9 +90,9 @@ class Inventory_ORM extends PostgressORM{
     if (dataset.isNotempty) {
       dataset.first();
       for (var i = 1; i <= dataset.count; i++) {
-      newRecord();
-      _dataFields.fields.forEach((element) {
-        element.loadDataFromDataset(dataset);
+        newRecord();
+        _dataFields.fields.forEach((element) {
+          element.loadDataFromDataset(dataset);
         });
         _dataFields.finalize();
         dataset.next();
@@ -107,28 +100,21 @@ class Inventory_ORM extends PostgressORM{
     }
   }
 
-
-  Future<Either<ErrorSqlResult, Dataset>>
-  select(
-    {
-      Columns? columns,
+  Future<Either<ErrorSqlResult, Dataset>> select(
+      {Columns? columns,
       Where? where,
       OrderBy? orderBy,
-      int? limit, 
-      int? offset
-    }
-  ) async
-  {
+      int? limit,
+      int? offset}) async {
     var col = columns;
     col ??= Columns();
     var whe = where;
     whe ??= Where();
     var ordBy = orderBy;
     ordBy ??= OrderBy();
-    return (await sqlConnection.openQuery(
-      'select', getSelectSql(col, 
-      whe , ordBy, limit: limit, offset: offset)))
-    .fold((l) => left(l), (r) => right(r.dataset));
+    return (await sqlConnection.openQuery('select',
+            getSelectSql(col, whe, ordBy, limit: limit, offset: offset)))
+        .fold((l) => left(l), (r) => right(r.dataset));
   }
 
   Future<Either<ErrorSqlResult, Inventory_ORM>> getInventoryWhere(
@@ -153,39 +139,41 @@ class Inventory_ORM extends PostgressORM{
   }
 
   Future<Either<ErrorSqlResult, ExecuteSuccesSqlResult>> deleteRecord(
-    int inventory_id) async{
+      int inventory_id) async {
     return getDeleteRecord(
-         this,
-         (<GenericField>[])
+        this,
+        (<GenericField>[])
           ..add(SerialField_PG.clone(_dataFields._inventory_id)
             ..setValue(inventory_id)));
   }
 
   Future<Either<ErrorSqlResult, SelectSuccesSqlResult>>
-    materializeFromProto3Json(Map<String, dynamic> proto3Json) async {
-  if (
-      (proto3Json.containsKey('inventoryId'))) {
-    return getMaterialize(
-        this,
-        (<GenericField>[])
-          ..add(SerialField_PG.clone(_dataFields._inventory_id)
-            ..setValue(proto3Json['inventoryId'])));
-  } else {
-      return left(ErrorSqlResult('Inventory_ORM', 'materializeFromProto3Json', '',
-           ['Required fields not found']));
+      materializeFromProto3Json(Map<String, dynamic> proto3Json) async {
+    if ((proto3Json.containsKey('inventoryId'))) {
+      return getMaterialize(
+          this,
+          (<GenericField>[])
+            ..add(SerialField_PG.clone(_dataFields._inventory_id)
+              ..setValue(proto3Json['inventoryId'])));
+    } else {
+      return left(ErrorSqlResult('Inventory_ORM', 'materializeFromProto3Json',
+          '', ['Required fields not found']));
+    }
   }
-  } 
 }
 
 class _FilterInventoryId extends IntegerFilter {
   _FilterInventoryId() : super('inventory.inventory_id');
 }
+
 class _FilterFilmId extends IntegerFilter {
   _FilterFilmId() : super('inventory.film_id');
 }
+
 class _FilterStoreId extends IntegerFilter {
   _FilterStoreId() : super('inventory.store_id');
 }
+
 class _FilterLastUpdate extends DateTimeFilter {
   _FilterLastUpdate() : super('inventory.last_update');
 }
@@ -207,8 +195,8 @@ class Where extends OrmSelectWhere {
     filters.add(_store_id);
     filters.add(_last_update);
   }
-
 }
+
 class Columns implements OrmSelectableColumns {
   final _columns = <_Inventory>[];
   void get inventory_id => _columns.add(_Inventory.inventory_id);
@@ -234,18 +222,20 @@ class Columns implements OrmSelectableColumns {
   }
 }
 
-class OrderBy with GenericOrderBy{
-
-  void inventory_id([ordType = OrdType.asc]){
+class OrderBy with GenericOrderBy {
+  void inventory_id([ordType = OrdType.asc]) {
     add(ColumnOrdenator('inventory.inventory_id', ordType));
   }
-  void film_id([ordType = OrdType.asc]){
+
+  void film_id([ordType = OrdType.asc]) {
     add(ColumnOrdenator('inventory.film_id', ordType));
   }
-  void store_id([ordType = OrdType.asc]){
+
+  void store_id([ordType = OrdType.asc]) {
     add(ColumnOrdenator('inventory.store_id', ordType));
   }
-  void last_update([ordType = OrdType.asc]){
+
+  void last_update([ordType = OrdType.asc]) {
     add(ColumnOrdenator('inventory.last_update', ordType));
   }
 }
