@@ -26,6 +26,12 @@ jobs:
 
       - name: Install dependencies
         run: dart pub get
+      - name: Install proto compiler  
+        run: apt install -y protobuf-compiler
+      - name: Install   
+        run: pub global activate protoc_plugin
+
+
 
       # Uncomment this step to verify the use of 'dart format' on each commit.
       - name: Verify formatting
