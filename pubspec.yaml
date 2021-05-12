@@ -1,6 +1,6 @@
 name: upper
 description: Back-end framework for Dart. Make a automated GRPC API For Relational Databases.
-version: 0.0.8-dev
+version: 0.0.9-dev
 homepage: https://github.com/andriwsluna/upper/
 
 environment:

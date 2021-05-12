@@ -31,6 +31,7 @@ Future<bool> createProjectFromPostgresDatabase(
 Future<bool> updateProject({
   String path = '',
 }) async {
+  print('loading uppr.json');
   return loadJson(path + 'upper.json').fold(
     (l) {
       print(l);

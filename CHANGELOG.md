@@ -33,3 +33,4 @@
 ## 0.0.9-dev
 
 - Default port changed to 8080;
+- Added command tool "update";

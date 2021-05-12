@@ -34,6 +34,7 @@ Future<bool> updateGrpcServer(
   UpperProject upperJson, {
   required String path,
 }) async {
+  print('updating grpc_server.dart . . .');
   return writeInFile(
     '$path/lib/src',
     'grpc_server.dart',
@@ -48,6 +49,7 @@ Future<bool> updateDockerFile(
   int port, {
   required String path,
 }) async {
+  print('updating Dockerfile . . .');
   return writeInFile(
     '$path',
     'Dockerfile',
@@ -61,7 +63,9 @@ Future<bool> updateServices(
   UpperProject upperJson, {
   required String path,
 }) async {
+  print('updating services . . .');
   for (var service in upperJson.services) {
+    print('updating ${service.name} . . .');
     (!(await updateService(
       service,
       port: upperJson.portNumer,
