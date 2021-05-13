@@ -37,7 +37,7 @@ Future<bool> serviceBuild({
 }) async {
   var parentTag = tag;
   if (parentTag.isNotEmpty) {
-    parentTag += '.';
+    parentTag += '/';
   }
   return await dockerBuild(
       verbose: verbose,
