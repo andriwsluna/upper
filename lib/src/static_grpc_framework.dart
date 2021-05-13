@@ -88,8 +88,8 @@ Future<bool> build(List<String> args) async {
             element.name.toLowerCase() == args.first.toLowerCase())) {
           return serviceBuild(
               tag: upperProject.dockerTag,
-              service: (upperProject.services
-                  .firstWhere((element) => element.name == args.first)));
+              service: (upperProject.services.firstWhere((element) =>
+                  element.name.toLowerCase() == args.first.toLowerCase())));
         } else {
           print('service ${args.first} not found');
           return false;

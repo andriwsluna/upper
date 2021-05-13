@@ -50,3 +50,7 @@
 ## 0.1.2-dev
 
 - build command adjusts;
+
+## 0.1.3-dev
+
+- bug: service build name search;
