@@ -84,8 +84,8 @@ Future<bool> build(List<String> args) async {
           server: upperProject,
         );
       } else {
-        if (upperProject.services
-            .any((element) => element.name == args.first)) {
+        if (upperProject.services.any((element) =>
+            element.name.toLowerCase() == args.first.toLowerCase())) {
           return serviceBuild(
               service: (upperProject.services
                   .firstWhere((element) => element.name == args.first)));
