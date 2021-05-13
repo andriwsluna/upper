@@ -24,6 +24,8 @@ jobs:
         run: sudo apt install -y protobuf-compiler
       - name: Install protoc_plugin
         run: pub global activate protoc_plugin
+      - name: apt-get update
+        run: sudo apt-get update
       - name: Install Docker Engine
         run: sudo apt-get install docker-ce docker-ce-cli containerd.io
  
