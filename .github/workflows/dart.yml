@@ -34,6 +34,6 @@ jobs:
       - name: Analyze project source
         run: dart analyze --fatal-infos
 
-      - name: Run tests
       - uses: docker/build-push-action@v2.4.0
-      - run: dart test
+      - name: Run tests
+        run: dart test
