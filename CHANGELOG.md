@@ -46,3 +46,7 @@
 ## 0.1.1-dev
 
 - upper build - added;
+
+## 0.1.2-dev
+
+- build command adjusts;
