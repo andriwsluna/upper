@@ -22,9 +22,13 @@ jobs:
 
       - name: Install proto compiler  
         run: sudo apt install -y protobuf-compiler
+        
       - name: Install protoc_plugin
         run: pub global activate protoc_plugin
-
+        
+      - name: setup-docker
+        uses: docker-practice/actions-setup-docker@v1
+        
       - name: Verify formatting
         run: dart format --output=none --set-exit-if-changed .
 
