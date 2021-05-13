@@ -22,11 +22,14 @@ jobs:
 
       - name: Install proto compiler  
         run: sudo apt install -y protobuf-compiler
+        
       - name: Install protoc_plugin
         run: pub global activate protoc_plugin
- 
         
-
+      - name: apt update
+        run: sudo apt-get update
+      - name: install docker engine
+        run: sudo apt-get install docker-ce docker-ce-cli containerd.io
 
       - name: Verify formatting
         run: dart format --output=none --set-exit-if-changed .
