@@ -67,7 +67,7 @@ Future<bool> createProjectAdditionalFiles(PostgreSQLConnection connection,
             '$path/$name/lib/services/${getServicePath(record, schemaInName)}';
 
         services.add({
-          'name': getServiceClassName(record, schemaInName),
+          'name': getTableName(record).capitalize(),
           'version': 1,
           'table_name': getTableName(record),
           'path': 'lib/services/${getServicePath(record, schemaInName)}',
@@ -77,8 +77,8 @@ Future<bool> createProjectAdditionalFiles(PostgreSQLConnection connection,
           'proto_name': '${getTableName(record).toLowerCase()}.proto',
           'proto_path':
               'lib/services/${getServicePath(record, schemaInName)}/lib/proto_generated',
-          'docker_tag': camelize(getTableName(record)).toLowerCase(),
-          'gcloud_name': camelize(getTableName(record)).toLowerCase(),
+          'docker_tag': (getTableName(record)).toLowerCase(),
+          'gcloud_name': (getTableName(record)).toLowerCase(),
         });
 
         result = await createAdditionalFiles(
