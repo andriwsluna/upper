@@ -1,5 +1,9 @@
 import 'package:upper/static_grpc/project_creator.dart';
 import 'package:postgres/postgres.dart';
+import 'package:upper/static_grpc/grpc_project_json.dart';
+import 'package:dartz/dartz.dart';
+import 'package:upper/src/io.dart';
+import 'package:upper/src/docker_engine.dart';
 import 'dart:io';
 
 Future<bool> create(List<String> args) async {
@@ -65,4 +69,58 @@ Future<bool> compile(List<String> args) async {
   return compileProtos(
       //path: 'example/dvdrental',
       );
+}
+
+Future<bool> build(List<String> args) async {
+  return (await getUpperProject()).fold(
+    () => false,
+    (upperProject) {
+      if (args.isEmpty) {
+        return microServicesBuild(
+          server: upperProject,
+        );
+      } else if (getFlag(args, '-mono')) {
+        return serverBuild(
+          server: upperProject,
+        );
+      } else {
+        if (upperProject.services
+            .any((element) => element.name == args.first)) {
+          return serviceBuild(
+              service: (upperProject.services
+                  .firstWhere((element) => element.name == args.first)));
+        } else {
+          print('service ${args.first} not found');
+          return false;
+        }
+      }
+    },
+  );
+}
+
+Future<Option<UpperProject>> getUpperProject({
+  String path = '',
+}) async {
+  var workDir = path;
+  if (path == '') {
+    workDir = Directory.current.path + '/';
+  } else {
+    workDir = path;
+  }
+  print('loading upper.json');
+  return loadJson(workDir + 'upper.json').fold(
+    (l) {
+      print(l);
+      return none();
+    },
+    (r) {
+      return getUpperProjectFromMap(r).fold(
+        (l) async {
+          print(l);
+          return none();
+        },
+        (upperJson) => some(upperJson),
+      );
+    },
+  );
 }
