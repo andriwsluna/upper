@@ -165,7 +165,8 @@ Future<Dataset> getTables(PostgreSQLConnection connection) async {
     ..add('cast(table_name as varchar)')
     ..add('from information_schema.tables')
     ..add("where table_schema not in ('pg_catalog','information_schema')")
-    ..add("and tables.table_type = 'BASE TABLE'");
+    ..add("and tables.table_type = 'BASE TABLE'")
+    ..add('order by table_schema, table_name');
   var con = newPGConnection(connection);
   await con.open();
   var r = pgSqlToDataset(await con.query(sql.asText()));

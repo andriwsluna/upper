@@ -1,3 +1,4 @@
+@Timeout(Duration(seconds: 200))
 import 'package:upper/static_grpc/project_creator.dart';
 import 'package:test/test.dart';
 import 'package:postgres/postgres.dart';
