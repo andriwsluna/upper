@@ -5,7 +5,12 @@ class UpperProject {
   final int version;
   final int portNumer;
   final String dockerTag;
+  final String gcloudProject;
   final String gcloudName;
+  final String gcrHost;
+  final int gcrMemory;
+  final int gcrTimeout;
+  final bool gcrAllowUnauthenticated;
   final List<UpperService> services;
 
   UpperProject({
@@ -13,7 +18,12 @@ class UpperProject {
     required this.version,
     required this.portNumer,
     required this.dockerTag,
+    required this.gcloudProject,
     required this.gcloudName,
+    required this.gcrHost,
+    required this.gcrMemory,
+    required this.gcrTimeout,
+    required this.gcrAllowUnauthenticated,
     required this.services,
   });
 }
@@ -30,6 +40,7 @@ class UpperService {
   final String protoPath;
   final String dockerTag;
   final String gcloudName;
+  final int grcMemory;
 
   UpperService({
     required this.name,
@@ -43,6 +54,7 @@ class UpperService {
     required this.protoPath,
     required this.dockerTag,
     required this.gcloudName,
+    required this.grcMemory,
   });
 }
 
@@ -56,7 +68,12 @@ Either<String, UpperProject> getUpperProjectFromMap(
       'version',
       'port_number',
       'docker_tag',
+      'gcloud_project',
       'gcloud_name',
+      'gcr_host',
+      'gcr_memory',
+      'gcr_timeout',
+      'gcr_allow_unauthenticated',
       'services',
     ],
   ).fold(
@@ -69,7 +86,12 @@ Either<String, UpperProject> getUpperProjectFromMap(
               version: upperJson['version'],
               portNumer: upperJson['port_number'],
               dockerTag: upperJson['docker_tag'],
+              gcloudProject: upperJson['gcloud_project'],
               gcloudName: upperJson['gcloud_name'],
+              gcrHost: upperJson['gcr_host'],
+              gcrMemory: upperJson['gcr_memory'],
+              gcrTimeout: upperJson['gcr_timeout'],
+              gcrAllowUnauthenticated: upperJson['gcr_allow_unauthenticated'],
               services: services));
         },
       );
@@ -112,7 +134,8 @@ Either<String, UpperService> getUpperServiceFromMap(
       'proto_name',
       'proto_path',
       'docker_tag',
-      'gcloud_name'
+      'gcloud_name',
+      'gcr_memory'
     ],
   ).fold(
     () {
@@ -128,6 +151,7 @@ Either<String, UpperService> getUpperServiceFromMap(
         protoPath: serviceJson['proto_path'],
         dockerTag: serviceJson['docker_tag'],
         gcloudName: serviceJson['gcloud_name'],
+        grcMemory: serviceJson['gcr_memory'],
       ));
     },
     (a) => left(a),

@@ -87,7 +87,7 @@ Future<bool> build(List<String> args) async {
         if (upperProject.services.any((element) =>
             element.name.toLowerCase() == args.first.toLowerCase())) {
           return serviceBuild(
-              tag: upperProject.dockerTag,
+              tag: getPrefixTag(upperProject),
               service: (upperProject.services.firstWhere((element) =>
                   element.name.toLowerCase() == args.first.toLowerCase())));
         } else {
@@ -122,6 +122,34 @@ Future<Option<UpperProject>> getUpperProject({
         },
         (upperJson) => some(upperJson),
       );
+    },
+  );
+}
+
+Future<bool> push(List<String> args) async {
+  return (await getUpperProject()).fold(
+    () => false,
+    (upperProject) {
+      if (args.isEmpty) {
+        return microServicesPush(
+          server: upperProject,
+        );
+      } else if (getFlag(args, '-mono')) {
+        return serverPush(
+          server: upperProject,
+        );
+      } else {
+        if (upperProject.services.any((element) =>
+            element.name.toLowerCase() == args.first.toLowerCase())) {
+          return servicePush(
+              tag: getPrefixTag(upperProject),
+              service: (upperProject.services.firstWhere((element) =>
+                  element.name.toLowerCase() == args.first.toLowerCase())));
+        } else {
+          print('service ${args.first} not found');
+          return false;
+        }
+      }
     },
   );
 }

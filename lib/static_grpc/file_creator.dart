@@ -56,7 +56,12 @@ Future<bool> createProjectAdditionalFiles(PostgreSQLConnection connection,
     'version': 1,
     'port_number': 8080,
     'docker_tag': camelize(name).toLowerCase(),
+    'gcloud_project': name.toLowerCase(),
     'gcloud_name': camelize(name).toLowerCase(),
+    'gcr_host': 'gcr.io',
+    'gcr_memory': 256,
+    'gcr_timeout': 300,
+    'gcr_allow_unauthenticated': true,
   });
   return getTables(connection).then((dataset) async {
     if (dataset.isNotempty) {
@@ -79,6 +84,7 @@ Future<bool> createProjectAdditionalFiles(PostgreSQLConnection connection,
               'lib/services/${getServicePath(record, schemaInName)}/lib/proto_generated',
           'docker_tag': (getTableName(record)).toLowerCase(),
           'gcloud_name': (getTableName(record)).toLowerCase(),
+          'gcr_memory': 50,
         });
 
         result = await createAdditionalFiles(

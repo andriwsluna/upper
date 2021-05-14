@@ -113,4 +113,34 @@ void main() {
   //     }
   //   });
   // });
+
+  group('dockerPush', () {
+    // test('valid params', () async {
+    //   var result = await dockerPush(
+    //     workingDirectory: 'example/dvdrental',
+    //     verbose: true,
+    //     tag: 'gcr.io/andriwsluna-grpc-server/dvdrental/actor:v1',
+    //   );
+
+    //   expect(result, true);
+    // });
+
+    test('invalid tag', () async {
+      var result = await dockerPush(
+        workingDirectory: 'example/dvdrental',
+        tag: 'dvdrental::v1',
+      );
+
+      expect(result, false);
+    });
+
+    test('invalid workdir', () async {
+      var result = await dockerPush(
+        workingDirectory: 'dvdrental',
+        tag: 'dvdrental:v1',
+      );
+
+      expect(result, false);
+    });
+  });
 }
