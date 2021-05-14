@@ -12,6 +12,6 @@ FROM subfuzion/dart:slim
 COPY --from=0 /app/bin/server /app/bin/server
 # COPY any other directories or files you may require at runtime, ex:
 #COPY --from=0 /app/static/ /app/static/
-EXPOSE 7010
+EXPOSE 8080
 ENTRYPOINT ["/app/bin/server"]
   

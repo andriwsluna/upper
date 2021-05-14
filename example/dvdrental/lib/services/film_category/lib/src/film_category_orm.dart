@@ -4,9 +4,14 @@ import 'package:data_db/data_db.dart';
 import 'package:postgres/postgres.dart';
 import 'package:static_postgres_orm/src/domain/orm_filter.dart';
 
-enum _FilmCategory { film_id, category_id, last_update }
+enum _FilmCategory {
+  film_id
+  ,category_id
+  ,last_update
+}
 
 class _DataFields extends GenericDataFields {
+
   late final IntegerField_PG _film_id;
   late final IntegerField_PG _category_id;
   late final DateTimeField_PG _last_update;
@@ -28,7 +33,7 @@ class _DataFields extends GenericDataFields {
 
   GenericField getCooField(_DataFields origin, String field) {
     return origin.fields
-        .firstWhere((element) => getFieldName(element) == field);
+      .firstWhere((element) => getFieldName(element) == field);
   }
 
   void _cloneField(_DataFields origin) {
@@ -58,9 +63,10 @@ class _DataFields extends GenericDataFields {
   }
 }
 
-class Film_category_ORM extends PostgressORM {
+class Film_category_ORM extends PostgressORM{
   static final NewRecordEvent _addRecord = NewRecordEvent();
   _DataFields get _dataFields => getRecords(this)[rowIndex] as _DataFields;
+
 
   IntegerField_PG get film_id => _dataFields._film_id;
   IntegerField_PG get category_id => _dataFields._category_id;
@@ -73,8 +79,7 @@ class Film_category_ORM extends PostgressORM {
   }
 
   Film_category_ORM.fromConnection(PostgreSQLExecutionContext _pgConnection)
-      : super.fromConnection(
-            _pgConnection, 'public', 'film_category', _addRecord) {
+      : super.fromConnection(_pgConnection, 'public', 'film_category', _addRecord) {
     _addRecord.action = _executeAddRecord;
     getRecords(this).add(_DataFields());
   }
@@ -87,9 +92,9 @@ class Film_category_ORM extends PostgressORM {
     if (dataset.isNotempty) {
       dataset.first();
       for (var i = 1; i <= dataset.count; i++) {
-        newRecord();
-        _dataFields.fields.forEach((element) {
-          element.loadDataFromDataset(dataset);
+      newRecord();
+      _dataFields.fields.forEach((element) {
+        element.loadDataFromDataset(dataset);
         });
         _dataFields.finalize();
         dataset.next();
@@ -97,21 +102,28 @@ class Film_category_ORM extends PostgressORM {
     }
   }
 
-  Future<Either<ErrorSqlResult, Dataset>> select(
-      {Columns? columns,
+
+  Future<Either<ErrorSqlResult, Dataset>>
+  select(
+    {
+      Columns? columns,
       Where? where,
       OrderBy? orderBy,
-      int? limit,
-      int? offset}) async {
+      int? limit, 
+      int? offset
+    }
+  ) async
+  {
     var col = columns;
     col ??= Columns();
     var whe = where;
     whe ??= Where();
     var ordBy = orderBy;
     ordBy ??= OrderBy();
-    return (await sqlConnection.openQuery('select',
-            getSelectSql(col, whe, ordBy, limit: limit, offset: offset)))
-        .fold((l) => left(l), (r) => right(r.dataset));
+    return (await sqlConnection.openQuery(
+      'select', getSelectSql(col, 
+      whe , ordBy, limit: limit, offset: offset)))
+    .fold((l) => left(l), (r) => right(r.dataset));
   }
 
   Future<Either<ErrorSqlResult, Film_category_ORM>> getFilmCategoryWhere(
@@ -131,47 +143,47 @@ class Film_category_ORM extends PostgressORM {
     return getMaterialize(
         this,
         (<GenericField>[])
-          ..add(IntegerField_PG.clone(_dataFields._film_id)..setValue(film_id))
+          ..add(IntegerField_PG.clone(_dataFields._film_id)
+            ..setValue(film_id))
           ..add(IntegerField_PG.clone(_dataFields._category_id)
             ..setValue(category_id)));
   }
 
   Future<Either<ErrorSqlResult, ExecuteSuccesSqlResult>> deleteRecord(
-      int film_id, int category_id) async {
+    int film_id, int category_id) async{
     return getDeleteRecord(
-        this,
-        (<GenericField>[])
-          ..add(IntegerField_PG.clone(_dataFields._film_id)..setValue(film_id))
+         this,
+         (<GenericField>[])
+          ..add(IntegerField_PG.clone(_dataFields._film_id)
+            ..setValue(film_id))
           ..add(IntegerField_PG.clone(_dataFields._category_id)
             ..setValue(category_id)));
   }
 
   Future<Either<ErrorSqlResult, SelectSuccesSqlResult>>
-      materializeFromProto3Json(Map<String, dynamic> proto3Json) async {
-    if ((proto3Json.containsKey('filmId')) &&
-        (proto3Json.containsKey('categoryId'))) {
-      return getMaterialize(
-          this,
-          (<GenericField>[])
-            ..add(IntegerField_PG.clone(_dataFields._film_id)
-              ..setValue(proto3Json['filmId']))
-            ..add(IntegerField_PG.clone(_dataFields._category_id)
-              ..setValue(proto3Json['categoryId'])));
-    } else {
-      return left(ErrorSqlResult('Film_category_ORM',
-          'materializeFromProto3Json', '', ['Required fields not found']));
-    }
+    materializeFromProto3Json(Map<String, dynamic> proto3Json) async {
+  if (
+      (proto3Json.containsKey('filmId')) && (proto3Json.containsKey('categoryId'))) {
+    return getMaterialize(
+        this,
+        (<GenericField>[])
+          ..add(IntegerField_PG.clone(_dataFields._film_id)
+            ..setValue(proto3Json['filmId']))
+          ..add(IntegerField_PG.clone(_dataFields._category_id)
+            ..setValue(proto3Json['categoryId'])));
+  } else {
+      return left(ErrorSqlResult('Film_category_ORM', 'materializeFromProto3Json', '',
+           ['Required fields not found']));
   }
+  } 
 }
 
 class _FilterFilmId extends IntegerFilter {
   _FilterFilmId() : super('film_category.film_id');
 }
-
 class _FilterCategoryId extends IntegerFilter {
   _FilterCategoryId() : super('film_category.category_id');
 }
-
 class _FilterLastUpdate extends DateTimeFilter {
   _FilterLastUpdate() : super('film_category.last_update');
 }
@@ -190,8 +202,8 @@ class Where extends OrmSelectWhere {
     filters.add(_category_id);
     filters.add(_last_update);
   }
-}
 
+}
 class Columns implements OrmSelectableColumns {
   final _columns = <_FilmCategory>[];
   void get film_id => _columns.add(_FilmCategory.film_id);
@@ -216,16 +228,15 @@ class Columns implements OrmSelectableColumns {
   }
 }
 
-class OrderBy with GenericOrderBy {
-  void film_id([ordType = OrdType.asc]) {
+class OrderBy with GenericOrderBy{
+
+  void film_id([ordType = OrdType.asc]){
     add(ColumnOrdenator('film_category.film_id', ordType));
   }
-
-  void category_id([ordType = OrdType.asc]) {
+  void category_id([ordType = OrdType.asc]){
     add(ColumnOrdenator('film_category.category_id', ordType));
   }
-
-  void last_update([ordType = OrdType.asc]) {
+  void last_update([ordType = OrdType.asc]){
     add(ColumnOrdenator('film_category.last_update', ordType));
   }
 }

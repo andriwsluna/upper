@@ -4,9 +4,14 @@ import 'package:data_db/data_db.dart';
 import 'package:postgres/postgres.dart';
 import 'package:static_postgres_orm/src/domain/orm_filter.dart';
 
-enum _Language { language_id, name, last_update }
+enum _Language {
+  language_id
+  ,name
+  ,last_update
+}
 
 class _DataFields extends GenericDataFields {
+
   late final SerialField_PG _language_id;
   late final StringField_PG _name;
   late final DateTimeField_PG _last_update;
@@ -28,7 +33,7 @@ class _DataFields extends GenericDataFields {
 
   GenericField getCooField(_DataFields origin, String field) {
     return origin.fields
-        .firstWhere((element) => getFieldName(element) == field);
+      .firstWhere((element) => getFieldName(element) == field);
   }
 
   void _cloneField(_DataFields origin) {
@@ -58,9 +63,10 @@ class _DataFields extends GenericDataFields {
   }
 }
 
-class Language_ORM extends PostgressORM {
+class Language_ORM extends PostgressORM{
   static final NewRecordEvent _addRecord = NewRecordEvent();
   _DataFields get _dataFields => getRecords(this)[rowIndex] as _DataFields;
+
 
   SerialField_PG get language_id => _dataFields._language_id;
   StringField_PG get name => _dataFields._name;
@@ -86,9 +92,9 @@ class Language_ORM extends PostgressORM {
     if (dataset.isNotempty) {
       dataset.first();
       for (var i = 1; i <= dataset.count; i++) {
-        newRecord();
-        _dataFields.fields.forEach((element) {
-          element.loadDataFromDataset(dataset);
+      newRecord();
+      _dataFields.fields.forEach((element) {
+        element.loadDataFromDataset(dataset);
         });
         _dataFields.finalize();
         dataset.next();
@@ -96,21 +102,28 @@ class Language_ORM extends PostgressORM {
     }
   }
 
-  Future<Either<ErrorSqlResult, Dataset>> select(
-      {Columns? columns,
+
+  Future<Either<ErrorSqlResult, Dataset>>
+  select(
+    {
+      Columns? columns,
       Where? where,
       OrderBy? orderBy,
-      int? limit,
-      int? offset}) async {
+      int? limit, 
+      int? offset
+    }
+  ) async
+  {
     var col = columns;
     col ??= Columns();
     var whe = where;
     whe ??= Where();
     var ordBy = orderBy;
     ordBy ??= OrderBy();
-    return (await sqlConnection.openQuery('select',
-            getSelectSql(col, whe, ordBy, limit: limit, offset: offset)))
-        .fold((l) => left(l), (r) => right(r.dataset));
+    return (await sqlConnection.openQuery(
+      'select', getSelectSql(col, 
+      whe , ordBy, limit: limit, offset: offset)))
+    .fold((l) => left(l), (r) => right(r.dataset));
   }
 
   Future<Either<ErrorSqlResult, Language_ORM>> getLanguageWhere(
@@ -135,37 +148,36 @@ class Language_ORM extends PostgressORM {
   }
 
   Future<Either<ErrorSqlResult, ExecuteSuccesSqlResult>> deleteRecord(
-      int language_id) async {
+    int language_id) async{
     return getDeleteRecord(
-        this,
-        (<GenericField>[])
+         this,
+         (<GenericField>[])
           ..add(SerialField_PG.clone(_dataFields._language_id)
             ..setValue(language_id)));
   }
 
   Future<Either<ErrorSqlResult, SelectSuccesSqlResult>>
-      materializeFromProto3Json(Map<String, dynamic> proto3Json) async {
-    if ((proto3Json.containsKey('languageId'))) {
-      return getMaterialize(
-          this,
-          (<GenericField>[])
-            ..add(SerialField_PG.clone(_dataFields._language_id)
-              ..setValue(proto3Json['languageId'])));
-    } else {
-      return left(ErrorSqlResult('Language_ORM', 'materializeFromProto3Json',
-          '', ['Required fields not found']));
-    }
+    materializeFromProto3Json(Map<String, dynamic> proto3Json) async {
+  if (
+      (proto3Json.containsKey('languageId'))) {
+    return getMaterialize(
+        this,
+        (<GenericField>[])
+          ..add(SerialField_PG.clone(_dataFields._language_id)
+            ..setValue(proto3Json['languageId'])));
+  } else {
+      return left(ErrorSqlResult('Language_ORM', 'materializeFromProto3Json', '',
+           ['Required fields not found']));
   }
+  } 
 }
 
 class _FilterLanguageId extends IntegerFilter {
   _FilterLanguageId() : super('language.language_id');
 }
-
 class _FilterName extends StringFilter {
   _FilterName() : super('language.name');
 }
-
 class _FilterLastUpdate extends DateTimeFilter {
   _FilterLastUpdate() : super('language.last_update');
 }
@@ -184,8 +196,8 @@ class Where extends OrmSelectWhere {
     filters.add(_name);
     filters.add(_last_update);
   }
-}
 
+}
 class Columns implements OrmSelectableColumns {
   final _columns = <_Language>[];
   void get language_id => _columns.add(_Language.language_id);
@@ -210,16 +222,15 @@ class Columns implements OrmSelectableColumns {
   }
 }
 
-class OrderBy with GenericOrderBy {
-  void language_id([ordType = OrdType.asc]) {
+class OrderBy with GenericOrderBy{
+
+  void language_id([ordType = OrdType.asc]){
     add(ColumnOrdenator('language.language_id', ordType));
   }
-
-  void name([ordType = OrdType.asc]) {
+  void name([ordType = OrdType.asc]){
     add(ColumnOrdenator('language.name', ordType));
   }
-
-  void last_update([ordType = OrdType.asc]) {
+  void last_update([ordType = OrdType.asc]){
     add(ColumnOrdenator('language.last_update', ordType));
   }
 }

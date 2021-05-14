@@ -20,7 +20,7 @@ class Film_categoryService extends Film_categoryServiceBase {
   Future<InsertResponse> insert(
       grpc.ServiceCall call, InsertRequest request) async {
     return await executeInsert(
-        request.data, request.options.inTransaction, pgConnection);
+      request.data, request.options.inTransaction, pgConnection);
   }
 
   @override
@@ -79,8 +79,7 @@ Future<GetResponse> tryToMaterialize(
     Map<String, dynamic> proto3Json, PostgreSQLConnection connection) async {
   var filmCategoryOrm = Film_category_ORM(newConnection(connection));
 
-  return (await filmCategoryOrm.materializeFromProto3Json(proto3Json)).fold(
-      (l) {
+  return (await filmCategoryOrm.materializeFromProto3Json(proto3Json)).fold((l) {
     return GetResponse()
       ..result = false
       ..errorMessage = l.toJson();
@@ -137,8 +136,8 @@ void finalizeInsertResponse(
   response.rowsToInsert = rowsToInsert;
 }
 
-Future<List<String>> performAllInserts(List<Film_categoryToInsert> data,
-    Film_category_ORM orm, bool inTransaction) async {
+Future<List<String>> performAllInserts(
+    List<Film_categoryToInsert> data, Film_category_ORM orm, bool inTransaction) async {
   var result = <String>[];
   for (var film_category in data) {
     var error = (await tryToInsert(
@@ -249,12 +248,12 @@ Future<DeleteResponse> executeDelete(List<Film_categoryPk> pkData,
     if (inTransaction) {
       await pgconnection.open();
       await pgconnection.transaction((connection) async {
-        response.errorMessage.addAll(await performAllDeletes(pkData,
-            Film_category_ORM.fromConnection(connection), inTransaction));
+      response.errorMessage.addAll(await performAllDeletes(
+          pkData, Film_category_ORM.fromConnection(connection), inTransaction));
       });
     } else {
-      response.errorMessage.addAll(await performAllDeletes(pkData,
-          Film_category_ORM(newConnection(pgconnection)), inTransaction));
+      response.errorMessage.addAll(await performAllDeletes(
+          pkData, Film_category_ORM(newConnection(pgconnection)), inTransaction));
     }
 
     nextCompleter.complete();
@@ -286,8 +285,8 @@ void finalizeDeleteResponse(
   response.rowsToDelete = rowsToDelete;
 }
 
-Future<List<String>> performAllDeletes(List<Film_categoryPk> pkData,
-    Film_category_ORM orm, bool inTransaction) async {
+Future<List<String>> performAllDeletes(
+    List<Film_categoryPk> pkData, Film_category_ORM orm, bool inTransaction) async {
   var result = <String>[];
   for (var record in pkData) {
     var error =
@@ -296,7 +295,7 @@ Future<List<String>> performAllDeletes(List<Film_categoryPk> pkData,
     if (error.isNotEmpty) {
       result.addAll(error);
       if (inTransaction) {
-        break;
+         break;
       }
     }
   }
@@ -385,7 +384,7 @@ extension OrderByColumn on OrderByOperator {
       case SelectableColumns.lastUpdate:
         name = 'last_update';
         break;
-    }
+   }
     OrdType ordType;
     if (orderType == OrderType.desc) {
       ordType = OrdType.desc;

@@ -5,20 +5,21 @@ import 'package:postgres/postgres.dart';
 import 'package:static_postgres_orm/src/domain/orm_filter.dart';
 
 enum _Staff {
-  staff_id,
-  first_name,
-  last_name,
-  address_id,
-  email,
-  store_id,
-  active,
-  username,
-  password,
-  last_update,
-  picture
+  staff_id
+  ,first_name
+  ,last_name
+  ,address_id
+  ,email
+  ,store_id
+  ,active
+  ,username
+  ,password
+  ,last_update
+  ,picture
 }
 
 class _DataFields extends GenericDataFields {
+
   late final SerialField_PG _staff_id;
   late final StringField_PG _first_name;
   late final StringField_PG _last_name;
@@ -56,7 +57,7 @@ class _DataFields extends GenericDataFields {
 
   GenericField getCooField(_DataFields origin, String field) {
     return origin.fields
-        .firstWhere((element) => getFieldName(element) == field);
+      .firstWhere((element) => getFieldName(element) == field);
   }
 
   void _cloneField(_DataFields origin) {
@@ -94,9 +95,10 @@ class _DataFields extends GenericDataFields {
   }
 }
 
-class Staff_ORM extends PostgressORM {
+class Staff_ORM extends PostgressORM{
   static final NewRecordEvent _addRecord = NewRecordEvent();
   _DataFields get _dataFields => getRecords(this)[rowIndex] as _DataFields;
+
 
   SerialField_PG get staff_id => _dataFields._staff_id;
   StringField_PG get first_name => _dataFields._first_name;
@@ -122,16 +124,17 @@ class Staff_ORM extends PostgressORM {
     getRecords(this).add(_DataFields());
   }
 
-  Staff_ORM.fromDataset(Postgres_SqlConnection sqlConnection, Dataset dataset)
+  Staff_ORM.fromDataset(
+      Postgres_SqlConnection sqlConnection, Dataset dataset)
       : super(sqlConnection, 'public', 'staff', _addRecord) {
     _addRecord.action = _executeAddRecord;
     getRecords(this).add(_DataFields());
     if (dataset.isNotempty) {
       dataset.first();
       for (var i = 1; i <= dataset.count; i++) {
-        newRecord();
-        _dataFields.fields.forEach((element) {
-          element.loadDataFromDataset(dataset);
+      newRecord();
+      _dataFields.fields.forEach((element) {
+        element.loadDataFromDataset(dataset);
         });
         _dataFields.finalize();
         dataset.next();
@@ -139,21 +142,28 @@ class Staff_ORM extends PostgressORM {
     }
   }
 
-  Future<Either<ErrorSqlResult, Dataset>> select(
-      {Columns? columns,
+
+  Future<Either<ErrorSqlResult, Dataset>>
+  select(
+    {
+      Columns? columns,
       Where? where,
       OrderBy? orderBy,
-      int? limit,
-      int? offset}) async {
+      int? limit, 
+      int? offset
+    }
+  ) async
+  {
     var col = columns;
     col ??= Columns();
     var whe = where;
     whe ??= Where();
     var ordBy = orderBy;
     ordBy ??= OrderBy();
-    return (await sqlConnection.openQuery('select',
-            getSelectSql(col, whe, ordBy, limit: limit, offset: offset)))
-        .fold((l) => left(l), (r) => right(r.dataset));
+    return (await sqlConnection.openQuery(
+      'select', getSelectSql(col, 
+      whe , ordBy, limit: limit, offset: offset)))
+    .fold((l) => left(l), (r) => right(r.dataset));
   }
 
   Future<Either<ErrorSqlResult, Staff_ORM>> getStaffWhere(
@@ -173,74 +183,65 @@ class Staff_ORM extends PostgressORM {
     return getMaterialize(
         this,
         (<GenericField>[])
-          ..add(
-              SerialField_PG.clone(_dataFields._staff_id)..setValue(staff_id)));
+          ..add(SerialField_PG.clone(_dataFields._staff_id)
+            ..setValue(staff_id)));
   }
 
   Future<Either<ErrorSqlResult, ExecuteSuccesSqlResult>> deleteRecord(
-      int staff_id) async {
+    int staff_id) async{
     return getDeleteRecord(
-        this,
-        (<GenericField>[])
-          ..add(
-              SerialField_PG.clone(_dataFields._staff_id)..setValue(staff_id)));
+         this,
+         (<GenericField>[])
+          ..add(SerialField_PG.clone(_dataFields._staff_id)
+            ..setValue(staff_id)));
   }
 
   Future<Either<ErrorSqlResult, SelectSuccesSqlResult>>
-      materializeFromProto3Json(Map<String, dynamic> proto3Json) async {
-    if ((proto3Json.containsKey('staffId'))) {
-      return getMaterialize(
-          this,
-          (<GenericField>[])
-            ..add(SerialField_PG.clone(_dataFields._staff_id)
-              ..setValue(proto3Json['staffId'])));
-    } else {
+    materializeFromProto3Json(Map<String, dynamic> proto3Json) async {
+  if (
+      (proto3Json.containsKey('staffId'))) {
+    return getMaterialize(
+        this,
+        (<GenericField>[])
+          ..add(SerialField_PG.clone(_dataFields._staff_id)
+            ..setValue(proto3Json['staffId'])));
+  } else {
       return left(ErrorSqlResult('Staff_ORM', 'materializeFromProto3Json', '',
-          ['Required fields not found']));
-    }
+           ['Required fields not found']));
   }
+  } 
 }
 
 class _FilterStaffId extends IntegerFilter {
   _FilterStaffId() : super('staff.staff_id');
 }
-
 class _FilterFirstName extends StringFilter {
   _FilterFirstName() : super('staff.first_name');
 }
-
 class _FilterLastName extends StringFilter {
   _FilterLastName() : super('staff.last_name');
 }
-
 class _FilterAddressId extends IntegerFilter {
   _FilterAddressId() : super('staff.address_id');
 }
-
 class _FilterEmail extends StringFilter with NullableFilter {
   _FilterEmail() : super('staff.email');
 }
-
 class _FilterStoreId extends IntegerFilter {
   _FilterStoreId() : super('staff.store_id');
 }
-
 class _FilterActive extends BooleanFilter {
   _FilterActive() : super('staff.active');
 }
-
 class _FilterUsername extends StringFilter {
   _FilterUsername() : super('staff.username');
 }
-
 class _FilterPassword extends StringFilter with NullableFilter {
   _FilterPassword() : super('staff.password');
 }
-
 class _FilterLastUpdate extends DateTimeFilter {
   _FilterLastUpdate() : super('staff.last_update');
 }
-
 class _FilterPicture extends StringFilter with NullableFilter {
   _FilterPicture() : super('staff.picture');
 }
@@ -283,8 +284,8 @@ class Where extends OrmSelectWhere {
     filters.add(_last_update);
     filters.add(_picture);
   }
-}
 
+}
 class Columns implements OrmSelectableColumns {
   final _columns = <_Staff>[];
   void get staff_id => _columns.add(_Staff.staff_id);
@@ -317,48 +318,39 @@ class Columns implements OrmSelectableColumns {
   }
 }
 
-class OrderBy with GenericOrderBy {
-  void staff_id([ordType = OrdType.asc]) {
+class OrderBy with GenericOrderBy{
+
+  void staff_id([ordType = OrdType.asc]){
     add(ColumnOrdenator('staff.staff_id', ordType));
   }
-
-  void first_name([ordType = OrdType.asc]) {
+  void first_name([ordType = OrdType.asc]){
     add(ColumnOrdenator('staff.first_name', ordType));
   }
-
-  void last_name([ordType = OrdType.asc]) {
+  void last_name([ordType = OrdType.asc]){
     add(ColumnOrdenator('staff.last_name', ordType));
   }
-
-  void address_id([ordType = OrdType.asc]) {
+  void address_id([ordType = OrdType.asc]){
     add(ColumnOrdenator('staff.address_id', ordType));
   }
-
-  void email([ordType = OrdType.asc]) {
+  void email([ordType = OrdType.asc]){
     add(ColumnOrdenator('staff.email', ordType));
   }
-
-  void store_id([ordType = OrdType.asc]) {
+  void store_id([ordType = OrdType.asc]){
     add(ColumnOrdenator('staff.store_id', ordType));
   }
-
-  void active([ordType = OrdType.asc]) {
+  void active([ordType = OrdType.asc]){
     add(ColumnOrdenator('staff.active', ordType));
   }
-
-  void username([ordType = OrdType.asc]) {
+  void username([ordType = OrdType.asc]){
     add(ColumnOrdenator('staff.username', ordType));
   }
-
-  void password([ordType = OrdType.asc]) {
+  void password([ordType = OrdType.asc]){
     add(ColumnOrdenator('staff.password', ordType));
   }
-
-  void last_update([ordType = OrdType.asc]) {
+  void last_update([ordType = OrdType.asc]){
     add(ColumnOrdenator('staff.last_update', ordType));
   }
-
-  void picture([ordType = OrdType.asc]) {
+  void picture([ordType = OrdType.asc]){
     add(ColumnOrdenator('staff.picture', ordType));
   }
 }

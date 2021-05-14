@@ -20,7 +20,7 @@ class Film_actorService extends Film_actorServiceBase {
   Future<InsertResponse> insert(
       grpc.ServiceCall call, InsertRequest request) async {
     return await executeInsert(
-        request.data, request.options.inTransaction, pgConnection);
+      request.data, request.options.inTransaction, pgConnection);
   }
 
   @override
@@ -136,8 +136,8 @@ void finalizeInsertResponse(
   response.rowsToInsert = rowsToInsert;
 }
 
-Future<List<String>> performAllInserts(List<Film_actorToInsert> data,
-    Film_actor_ORM orm, bool inTransaction) async {
+Future<List<String>> performAllInserts(
+    List<Film_actorToInsert> data, Film_actor_ORM orm, bool inTransaction) async {
   var result = <String>[];
   for (var film_actor in data) {
     var error = (await tryToInsert(
@@ -164,8 +164,8 @@ Future<List<String>> tryToInsert(
   }
 }
 
-Future<UpdateResponse> executeUpdate(List<Film_actor> data, bool inTransaction,
-    PostgreSQLConnection connection) async {
+Future<UpdateResponse> executeUpdate(List<Film_actor> data,
+    bool inTransaction, PostgreSQLConnection connection) async {
   var response = UpdateResponse();
   final nextCompleter = Completer.sync();
   var pgconnection = newPGConnection(connection);
@@ -248,8 +248,8 @@ Future<DeleteResponse> executeDelete(List<Film_actorPk> pkData,
     if (inTransaction) {
       await pgconnection.open();
       await pgconnection.transaction((connection) async {
-        response.errorMessage.addAll(await performAllDeletes(
-            pkData, Film_actor_ORM.fromConnection(connection), inTransaction));
+      response.errorMessage.addAll(await performAllDeletes(
+          pkData, Film_actor_ORM.fromConnection(connection), inTransaction));
       });
     } else {
       response.errorMessage.addAll(await performAllDeletes(
@@ -295,7 +295,7 @@ Future<List<String>> performAllDeletes(
     if (error.isNotEmpty) {
       result.addAll(error);
       if (inTransaction) {
-        break;
+         break;
       }
     }
   }
@@ -384,7 +384,7 @@ extension OrderByColumn on OrderByOperator {
       case SelectableColumns.lastUpdate:
         name = 'last_update';
         break;
-    }
+   }
     OrdType ordType;
     if (orderType == OrderType.desc) {
       ordType = OrdType.desc;

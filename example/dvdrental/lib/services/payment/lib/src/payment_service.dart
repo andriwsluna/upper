@@ -20,7 +20,7 @@ class PaymentService extends PaymentServiceBase {
   Future<InsertResponse> insert(
       grpc.ServiceCall call, InsertRequest request) async {
     return await executeInsert(
-        request.data, request.options.inTransaction, pgConnection);
+      request.data, request.options.inTransaction, pgConnection);
   }
 
   @override
@@ -173,8 +173,8 @@ Future<List<String>> tryToInsert(
   }
 }
 
-Future<UpdateResponse> executeUpdate(List<Payment> data, bool inTransaction,
-    PostgreSQLConnection connection) async {
+Future<UpdateResponse> executeUpdate(List<Payment> data,
+    bool inTransaction, PostgreSQLConnection connection) async {
   var response = UpdateResponse();
   final nextCompleter = Completer.sync();
   var pgconnection = newPGConnection(connection);
@@ -248,8 +248,8 @@ Future<List<String>> tryToUpdate(
   }
 }
 
-Future<DeleteResponse> executeDelete(List<PaymentPk> pkData, bool inTransaction,
-    PostgreSQLConnection connection) async {
+Future<DeleteResponse> executeDelete(List<PaymentPk> pkData,
+    bool inTransaction, PostgreSQLConnection connection) async {
   var response = DeleteResponse();
   final nextCompleter = Completer.sync();
   var pgconnection = newPGConnection(connection);
@@ -257,8 +257,8 @@ Future<DeleteResponse> executeDelete(List<PaymentPk> pkData, bool inTransaction,
     if (inTransaction) {
       await pgconnection.open();
       await pgconnection.transaction((connection) async {
-        response.errorMessage.addAll(await performAllDeletes(
-            pkData, Payment_ORM.fromConnection(connection), inTransaction));
+      response.errorMessage.addAll(await performAllDeletes(
+          pkData, Payment_ORM.fromConnection(connection), inTransaction));
       });
     } else {
       response.errorMessage.addAll(await performAllDeletes(
@@ -304,7 +304,7 @@ Future<List<String>> performAllDeletes(
     if (error.isNotEmpty) {
       result.addAll(error);
       if (inTransaction) {
-        break;
+         break;
       }
     }
   }
@@ -402,7 +402,7 @@ extension OrderByColumn on OrderByOperator {
       case SelectableColumns.paymentDate:
         name = 'payment_date';
         break;
-    }
+   }
     OrdType ordType;
     if (orderType == OrderType.desc) {
       ordType = OrdType.desc;

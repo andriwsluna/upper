@@ -20,7 +20,7 @@ class CustomerService extends CustomerServiceBase {
   Future<InsertResponse> insert(
       grpc.ServiceCall call, InsertRequest request) async {
     return await executeInsert(
-        request.data, request.options.inTransaction, pgConnection);
+      request.data, request.options.inTransaction, pgConnection);
   }
 
   @override
@@ -185,8 +185,8 @@ Future<List<String>> tryToInsert(
   }
 }
 
-Future<UpdateResponse> executeUpdate(List<Customer> data, bool inTransaction,
-    PostgreSQLConnection connection) async {
+Future<UpdateResponse> executeUpdate(List<Customer> data,
+    bool inTransaction, PostgreSQLConnection connection) async {
   var response = UpdateResponse();
   final nextCompleter = Completer.sync();
   var pgconnection = newPGConnection(connection);
@@ -269,8 +269,8 @@ Future<DeleteResponse> executeDelete(List<CustomerPk> pkData,
     if (inTransaction) {
       await pgconnection.open();
       await pgconnection.transaction((connection) async {
-        response.errorMessage.addAll(await performAllDeletes(
-            pkData, Customer_ORM.fromConnection(connection), inTransaction));
+      response.errorMessage.addAll(await performAllDeletes(
+          pkData, Customer_ORM.fromConnection(connection), inTransaction));
       });
     } else {
       response.errorMessage.addAll(await performAllDeletes(
@@ -316,7 +316,7 @@ Future<List<String>> performAllDeletes(
     if (error.isNotEmpty) {
       result.addAll(error);
       if (inTransaction) {
-        break;
+         break;
       }
     }
   }
@@ -426,7 +426,7 @@ extension OrderByColumn on OrderByOperator {
       case SelectableColumns.active:
         name = 'active';
         break;
-    }
+   }
     OrdType ordType;
     if (orderType == OrderType.desc) {
       ordType = OrdType.desc;

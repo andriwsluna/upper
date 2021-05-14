@@ -5,17 +5,18 @@ import 'package:postgres/postgres.dart';
 import 'package:static_postgres_orm/src/domain/orm_filter.dart';
 
 enum _Address {
-  address_id,
-  address,
-  address2,
-  district,
-  city_id,
-  postal_code,
-  phone,
-  last_update
+  address_id
+  ,address
+  ,address2
+  ,district
+  ,city_id
+  ,postal_code
+  ,phone
+  ,last_update
 }
 
 class _DataFields extends GenericDataFields {
+
   late final SerialField_PG _address_id;
   late final StringField_PG _address;
   late final StringField_PG _address2;
@@ -47,7 +48,7 @@ class _DataFields extends GenericDataFields {
 
   GenericField getCooField(_DataFields origin, String field) {
     return origin.fields
-        .firstWhere((element) => getFieldName(element) == field);
+      .firstWhere((element) => getFieldName(element) == field);
   }
 
   void _cloneField(_DataFields origin) {
@@ -82,9 +83,10 @@ class _DataFields extends GenericDataFields {
   }
 }
 
-class Address_ORM extends PostgressORM {
+class Address_ORM extends PostgressORM{
   static final NewRecordEvent _addRecord = NewRecordEvent();
   _DataFields get _dataFields => getRecords(this)[rowIndex] as _DataFields;
+
 
   SerialField_PG get address_id => _dataFields._address_id;
   StringField_PG get address => _dataFields._address;
@@ -107,16 +109,17 @@ class Address_ORM extends PostgressORM {
     getRecords(this).add(_DataFields());
   }
 
-  Address_ORM.fromDataset(Postgres_SqlConnection sqlConnection, Dataset dataset)
+  Address_ORM.fromDataset(
+      Postgres_SqlConnection sqlConnection, Dataset dataset)
       : super(sqlConnection, 'public', 'address', _addRecord) {
     _addRecord.action = _executeAddRecord;
     getRecords(this).add(_DataFields());
     if (dataset.isNotempty) {
       dataset.first();
       for (var i = 1; i <= dataset.count; i++) {
-        newRecord();
-        _dataFields.fields.forEach((element) {
-          element.loadDataFromDataset(dataset);
+      newRecord();
+      _dataFields.fields.forEach((element) {
+        element.loadDataFromDataset(dataset);
         });
         _dataFields.finalize();
         dataset.next();
@@ -124,21 +127,28 @@ class Address_ORM extends PostgressORM {
     }
   }
 
-  Future<Either<ErrorSqlResult, Dataset>> select(
-      {Columns? columns,
+
+  Future<Either<ErrorSqlResult, Dataset>>
+  select(
+    {
+      Columns? columns,
       Where? where,
       OrderBy? orderBy,
-      int? limit,
-      int? offset}) async {
+      int? limit, 
+      int? offset
+    }
+  ) async
+  {
     var col = columns;
     col ??= Columns();
     var whe = where;
     whe ??= Where();
     var ordBy = orderBy;
     ordBy ??= OrderBy();
-    return (await sqlConnection.openQuery('select',
-            getSelectSql(col, whe, ordBy, limit: limit, offset: offset)))
-        .fold((l) => left(l), (r) => right(r.dataset));
+    return (await sqlConnection.openQuery(
+      'select', getSelectSql(col, 
+      whe , ordBy, limit: limit, offset: offset)))
+    .fold((l) => left(l), (r) => right(r.dataset));
   }
 
   Future<Either<ErrorSqlResult, Address_ORM>> getAddressWhere(
@@ -163,57 +173,51 @@ class Address_ORM extends PostgressORM {
   }
 
   Future<Either<ErrorSqlResult, ExecuteSuccesSqlResult>> deleteRecord(
-      int address_id) async {
+    int address_id) async{
     return getDeleteRecord(
-        this,
-        (<GenericField>[])
+         this,
+         (<GenericField>[])
           ..add(SerialField_PG.clone(_dataFields._address_id)
             ..setValue(address_id)));
   }
 
   Future<Either<ErrorSqlResult, SelectSuccesSqlResult>>
-      materializeFromProto3Json(Map<String, dynamic> proto3Json) async {
-    if ((proto3Json.containsKey('addressId'))) {
-      return getMaterialize(
-          this,
-          (<GenericField>[])
-            ..add(SerialField_PG.clone(_dataFields._address_id)
-              ..setValue(proto3Json['addressId'])));
-    } else {
+    materializeFromProto3Json(Map<String, dynamic> proto3Json) async {
+  if (
+      (proto3Json.containsKey('addressId'))) {
+    return getMaterialize(
+        this,
+        (<GenericField>[])
+          ..add(SerialField_PG.clone(_dataFields._address_id)
+            ..setValue(proto3Json['addressId'])));
+  } else {
       return left(ErrorSqlResult('Address_ORM', 'materializeFromProto3Json', '',
-          ['Required fields not found']));
-    }
+           ['Required fields not found']));
   }
+  } 
 }
 
 class _FilterAddressId extends IntegerFilter {
   _FilterAddressId() : super('address.address_id');
 }
-
 class _FilterAddress extends StringFilter {
   _FilterAddress() : super('address.address');
 }
-
 class _FilterAddress2 extends StringFilter with NullableFilter {
   _FilterAddress2() : super('address.address2');
 }
-
 class _FilterDistrict extends StringFilter {
   _FilterDistrict() : super('address.district');
 }
-
 class _FilterCityId extends IntegerFilter {
   _FilterCityId() : super('address.city_id');
 }
-
 class _FilterPostalCode extends StringFilter with NullableFilter {
   _FilterPostalCode() : super('address.postal_code');
 }
-
 class _FilterPhone extends StringFilter {
   _FilterPhone() : super('address.phone');
 }
-
 class _FilterLastUpdate extends DateTimeFilter {
   _FilterLastUpdate() : super('address.last_update');
 }
@@ -247,8 +251,8 @@ class Where extends OrmSelectWhere {
     filters.add(_phone);
     filters.add(_last_update);
   }
-}
 
+}
 class Columns implements OrmSelectableColumns {
   final _columns = <_Address>[];
   void get address_id => _columns.add(_Address.address_id);
@@ -278,36 +282,30 @@ class Columns implements OrmSelectableColumns {
   }
 }
 
-class OrderBy with GenericOrderBy {
-  void address_id([ordType = OrdType.asc]) {
+class OrderBy with GenericOrderBy{
+
+  void address_id([ordType = OrdType.asc]){
     add(ColumnOrdenator('address.address_id', ordType));
   }
-
-  void address([ordType = OrdType.asc]) {
+  void address([ordType = OrdType.asc]){
     add(ColumnOrdenator('address.address', ordType));
   }
-
-  void address2([ordType = OrdType.asc]) {
+  void address2([ordType = OrdType.asc]){
     add(ColumnOrdenator('address.address2', ordType));
   }
-
-  void district([ordType = OrdType.asc]) {
+  void district([ordType = OrdType.asc]){
     add(ColumnOrdenator('address.district', ordType));
   }
-
-  void city_id([ordType = OrdType.asc]) {
+  void city_id([ordType = OrdType.asc]){
     add(ColumnOrdenator('address.city_id', ordType));
   }
-
-  void postal_code([ordType = OrdType.asc]) {
+  void postal_code([ordType = OrdType.asc]){
     add(ColumnOrdenator('address.postal_code', ordType));
   }
-
-  void phone([ordType = OrdType.asc]) {
+  void phone([ordType = OrdType.asc]){
     add(ColumnOrdenator('address.phone', ordType));
   }
-
-  void last_update([ordType = OrdType.asc]) {
+  void last_update([ordType = OrdType.asc]){
     add(ColumnOrdenator('address.last_update', ordType));
   }
 }
