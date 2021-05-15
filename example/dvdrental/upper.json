@@ -1,7 +1,7 @@
 {
   "name": "dvdrental",
   "version": 1,
-  "port_number": 443,
+  "port_number": 8080,
   "docker_tag": "dvdrental",
   "gcloud_project": "andriwsluna-grpc-server",
   "gcloud_name": "dvdrental",
