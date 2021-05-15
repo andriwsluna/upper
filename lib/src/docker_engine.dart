@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:upper/src/io.dart';
 import 'package:upper/static_grpc/grpc_project_json.dart';
+import 'gcloud_engine.dart';
 
 Future<bool> dockerBuild({
   String workingDirectory = '',
@@ -63,10 +64,17 @@ Future<bool> serverBuild({
   bool noCache = false,
 }) async {
   return await dockerBuild(
-      verbose: verbose,
-      noCache: noCache,
-      workingDirectory: '${Directory.current.path}/$path',
-      tag: '${server.dockerTag}:v${server.version}');
+    verbose: verbose,
+    noCache: noCache,
+    workingDirectory: '${Directory.current.path}/$path',
+    tag: getImageName(
+      serviceName: server.gcloudName,
+      projectName: '',
+      gCloudProject: server.gcloudProject,
+      gcrHost: server.gcrHost,
+      version: server.version,
+    ),
+  );
 }
 
 Future<bool> microServicesBuild({
@@ -147,9 +155,16 @@ Future<bool> serverPush({
   bool verbose = false,
 }) async {
   return await dockerPush(
-      verbose: verbose,
-      workingDirectory: '${Directory.current.path}/$path',
-      tag: '${server.dockerTag}:v${server.version}');
+    verbose: verbose,
+    workingDirectory: '${Directory.current.path}/$path',
+    tag: getImageName(
+      serviceName: server.gcloudName,
+      projectName: '',
+      gCloudProject: server.gcloudProject,
+      gcrHost: server.gcrHost,
+      version: server.version,
+    ),
+  );
 }
 
 Future<bool> microServicesPush({
