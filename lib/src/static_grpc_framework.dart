@@ -4,6 +4,7 @@ import 'package:upper/static_grpc/grpc_project_json.dart';
 import 'package:dartz/dartz.dart';
 import 'package:upper/src/io.dart';
 import 'package:upper/src/docker_engine.dart';
+import 'package:upper/src/gcloud_engine.dart';
 import 'dart:io';
 
 Future<bool> create(List<String> args) async {
@@ -145,6 +146,40 @@ Future<bool> push(List<String> args) async {
               tag: getPrefixTag(upperProject),
               service: (upperProject.services.firstWhere((element) =>
                   element.name.toLowerCase() == args.first.toLowerCase())));
+        } else {
+          print('service ${args.first} not found');
+          return false;
+        }
+      }
+    },
+  );
+}
+
+Future<bool> deploy(List<String> args) async {
+  return (await getUpperProject()).fold(
+    () => false,
+    (upperProject) {
+      if (args.isEmpty) {
+        return microServicesDeploy(
+          project: upperProject,
+        );
+      } else if (getFlag(args, '-mono')) {
+        return serverDeploy(
+          project: upperProject,
+        );
+      } else {
+        if (upperProject.services.any((element) =>
+            element.name.toLowerCase() == args.first.toLowerCase())) {
+          return serviceDeploy(
+            service: (upperProject.services.firstWhere((element) =>
+                element.name.toLowerCase() == args.first.toLowerCase())),
+            projectName: upperProject.gcloudName,
+            gCloudProject: upperProject.gcloudProject,
+            gcrHost: upperProject.gcrHost,
+            allowUnauthenticate: upperProject.gcrAllowUnauthenticated,
+            port: upperProject.portNumer,
+            timeOut: upperProject.gcrTimeout,
+          );
         } else {
           print('service ${args.first} not found');
           return false;
