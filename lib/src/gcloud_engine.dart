@@ -28,7 +28,7 @@ Future<bool> deploy({
   }
 
   if (!verbose) {
-    print('deploing $name . . .');
+    print('deploying $name . . .');
   }
 
   return await executeCommand(
