@@ -37,6 +37,10 @@ final Map<String, _Command> _commandList = {
   'build': _Command('Build docker image', static_grpc.build),
   'push': _Command('Push docker image', static_grpc.push),
   'deploy': _Command('Deploy images on Google Cloud Run', static_grpc.deploy),
+  'release': _Command(
+    'Build, Push and Deploy images on Google Cloud Run',
+    static_grpc.compleDeploy,
+  ),
 };
 
 void _printCommandList() {

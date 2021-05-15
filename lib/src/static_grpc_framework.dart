@@ -188,3 +188,7 @@ Future<bool> deploy(List<String> args) async {
     },
   );
 }
+
+Future<bool> compleDeploy(List<String> args) async {
+  return await build(args) && await push(args) && await deploy(args);
+}
