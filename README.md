@@ -1,4 +1,4 @@
-![](https://github.com/andriwsluna/upper/blob/master/images/Card.png)
+![](https://github.com/andriwsluna/images/blob/main/upper/Card.png)
 
 [![Dart](https://github.com/andriwsluna/upper/actions/workflows/dart.yml/badge.svg)](https://github.com/andriwsluna/upper/actions/workflows/dart.yml)
 
