@@ -84,7 +84,7 @@ Future<bool> createProjectAdditionalFiles(PostgreSQLConnection connection,
               'lib/services/${getServicePath(record, schemaInName)}/lib/proto_generated',
           'docker_tag': (getTableName(record)).toLowerCase(),
           'gcloud_name':
-              '${camelize(name).toLowerCase()}-${(getTableName(record)).toLowerCase()}',
+              '${camelize(name).toLowerCase()}-${(camelize(getTableName(record))).toLowerCase()}',
           'gcr_memory': 50,
         });
 
