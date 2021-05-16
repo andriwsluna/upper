@@ -36,7 +36,7 @@ jobs:
         run: dart analyze --fatal-infos
 
       - name: Run tests
-        run: dart tes
+        run: dart test
       - name: Coveralls
         uses: coverallsapp/github-action@master
         with:
