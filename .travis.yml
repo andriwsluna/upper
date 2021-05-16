@@ -1,5 +1,5 @@
-language: dart
 dist: focal
+language: dart
 before_script:
   - sudo apt-get update
   - sudo apt-get install -y protobuf-compiler
