@@ -1,0 +1,42 @@
+{
+  "name": "product",
+  "version": 1,
+  "port_number": 8080,
+  "docker_tag": "product",
+  "gcloud_project": "product",
+  "gcloud_name": "product",
+  "gcr_host": "gcr.io",
+  "gcr_memory": 256,
+  "gcr_timeout": 300,
+  "gcr_allow_unauthenticated": true,
+  "services": [
+    {
+      "name": "Product",
+      "version": 1,
+      "table_name": "product",
+      "path": "lib/services/product",
+      "server_file_name": "product_server.dart",
+      "service_file_name": "product_service.dart",
+      "service_class_name": "ProductService",
+      "proto_name": "product.proto",
+      "proto_path": "lib/services/product/lib/proto_generated",
+      "docker_tag": "product",
+      "gcloud_name": "product-product",
+      "gcr_memory": 50
+    },
+    {
+      "name": "Produto",
+      "version": 1,
+      "table_name": "produto",
+      "path": "lib/services/produto",
+      "server_file_name": "produto_server.dart",
+      "service_file_name": "produto_service.dart",
+      "service_class_name": "ProdutoService",
+      "proto_name": "produto.proto",
+      "proto_path": "lib/services/produto/lib/proto_generated",
+      "docker_tag": "produto",
+      "gcloud_name": "product-produto",
+      "gcr_memory": 50
+    }
+  ]
+}
