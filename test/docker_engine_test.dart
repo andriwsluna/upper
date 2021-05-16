@@ -136,7 +136,7 @@ void main() {
 
     test('invalid workdir', () async {
       var result = await dockerPush(
-        workingDirectory: 'dvdrental',
+        workingDirectory: 'tses',
         tag: 'dvdrental:v1',
       );
 
