@@ -1,8 +1,9 @@
 language: dart
+dist: focal
 before_script:
   - sudo apt-get update
   - sudo apt-get install -y protobuf-compiler
-  - dart pub global activate protoc_plugin
+  - pub global activate protoc_plugin
   - export PATH="$PATH:$HOME/.pub-cache/bin"
 dart_task:
 - test
