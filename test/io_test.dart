@@ -21,9 +21,27 @@ void main() {
 
       expect(result, true);
     });
+
+    test('invalid path', () async {
+      var result = (await createFold('',
+          '\\\\\/////[--cc;;,.\01453768870x \n awd wadaw dwad awd wad z \z \z x\ z\z\z\z\ z\z]'));
+
+      expect(result, false);
+    });
   });
 
   group('loadJson', () {
+    setUp(() {
+      if (Directory('temp').existsSync()) {
+        Directory('temp').deleteSync(recursive: true);
+      }
+    });
+
+    tearDown(() {
+      if (Directory('temp').existsSync()) {
+        Directory('temp').deleteSync(recursive: true);
+      }
+    });
     test('valid file', () {
       var result = loadJson(
         'example/dvdrental/upper.json',
@@ -33,8 +51,9 @@ void main() {
     });
 
     test('invalid file', () {
+      writeInFile('temp', 'test.json', '123');
       var result = loadJson(
-        'example/upper.json',
+        'temp/test.json',
       );
 
       expect(result.isRight(), false);

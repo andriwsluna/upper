@@ -13,7 +13,7 @@ Future<bool> executeCompileProtos(
     (upperJson) async {
       return await compileProtoFileFromProject(
         project: upperJson,
-        workingDirectory: '',
+        workingDirectory: path,
       );
     },
   );

@@ -54,5 +54,16 @@ void main() {
 
       expect(result, true);
     });
+
+    test('invalid file', () async {
+      (upperProject as Map<String, dynamic>)
+          .removeWhere((key, value) => key == 'name');
+      var result = await executeProjectUpdate(
+        upperProject,
+        path: 'example/dvdrental',
+      );
+
+      expect(result, false);
+    });
   });
 }

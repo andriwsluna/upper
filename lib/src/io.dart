@@ -4,14 +4,13 @@ import 'package:file_utils/file_utils.dart';
 import 'package:dartz/dartz.dart';
 import 'package:process_run/shell.dart';
 
-Future<bool> createFold(String path, String name) {
-  return (Directory('$path/$name').create(recursive: true))
-      .then((Directory directory) {
-    return true;
-  }).onError((error, stackTrace) {
-    print(error.toString());
+Future<bool> createFold(String path, String name) async {
+  try {
+    Directory('$path/$name').createSync(recursive: true);
+    return (Directory('$path/$name')).existsSync();
+  } on Exception {
     return false;
-  });
+  }
 }
 
 Future<bool> writeInFile(String filePath, String fileName, String contents,

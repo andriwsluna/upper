@@ -77,27 +77,3 @@ Future<bool> compileProtos({
     },
   );
 }
-
-Future<bool> dockerBuild({
-  String path = '',
-}) async {
-  var workDir = path;
-  if (path == '') {
-    workDir = Directory.current.path + '/';
-  } else {
-    workDir = path;
-  }
-  print('loading upper.json');
-  return loadJson(workDir + 'upper.json').fold(
-    (l) {
-      print(l);
-      return false;
-    },
-    (r) {
-      return executeCompileProtos(
-        r,
-        path: workDir,
-      );
-    },
-  );
-}

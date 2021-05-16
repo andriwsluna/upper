@@ -6,13 +6,13 @@ Future<bool> createProjectStructure(
   print('Creating project structure. . .');
   try {
     var projectpath = '$path/$name';
-    return await createFold(projectpath, 'lib')
-        .then((value) => createFold(projectpath, 'bin'))
-        .then((value) => createFold(projectpath, 'protos'))
-        .then((value) => createFold(projectpath, 'test'))
-        .then((value) => createFold('$projectpath/lib', 'services'))
-        .then((value) => createFold('$projectpath/lib', 'src'))
-        .then((value) => writeFiles(projectpath, name, connection));
+    return await createFold(projectpath, 'lib') &&
+        await createFold(projectpath, 'bin') &&
+        await createFold(projectpath, 'protos') &&
+        await createFold(projectpath, 'test') &&
+        await createFold('$projectpath/lib', 'services') &&
+        await createFold('$projectpath/lib', 'src') &&
+        writeFiles(projectpath, name, connection);
   } on Exception catch (e) {
     print(e.toString());
     return false;

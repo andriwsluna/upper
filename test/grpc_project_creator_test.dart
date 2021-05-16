@@ -1,4 +1,3 @@
-@Timeout(Duration(seconds: 200))
 import 'package:upper/static_grpc/project_creator.dart';
 import 'package:test/test.dart';
 import 'package:postgres/postgres.dart';
@@ -31,6 +30,16 @@ void main() {
       var r = await createProjectFromPostgresDatabase(pgConnection,
           path: path, name: name);
       expect(r, true);
-    });
+    }, timeout: Timeout(Duration(minutes: 1)));
+  });
+
+  test('updateProject', () async {
+    var r = await updateProject(path: 'example/dvdrental/');
+    expect(r, true);
+  });
+
+  test('compileProtos', () async {
+    var r = await compileProtos(path: 'example/dvdrental/');
+    expect(r, true);
   });
 }
