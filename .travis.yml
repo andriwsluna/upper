@@ -1,6 +1,6 @@
 language: dart
 before_script:
-  - sudo apt install -y protobuf-compiler
+  - apt install -y protobuf-compiler
   - dart pub global activate protoc_plugin
   - export PATH="$PATH:$HOME/.pub-cache/bin"
 dart_task:
