@@ -6,11 +6,11 @@ import 'dart:io';
 void main() {
   group('createProjectFromPostgresDatabase', () {
     var pgConnection = PostgreSQLConnection(
-        'ec2-3-224-251-47.compute-1.amazonaws.com', 5432, 'db5pbo0gcf628i',
-        username: 'lprklljaicvzti',
+        'ec2-54-163-254-204.compute-1.amazonaws.com', 5432, 'db2tf16ao1cbq2',
+        username: 'ufnkessrkawtpy',
         useSSL: true,
         password:
-            '1614cea156aa98660ad86987bd6b2fc5d5fab3167a2f035e6b43f8c1024238e4');
+            '9f0588f2a60ca501779aa6c2b8dca63c0b99bb3bcea3d6c94efa8d19d0d45b27');
 
     var path = 'temp';
     var name = 'test_1';
@@ -34,14 +34,14 @@ void main() {
   });
 
   test('updateProject', () async {
-    var r = await updateProject(path: 'example/dvdrental/');
+    var r = await updateProject(path: 'example/product/');
     expect(r, true);
     var r2 = await updateProject();
     expect(r2, false);
   });
 
   test('compileProtos', () async {
-    var r = await compileProtos(path: 'example/dvdrental/');
+    var r = await compileProtos(path: 'example/product/');
     expect(r, true);
     var r2 = await compileProtos();
     expect(r2, false);

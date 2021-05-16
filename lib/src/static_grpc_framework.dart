@@ -61,15 +61,11 @@ bool _verifyObrigatoriesParams(List<String> args, String comand) {
 }
 
 Future<bool> update(List<String> args) async {
-  return updateProject(
-      //path: 'example/dvdrental',
-      );
+  return updateProject();
 }
 
 Future<bool> compile(List<String> args) async {
-  return compileProtos(
-      //path: 'example/dvdrental',
-      );
+  return compileProtos();
 }
 
 Future<bool> build(List<String> args) async {
