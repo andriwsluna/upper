@@ -36,10 +36,14 @@ void main() {
   test('updateProject', () async {
     var r = await updateProject(path: 'example/dvdrental/');
     expect(r, true);
+    var r2 = await updateProject();
+    expect(r2, false);
   });
 
   test('compileProtos', () async {
     var r = await compileProtos(path: 'example/dvdrental/');
     expect(r, true);
+    var r2 = await compileProtos();
+    expect(r2, false);
   });
 }

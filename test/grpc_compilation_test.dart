@@ -2,6 +2,7 @@ import 'package:upper/static_grpc/grpc_compliation.dart';
 import 'package:test/test.dart';
 import 'package:upper/src/io.dart';
 import 'package:upper/static_grpc/grpc_project_json.dart';
+import 'package:upper/static_grpc/grpc_compiler.dart';
 
 void main() {
   group('compileProtoFile', () {
@@ -84,6 +85,25 @@ void main() {
         );
 
         expect(result, true);
+      }
+    });
+  });
+
+  group('executeCompileProtos', () {
+    var project;
+    loadJson('example/dvdrental/upper.json').map((r) {
+      project = r;
+    });
+    test('invalid arguments', () async {
+      if (project != null) {
+        (project as Map<String, dynamic>)
+            .removeWhere((key, value) => key == 'name');
+        var result = await executeCompileProtos(
+          project,
+          path: 'example/dvdrental',
+        );
+
+        expect(result, false);
       }
     });
   });
