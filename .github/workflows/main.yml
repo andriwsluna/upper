@@ -37,3 +37,7 @@ jobs:
 
       - name: Run tests
         run: dart tes
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
