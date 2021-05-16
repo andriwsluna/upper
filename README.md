@@ -1,6 +1,6 @@
 ![](https://github.com/andriwsluna/images/blob/main/upper/Card.png)
 
-[![Dart](https://github.com/andriwsluna/upper/actions/workflows/dart.yml/badge.svg)](https://github.com/andriwsluna/upper/actions/workflows/dart.yml)
+[![CI](https://github.com/andriwsluna/upper/actions/workflows/main.yml/badge.svg)](https://github.com/andriwsluna/upper/actions/workflows/main.yml)
 
 # What is Upper?
 Upper is a open source back-end framework based on the Dart language.
