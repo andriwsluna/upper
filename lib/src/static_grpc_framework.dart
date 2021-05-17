@@ -61,30 +61,43 @@ bool _verifyObrigatoriesParams(List<String> args, String comand) {
 }
 
 Future<bool> update(List<String> args) async {
-  return updateProject();
+  return updateProject(
+    path: getParam(args, '-path') ?? '',
+  );
 }
 
 Future<bool> compile(List<String> args) async {
-  return compileProtos();
+  return compileProtos(
+    path: getParam(args, '-path') ?? '',
+  );
 }
 
 Future<bool> build(List<String> args) async {
-  return (await getUpperProject()).fold(
+  return (await getUpperProject(
+    path: getParam(args, '-path') ?? '',
+  ))
+      .fold(
     () => false,
     (upperProject) {
-      if (args.isEmpty) {
+      if ((args.first.startsWith('-'))) {
         return microServicesBuild(
           server: upperProject,
+          path: getParam(args, '-path') ?? '',
+          verbose: getFlag(args, '-verbose'),
         );
       } else if (getFlag(args, '-mono')) {
         return serverBuild(
           server: upperProject,
+          path: getParam(args, '-path') ?? '',
+          verbose: getFlag(args, '-verbose'),
         );
       } else {
         if (upperProject.services.any((element) =>
             element.name.toLowerCase() == args.first.toLowerCase())) {
           return serviceBuild(
               tag: getPrefixTag(upperProject),
+              path: getParam(args, '-path') ?? '',
+              verbose: getFlag(args, '-verbose'),
               service: (upperProject.services.firstWhere((element) =>
                   element.name.toLowerCase() == args.first.toLowerCase())));
         } else {
@@ -101,12 +114,12 @@ Future<Option<UpperProject>> getUpperProject({
 }) async {
   var workDir = path;
   if (path == '') {
-    workDir = Directory.current.path + '/';
+    workDir = Directory.current.path;
   } else {
     workDir = path;
   }
   print('loading upper.json');
-  return loadJson(workDir + 'upper.json').fold(
+  return loadJson(workDir + '/upper.json').fold(
     (l) {
       print(l);
       return none();
@@ -124,7 +137,10 @@ Future<Option<UpperProject>> getUpperProject({
 }
 
 Future<bool> push(List<String> args) async {
-  return (await getUpperProject()).fold(
+  return (await getUpperProject(
+    path: getParam(args, '-path') ?? '',
+  ))
+      .fold(
     () => false,
     (upperProject) {
       if (args.isEmpty) {
@@ -152,7 +168,10 @@ Future<bool> push(List<String> args) async {
 }
 
 Future<bool> deploy(List<String> args) async {
-  return (await getUpperProject()).fold(
+  return (await getUpperProject(
+    path: getParam(args, '-path') ?? '',
+  ))
+      .fold(
     () => false,
     (upperProject) {
       if (args.isEmpty) {

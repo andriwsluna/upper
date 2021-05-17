@@ -7,6 +7,7 @@ import 'grpc_project_structure_test.dart' as structure;
 import 'grpc_project_update_test.dart' as update;
 import 'io_test.dart' as io;
 import 'validators_test.dart' as validator;
+import 'static_grpc_framework_test.dart' as frame;
 
 void main() {
   docker.main();
@@ -17,5 +18,6 @@ void main() {
   structure.main();
   update.main();
   io.main();
+  frame.main();
   validator.main();
 }

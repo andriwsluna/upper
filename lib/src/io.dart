@@ -13,6 +13,16 @@ Future<bool> createFold(String path, String name) async {
   }
 }
 
+Future<bool> deleteFold(String path) async {
+  try {
+    Directory('$path').deleteSync(recursive: true);
+    return !(Directory('$path')).existsSync();
+  } on Exception catch (e) {
+    print(e.toString());
+    return false;
+  }
+}
+
 Future<bool> writeInFile(String filePath, String fileName, String contents,
     {FileMode mode = FileMode.write}) async {
   FileUtils.mkdir([filePath]);
