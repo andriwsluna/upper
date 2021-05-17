@@ -19,3 +19,7 @@
 - gcr params added to upper.json;
 - New feature: push command;
 - New feature: deploy command;
+
+## 0.1.5-dev
+
+- more tests
