@@ -1,3 +1,5 @@
+library upper.test;
+
 import 'docker_engine_test.dart' as docker;
 import 'gcloud_engine_test.dart' as gcloud;
 import 'grpc_compilation_test.dart' as compilation;
