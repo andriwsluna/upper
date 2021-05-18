@@ -29,11 +29,24 @@ jobs:
       - name: setup-docker
         uses: docker-practice/actions-setup-docker@v1
         
-      - name: Verify formatting
-        run: dart format --output=none --set-exit-if-changed .
+      #- name: Verify formatting
+      #  run: dart format --output=none --set-exit-if-changed .
 
       - name: Analyze project source
         run: dart analyze --fatal-infos
+        
+      - name: Install coverage
+        run: pub global activate coverage
 
       - name: Run tests
-        run: dart test
+        run: dart test --coverage=coverage
+      
+      - name: Generate lcov.info
+        run: pub global run coverage:format_coverage --packages=.packages -i coverage/test/.upper_test.dart.vm.json -o coverage/lcov.info
+        
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+        
+        
