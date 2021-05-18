@@ -29,8 +29,8 @@ jobs:
       - name: setup-docker
         uses: docker-practice/actions-setup-docker@v1
         
-      #- name: Verify formatting
-      #  run: dart format --output=none --set-exit-if-changed .
+      - name: Verify formatting
+        run: dart format --output=none --set-exit-if-changed .
 
       - name: Analyze project source
         run: dart analyze --fatal-infos
