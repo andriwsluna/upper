@@ -29,11 +29,7 @@ jobs:
       - name: setup-docker
         uses: docker-practice/actions-setup-docker@v1
         
-      - name: Verify formatting
-        run: dart format --output=none --set-exit-if-changed .
-
-      - name: Analyze project source
-        run: dart analyze --fatal-infos
-
-      - name: Run tests
-        run: dart test
+      - name: Activate test coverage
+        run: pub global activate dart_coveralls
+      - name: Run test coverage
+        run: pub global run dart_coveralls report --token ${{ secrets.COVERALLS_TOKEN }} --exclude-test-files test/.test_coverage.dart
