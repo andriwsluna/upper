@@ -42,7 +42,7 @@ jobs:
         run: dart test --coverage=coverage
         
       - name: Generate lcov.info
-        run: pub global run coverage:format_coverage --packages=.packages -i coverage/test/.upper_test.dart.vm.json -o coverage/lcov.info
+        run: pub global run coverage:format_coverage --packages=.packages -i coverage/test/.upper_test.dart.vm.json -o coverage/lcov.info --lcov --packages=.packages --report-on lib
         
       - name: Coveralls
         uses: coverallsapp/github-action@master
