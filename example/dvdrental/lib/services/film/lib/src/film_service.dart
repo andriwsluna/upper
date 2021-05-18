@@ -20,7 +20,7 @@ class FilmService extends FilmServiceBase {
   Future<InsertResponse> insert(
       grpc.ServiceCall call, InsertRequest request) async {
     return await executeInsert(
-      request.data, request.options.inTransaction, pgConnection);
+        request.data, request.options.inTransaction, pgConnection);
   }
 
   @override
@@ -173,8 +173,8 @@ Future<List<String>> performAllInserts(
     List<FilmToInsert> data, Film_ORM orm, bool inTransaction) async {
   var result = <String>[];
   for (var film in data) {
-    var error = (await tryToInsert(
-        orm, film.toProto3Json() as Map<String, dynamic>));
+    var error =
+        (await tryToInsert(orm, film.toProto3Json() as Map<String, dynamic>));
     if (error.isNotEmpty) {
       result.addAll(error);
       if (inTransaction) {
@@ -197,8 +197,8 @@ Future<List<String>> tryToInsert(
   }
 }
 
-Future<UpdateResponse> executeUpdate(List<Film> data,
-    bool inTransaction, PostgreSQLConnection connection) async {
+Future<UpdateResponse> executeUpdate(List<Film> data, bool inTransaction,
+    PostgreSQLConnection connection) async {
   var response = UpdateResponse();
   final nextCompleter = Completer.sync();
   var pgconnection = newPGConnection(connection);
@@ -272,8 +272,8 @@ Future<List<String>> tryToUpdate(
   }
 }
 
-Future<DeleteResponse> executeDelete(List<FilmPk> pkData,
-    bool inTransaction, PostgreSQLConnection connection) async {
+Future<DeleteResponse> executeDelete(List<FilmPk> pkData, bool inTransaction,
+    PostgreSQLConnection connection) async {
   var response = DeleteResponse();
   final nextCompleter = Completer.sync();
   var pgconnection = newPGConnection(connection);
@@ -281,8 +281,8 @@ Future<DeleteResponse> executeDelete(List<FilmPk> pkData,
     if (inTransaction) {
       await pgconnection.open();
       await pgconnection.transaction((connection) async {
-      response.errorMessage.addAll(await performAllDeletes(
-          pkData, Film_ORM.fromConnection(connection), inTransaction));
+        response.errorMessage.addAll(await performAllDeletes(
+            pkData, Film_ORM.fromConnection(connection), inTransaction));
       });
     } else {
       response.errorMessage.addAll(await performAllDeletes(
@@ -328,7 +328,7 @@ Future<List<String>> performAllDeletes(
     if (error.isNotEmpty) {
       result.addAll(error);
       if (inTransaction) {
-         break;
+        break;
       }
     }
   }
@@ -450,7 +450,7 @@ extension OrderByColumn on OrderByOperator {
       case SelectableColumns.squares:
         name = 'squares';
         break;
-   }
+    }
     OrdType ordType;
     if (orderType == OrderType.desc) {
       ordType = OrdType.desc;

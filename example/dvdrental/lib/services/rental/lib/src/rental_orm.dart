@@ -5,17 +5,16 @@ import 'package:postgres/postgres.dart';
 import 'package:static_postgres_orm/src/domain/orm_filter.dart';
 
 enum _Rental {
-  rental_id
-  ,rental_date
-  ,inventory_id
-  ,customer_id
-  ,return_date
-  ,staff_id
-  ,last_update
+  rental_id,
+  rental_date,
+  inventory_id,
+  customer_id,
+  return_date,
+  staff_id,
+  last_update
 }
 
 class _DataFields extends GenericDataFields {
-
   late final SerialField_PG _rental_id;
   late final DateTimeField_PG _rental_date;
   late final IntegerField_PG _inventory_id;
@@ -45,7 +44,7 @@ class _DataFields extends GenericDataFields {
 
   GenericField getCooField(_DataFields origin, String field) {
     return origin.fields
-      .firstWhere((element) => getFieldName(element) == field);
+        .firstWhere((element) => getFieldName(element) == field);
   }
 
   void _cloneField(_DataFields origin) {
@@ -79,10 +78,9 @@ class _DataFields extends GenericDataFields {
   }
 }
 
-class Rental_ORM extends PostgressORM{
+class Rental_ORM extends PostgressORM {
   static final NewRecordEvent _addRecord = NewRecordEvent();
   _DataFields get _dataFields => getRecords(this)[rowIndex] as _DataFields;
-
 
   SerialField_PG get rental_id => _dataFields._rental_id;
   DateTimeField_PG get rental_date => _dataFields._rental_date;
@@ -104,17 +102,16 @@ class Rental_ORM extends PostgressORM{
     getRecords(this).add(_DataFields());
   }
 
-  Rental_ORM.fromDataset(
-      Postgres_SqlConnection sqlConnection, Dataset dataset)
+  Rental_ORM.fromDataset(Postgres_SqlConnection sqlConnection, Dataset dataset)
       : super(sqlConnection, 'public', 'rental', _addRecord) {
     _addRecord.action = _executeAddRecord;
     getRecords(this).add(_DataFields());
     if (dataset.isNotempty) {
       dataset.first();
       for (var i = 1; i <= dataset.count; i++) {
-      newRecord();
-      _dataFields.fields.forEach((element) {
-        element.loadDataFromDataset(dataset);
+        newRecord();
+        _dataFields.fields.forEach((element) {
+          element.loadDataFromDataset(dataset);
         });
         _dataFields.finalize();
         dataset.next();
@@ -122,28 +119,21 @@ class Rental_ORM extends PostgressORM{
     }
   }
 
-
-  Future<Either<ErrorSqlResult, Dataset>>
-  select(
-    {
-      Columns? columns,
+  Future<Either<ErrorSqlResult, Dataset>> select(
+      {Columns? columns,
       Where? where,
       OrderBy? orderBy,
-      int? limit, 
-      int? offset
-    }
-  ) async
-  {
+      int? limit,
+      int? offset}) async {
     var col = columns;
     col ??= Columns();
     var whe = where;
     whe ??= Where();
     var ordBy = orderBy;
     ordBy ??= OrderBy();
-    return (await sqlConnection.openQuery(
-      'select', getSelectSql(col, 
-      whe , ordBy, limit: limit, offset: offset)))
-    .fold((l) => left(l), (r) => right(r.dataset));
+    return (await sqlConnection.openQuery('select',
+            getSelectSql(col, whe, ordBy, limit: limit, offset: offset)))
+        .fold((l) => left(l), (r) => right(r.dataset));
   }
 
   Future<Either<ErrorSqlResult, Rental_ORM>> getRentalWhere(
@@ -168,48 +158,53 @@ class Rental_ORM extends PostgressORM{
   }
 
   Future<Either<ErrorSqlResult, ExecuteSuccesSqlResult>> deleteRecord(
-    int rental_id) async{
+      int rental_id) async {
     return getDeleteRecord(
-         this,
-         (<GenericField>[])
+        this,
+        (<GenericField>[])
           ..add(SerialField_PG.clone(_dataFields._rental_id)
             ..setValue(rental_id)));
   }
 
   Future<Either<ErrorSqlResult, SelectSuccesSqlResult>>
-    materializeFromProto3Json(Map<String, dynamic> proto3Json) async {
-  if (
-      (proto3Json.containsKey('rentalId'))) {
-    return getMaterialize(
-        this,
-        (<GenericField>[])
-          ..add(SerialField_PG.clone(_dataFields._rental_id)
-            ..setValue(proto3Json['rentalId'])));
-  } else {
+      materializeFromProto3Json(Map<String, dynamic> proto3Json) async {
+    if ((proto3Json.containsKey('rentalId'))) {
+      return getMaterialize(
+          this,
+          (<GenericField>[])
+            ..add(SerialField_PG.clone(_dataFields._rental_id)
+              ..setValue(proto3Json['rentalId'])));
+    } else {
       return left(ErrorSqlResult('Rental_ORM', 'materializeFromProto3Json', '',
-           ['Required fields not found']));
+          ['Required fields not found']));
+    }
   }
-  } 
 }
 
 class _FilterRentalId extends IntegerFilter {
   _FilterRentalId() : super('rental.rental_id');
 }
+
 class _FilterRentalDate extends DateTimeFilter {
   _FilterRentalDate() : super('rental.rental_date');
 }
+
 class _FilterInventoryId extends IntegerFilter {
   _FilterInventoryId() : super('rental.inventory_id');
 }
+
 class _FilterCustomerId extends IntegerFilter {
   _FilterCustomerId() : super('rental.customer_id');
 }
+
 class _FilterReturnDate extends DateTimeFilter with NullableFilter {
   _FilterReturnDate() : super('rental.return_date');
 }
+
 class _FilterStaffId extends IntegerFilter {
   _FilterStaffId() : super('rental.staff_id');
 }
+
 class _FilterLastUpdate extends DateTimeFilter {
   _FilterLastUpdate() : super('rental.last_update');
 }
@@ -240,8 +235,8 @@ class Where extends OrmSelectWhere {
     filters.add(_staff_id);
     filters.add(_last_update);
   }
-
 }
+
 class Columns implements OrmSelectableColumns {
   final _columns = <_Rental>[];
   void get rental_id => _columns.add(_Rental.rental_id);
@@ -270,27 +265,32 @@ class Columns implements OrmSelectableColumns {
   }
 }
 
-class OrderBy with GenericOrderBy{
-
-  void rental_id([ordType = OrdType.asc]){
+class OrderBy with GenericOrderBy {
+  void rental_id([ordType = OrdType.asc]) {
     add(ColumnOrdenator('rental.rental_id', ordType));
   }
-  void rental_date([ordType = OrdType.asc]){
+
+  void rental_date([ordType = OrdType.asc]) {
     add(ColumnOrdenator('rental.rental_date', ordType));
   }
-  void inventory_id([ordType = OrdType.asc]){
+
+  void inventory_id([ordType = OrdType.asc]) {
     add(ColumnOrdenator('rental.inventory_id', ordType));
   }
-  void customer_id([ordType = OrdType.asc]){
+
+  void customer_id([ordType = OrdType.asc]) {
     add(ColumnOrdenator('rental.customer_id', ordType));
   }
-  void return_date([ordType = OrdType.asc]){
+
+  void return_date([ordType = OrdType.asc]) {
     add(ColumnOrdenator('rental.return_date', ordType));
   }
-  void staff_id([ordType = OrdType.asc]){
+
+  void staff_id([ordType = OrdType.asc]) {
     add(ColumnOrdenator('rental.staff_id', ordType));
   }
-  void last_update([ordType = OrdType.asc]){
+
+  void last_update([ordType = OrdType.asc]) {
     add(ColumnOrdenator('rental.last_update', ordType));
   }
 }

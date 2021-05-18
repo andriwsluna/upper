@@ -5,20 +5,19 @@ import 'package:postgres/postgres.dart';
 import 'package:static_postgres_orm/src/domain/orm_filter.dart';
 
 enum _Customer {
-  customer_id
-  ,store_id
-  ,first_name
-  ,last_name
-  ,email
-  ,address_id
-  ,activebool
-  ,create_date
-  ,last_update
-  ,active
+  customer_id,
+  store_id,
+  first_name,
+  last_name,
+  email,
+  address_id,
+  activebool,
+  create_date,
+  last_update,
+  active
 }
 
 class _DataFields extends GenericDataFields {
-
   late final SerialField_PG _customer_id;
   late final IntegerField_PG _store_id;
   late final StringField_PG _first_name;
@@ -54,7 +53,7 @@ class _DataFields extends GenericDataFields {
 
   GenericField getCooField(_DataFields origin, String field) {
     return origin.fields
-      .firstWhere((element) => getFieldName(element) == field);
+        .firstWhere((element) => getFieldName(element) == field);
   }
 
   void _cloneField(_DataFields origin) {
@@ -91,10 +90,9 @@ class _DataFields extends GenericDataFields {
   }
 }
 
-class Customer_ORM extends PostgressORM{
+class Customer_ORM extends PostgressORM {
   static final NewRecordEvent _addRecord = NewRecordEvent();
   _DataFields get _dataFields => getRecords(this)[rowIndex] as _DataFields;
-
 
   SerialField_PG get customer_id => _dataFields._customer_id;
   IntegerField_PG get store_id => _dataFields._store_id;
@@ -127,9 +125,9 @@ class Customer_ORM extends PostgressORM{
     if (dataset.isNotempty) {
       dataset.first();
       for (var i = 1; i <= dataset.count; i++) {
-      newRecord();
-      _dataFields.fields.forEach((element) {
-        element.loadDataFromDataset(dataset);
+        newRecord();
+        _dataFields.fields.forEach((element) {
+          element.loadDataFromDataset(dataset);
         });
         _dataFields.finalize();
         dataset.next();
@@ -137,28 +135,21 @@ class Customer_ORM extends PostgressORM{
     }
   }
 
-
-  Future<Either<ErrorSqlResult, Dataset>>
-  select(
-    {
-      Columns? columns,
+  Future<Either<ErrorSqlResult, Dataset>> select(
+      {Columns? columns,
       Where? where,
       OrderBy? orderBy,
-      int? limit, 
-      int? offset
-    }
-  ) async
-  {
+      int? limit,
+      int? offset}) async {
     var col = columns;
     col ??= Columns();
     var whe = where;
     whe ??= Where();
     var ordBy = orderBy;
     ordBy ??= OrderBy();
-    return (await sqlConnection.openQuery(
-      'select', getSelectSql(col, 
-      whe , ordBy, limit: limit, offset: offset)))
-    .fold((l) => left(l), (r) => right(r.dataset));
+    return (await sqlConnection.openQuery('select',
+            getSelectSql(col, whe, ordBy, limit: limit, offset: offset)))
+        .fold((l) => left(l), (r) => right(r.dataset));
   }
 
   Future<Either<ErrorSqlResult, Customer_ORM>> getCustomerWhere(
@@ -183,57 +174,65 @@ class Customer_ORM extends PostgressORM{
   }
 
   Future<Either<ErrorSqlResult, ExecuteSuccesSqlResult>> deleteRecord(
-    int customer_id) async{
+      int customer_id) async {
     return getDeleteRecord(
-         this,
-         (<GenericField>[])
+        this,
+        (<GenericField>[])
           ..add(SerialField_PG.clone(_dataFields._customer_id)
             ..setValue(customer_id)));
   }
 
   Future<Either<ErrorSqlResult, SelectSuccesSqlResult>>
-    materializeFromProto3Json(Map<String, dynamic> proto3Json) async {
-  if (
-      (proto3Json.containsKey('customerId'))) {
-    return getMaterialize(
-        this,
-        (<GenericField>[])
-          ..add(SerialField_PG.clone(_dataFields._customer_id)
-            ..setValue(proto3Json['customerId'])));
-  } else {
-      return left(ErrorSqlResult('Customer_ORM', 'materializeFromProto3Json', '',
-           ['Required fields not found']));
+      materializeFromProto3Json(Map<String, dynamic> proto3Json) async {
+    if ((proto3Json.containsKey('customerId'))) {
+      return getMaterialize(
+          this,
+          (<GenericField>[])
+            ..add(SerialField_PG.clone(_dataFields._customer_id)
+              ..setValue(proto3Json['customerId'])));
+    } else {
+      return left(ErrorSqlResult('Customer_ORM', 'materializeFromProto3Json',
+          '', ['Required fields not found']));
+    }
   }
-  } 
 }
 
 class _FilterCustomerId extends IntegerFilter {
   _FilterCustomerId() : super('customer.customer_id');
 }
+
 class _FilterStoreId extends IntegerFilter {
   _FilterStoreId() : super('customer.store_id');
 }
+
 class _FilterFirstName extends StringFilter {
   _FilterFirstName() : super('customer.first_name');
 }
+
 class _FilterLastName extends StringFilter {
   _FilterLastName() : super('customer.last_name');
 }
+
 class _FilterEmail extends StringFilter with NullableFilter {
   _FilterEmail() : super('customer.email');
 }
+
 class _FilterAddressId extends IntegerFilter {
   _FilterAddressId() : super('customer.address_id');
 }
+
 class _FilterActivebool extends BooleanFilter {
   _FilterActivebool() : super('customer.activebool');
 }
+
 class _FilterCreateDate extends DateFilter {
   _FilterCreateDate() : super('customer.create_date');
 }
+
 class _FilterLastUpdate extends DateTimeFilter with NullableFilter {
   _FilterLastUpdate() : super('customer.last_update');
 }
+
 class _FilterActive extends IntegerFilter with NullableFilter {
   _FilterActive() : super('customer.active');
 }
@@ -273,8 +272,8 @@ class Where extends OrmSelectWhere {
     filters.add(_last_update);
     filters.add(_active);
   }
-
 }
+
 class Columns implements OrmSelectableColumns {
   final _columns = <_Customer>[];
   void get customer_id => _columns.add(_Customer.customer_id);
@@ -306,36 +305,44 @@ class Columns implements OrmSelectableColumns {
   }
 }
 
-class OrderBy with GenericOrderBy{
-
-  void customer_id([ordType = OrdType.asc]){
+class OrderBy with GenericOrderBy {
+  void customer_id([ordType = OrdType.asc]) {
     add(ColumnOrdenator('customer.customer_id', ordType));
   }
-  void store_id([ordType = OrdType.asc]){
+
+  void store_id([ordType = OrdType.asc]) {
     add(ColumnOrdenator('customer.store_id', ordType));
   }
-  void first_name([ordType = OrdType.asc]){
+
+  void first_name([ordType = OrdType.asc]) {
     add(ColumnOrdenator('customer.first_name', ordType));
   }
-  void last_name([ordType = OrdType.asc]){
+
+  void last_name([ordType = OrdType.asc]) {
     add(ColumnOrdenator('customer.last_name', ordType));
   }
-  void email([ordType = OrdType.asc]){
+
+  void email([ordType = OrdType.asc]) {
     add(ColumnOrdenator('customer.email', ordType));
   }
-  void address_id([ordType = OrdType.asc]){
+
+  void address_id([ordType = OrdType.asc]) {
     add(ColumnOrdenator('customer.address_id', ordType));
   }
-  void activebool([ordType = OrdType.asc]){
+
+  void activebool([ordType = OrdType.asc]) {
     add(ColumnOrdenator('customer.activebool', ordType));
   }
-  void create_date([ordType = OrdType.asc]){
+
+  void create_date([ordType = OrdType.asc]) {
     add(ColumnOrdenator('customer.create_date', ordType));
   }
-  void last_update([ordType = OrdType.asc]){
+
+  void last_update([ordType = OrdType.asc]) {
     add(ColumnOrdenator('customer.last_update', ordType));
   }
-  void active([ordType = OrdType.asc]){
+
+  void active([ordType = OrdType.asc]) {
     add(ColumnOrdenator('customer.active', ordType));
   }
 }

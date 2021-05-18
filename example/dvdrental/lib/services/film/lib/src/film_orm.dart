@@ -5,24 +5,23 @@ import 'package:postgres/postgres.dart';
 import 'package:static_postgres_orm/src/domain/orm_filter.dart';
 
 enum _Film {
-  film_id
-  ,title
-  ,description
-  ,release_year
-  ,language_id
-  ,rental_duration
-  ,rental_rate
-  ,length
-  ,replacement_cost
-  ,rating
-  ,last_update
-  ,special_features
-  ,fulltext
-  ,squares
+  film_id,
+  title,
+  description,
+  release_year,
+  language_id,
+  rental_duration,
+  rental_rate,
+  length,
+  replacement_cost,
+  rating,
+  last_update,
+  special_features,
+  fulltext,
+  squares
 }
 
 class _DataFields extends GenericDataFields {
-
   late final SerialField_PG _film_id;
   late final StringField_PG _title;
   late final StringField_PG _description;
@@ -59,14 +58,15 @@ class _DataFields extends GenericDataFields {
     _replacement_cost = NumericField_PG(this, 'replacement_cost', true, false);
     _rating = StringField_PG(this, 'rating', false, false, -1);
     _last_update = DateTimeField_PG(this, 'last_update', true, false);
-    _special_features = StringField_PG(this, 'special_features', false, false, -1);
+    _special_features =
+        StringField_PG(this, 'special_features', false, false, -1);
     _fulltext = StringField_PG(this, 'fulltext', true, false, -1);
     _squares = StringField_PG(this, 'squares', false, false, -1);
   }
 
   GenericField getCooField(_DataFields origin, String field) {
     return origin.fields
-      .firstWhere((element) => getFieldName(element) == field);
+        .firstWhere((element) => getFieldName(element) == field);
   }
 
   void _cloneField(_DataFields origin) {
@@ -107,10 +107,9 @@ class _DataFields extends GenericDataFields {
   }
 }
 
-class Film_ORM extends PostgressORM{
+class Film_ORM extends PostgressORM {
   static final NewRecordEvent _addRecord = NewRecordEvent();
   _DataFields get _dataFields => getRecords(this)[rowIndex] as _DataFields;
-
 
   SerialField_PG get film_id => _dataFields._film_id;
   StringField_PG get title => _dataFields._title;
@@ -139,17 +138,16 @@ class Film_ORM extends PostgressORM{
     getRecords(this).add(_DataFields());
   }
 
-  Film_ORM.fromDataset(
-      Postgres_SqlConnection sqlConnection, Dataset dataset)
+  Film_ORM.fromDataset(Postgres_SqlConnection sqlConnection, Dataset dataset)
       : super(sqlConnection, 'public', 'film', _addRecord) {
     _addRecord.action = _executeAddRecord;
     getRecords(this).add(_DataFields());
     if (dataset.isNotempty) {
       dataset.first();
       for (var i = 1; i <= dataset.count; i++) {
-      newRecord();
-      _dataFields.fields.forEach((element) {
-        element.loadDataFromDataset(dataset);
+        newRecord();
+        _dataFields.fields.forEach((element) {
+          element.loadDataFromDataset(dataset);
         });
         _dataFields.finalize();
         dataset.next();
@@ -157,28 +155,21 @@ class Film_ORM extends PostgressORM{
     }
   }
 
-
-  Future<Either<ErrorSqlResult, Dataset>>
-  select(
-    {
-      Columns? columns,
+  Future<Either<ErrorSqlResult, Dataset>> select(
+      {Columns? columns,
       Where? where,
       OrderBy? orderBy,
-      int? limit, 
-      int? offset
-    }
-  ) async
-  {
+      int? limit,
+      int? offset}) async {
     var col = columns;
     col ??= Columns();
     var whe = where;
     whe ??= Where();
     var ordBy = orderBy;
     ordBy ??= OrderBy();
-    return (await sqlConnection.openQuery(
-      'select', getSelectSql(col, 
-      whe , ordBy, limit: limit, offset: offset)))
-    .fold((l) => left(l), (r) => right(r.dataset));
+    return (await sqlConnection.openQuery('select',
+            getSelectSql(col, whe, ordBy, limit: limit, offset: offset)))
+        .fold((l) => left(l), (r) => right(r.dataset));
   }
 
   Future<Either<ErrorSqlResult, Film_ORM>> getFilmWhere(
@@ -198,74 +189,84 @@ class Film_ORM extends PostgressORM{
     return getMaterialize(
         this,
         (<GenericField>[])
-          ..add(SerialField_PG.clone(_dataFields._film_id)
-            ..setValue(film_id)));
+          ..add(SerialField_PG.clone(_dataFields._film_id)..setValue(film_id)));
   }
 
   Future<Either<ErrorSqlResult, ExecuteSuccesSqlResult>> deleteRecord(
-    int film_id) async{
+      int film_id) async {
     return getDeleteRecord(
-         this,
-         (<GenericField>[])
-          ..add(SerialField_PG.clone(_dataFields._film_id)
-            ..setValue(film_id)));
+        this,
+        (<GenericField>[])
+          ..add(SerialField_PG.clone(_dataFields._film_id)..setValue(film_id)));
   }
 
   Future<Either<ErrorSqlResult, SelectSuccesSqlResult>>
-    materializeFromProto3Json(Map<String, dynamic> proto3Json) async {
-  if (
-      (proto3Json.containsKey('filmId'))) {
-    return getMaterialize(
-        this,
-        (<GenericField>[])
-          ..add(SerialField_PG.clone(_dataFields._film_id)
-            ..setValue(proto3Json['filmId'])));
-  } else {
+      materializeFromProto3Json(Map<String, dynamic> proto3Json) async {
+    if ((proto3Json.containsKey('filmId'))) {
+      return getMaterialize(
+          this,
+          (<GenericField>[])
+            ..add(SerialField_PG.clone(_dataFields._film_id)
+              ..setValue(proto3Json['filmId'])));
+    } else {
       return left(ErrorSqlResult('Film_ORM', 'materializeFromProto3Json', '',
-           ['Required fields not found']));
+          ['Required fields not found']));
+    }
   }
-  } 
 }
 
 class _FilterFilmId extends IntegerFilter {
   _FilterFilmId() : super('film.film_id');
 }
+
 class _FilterTitle extends StringFilter {
   _FilterTitle() : super('film.title');
 }
+
 class _FilterDescription extends StringFilter with NullableFilter {
   _FilterDescription() : super('film.description');
 }
+
 class _FilterReleaseYear extends IntegerFilter with NullableFilter {
   _FilterReleaseYear() : super('film.release_year');
 }
+
 class _FilterLanguageId extends IntegerFilter {
   _FilterLanguageId() : super('film.language_id');
 }
+
 class _FilterRentalDuration extends IntegerFilter {
   _FilterRentalDuration() : super('film.rental_duration');
 }
+
 class _FilterRentalRate extends NumericFilter {
   _FilterRentalRate() : super('film.rental_rate');
 }
+
 class _FilterLength extends IntegerFilter with NullableFilter {
   _FilterLength() : super('film.length');
 }
+
 class _FilterReplacementCost extends NumericFilter {
   _FilterReplacementCost() : super('film.replacement_cost');
 }
+
 class _FilterRating extends StringFilter with NullableFilter {
   _FilterRating() : super('film.rating');
 }
+
 class _FilterLastUpdate extends DateTimeFilter {
   _FilterLastUpdate() : super('film.last_update');
 }
+
 class _FilterSpecialFeatures extends StringFilter with NullableFilter {
   _FilterSpecialFeatures() : super('film.special_features');
 }
+
 class _FilterFulltext extends StringFilter {
   _FilterFulltext() : super('film.fulltext');
 }
+
 class _FilterSquares extends StringFilter with NullableFilter {
   _FilterSquares() : super('film.squares');
 }
@@ -317,8 +318,8 @@ class Where extends OrmSelectWhere {
     filters.add(_fulltext);
     filters.add(_squares);
   }
-
 }
+
 class Columns implements OrmSelectableColumns {
   final _columns = <_Film>[];
   void get film_id => _columns.add(_Film.film_id);
@@ -354,48 +355,60 @@ class Columns implements OrmSelectableColumns {
   }
 }
 
-class OrderBy with GenericOrderBy{
-
-  void film_id([ordType = OrdType.asc]){
+class OrderBy with GenericOrderBy {
+  void film_id([ordType = OrdType.asc]) {
     add(ColumnOrdenator('film.film_id', ordType));
   }
-  void title([ordType = OrdType.asc]){
+
+  void title([ordType = OrdType.asc]) {
     add(ColumnOrdenator('film.title', ordType));
   }
-  void description([ordType = OrdType.asc]){
+
+  void description([ordType = OrdType.asc]) {
     add(ColumnOrdenator('film.description', ordType));
   }
-  void release_year([ordType = OrdType.asc]){
+
+  void release_year([ordType = OrdType.asc]) {
     add(ColumnOrdenator('film.release_year', ordType));
   }
-  void language_id([ordType = OrdType.asc]){
+
+  void language_id([ordType = OrdType.asc]) {
     add(ColumnOrdenator('film.language_id', ordType));
   }
-  void rental_duration([ordType = OrdType.asc]){
+
+  void rental_duration([ordType = OrdType.asc]) {
     add(ColumnOrdenator('film.rental_duration', ordType));
   }
-  void rental_rate([ordType = OrdType.asc]){
+
+  void rental_rate([ordType = OrdType.asc]) {
     add(ColumnOrdenator('film.rental_rate', ordType));
   }
-  void length([ordType = OrdType.asc]){
+
+  void length([ordType = OrdType.asc]) {
     add(ColumnOrdenator('film.length', ordType));
   }
-  void replacement_cost([ordType = OrdType.asc]){
+
+  void replacement_cost([ordType = OrdType.asc]) {
     add(ColumnOrdenator('film.replacement_cost', ordType));
   }
-  void rating([ordType = OrdType.asc]){
+
+  void rating([ordType = OrdType.asc]) {
     add(ColumnOrdenator('film.rating', ordType));
   }
-  void last_update([ordType = OrdType.asc]){
+
+  void last_update([ordType = OrdType.asc]) {
     add(ColumnOrdenator('film.last_update', ordType));
   }
-  void special_features([ordType = OrdType.asc]){
+
+  void special_features([ordType = OrdType.asc]) {
     add(ColumnOrdenator('film.special_features', ordType));
   }
-  void fulltext([ordType = OrdType.asc]){
+
+  void fulltext([ordType = OrdType.asc]) {
     add(ColumnOrdenator('film.fulltext', ordType));
   }
-  void squares([ordType = OrdType.asc]){
+
+  void squares([ordType = OrdType.asc]) {
     add(ColumnOrdenator('film.squares', ordType));
   }
 }

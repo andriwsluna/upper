@@ -4,15 +4,9 @@ import 'package:data_db/data_db.dart';
 import 'package:postgres/postgres.dart';
 import 'package:static_postgres_orm/src/domain/orm_filter.dart';
 
-enum _Actor {
-  actor_id
-  ,first_name
-  ,last_name
-  ,last_update
-}
+enum _Actor { actor_id, first_name, last_name, last_update }
 
 class _DataFields extends GenericDataFields {
-
   late final SerialField_PG _actor_id;
   late final StringField_PG _first_name;
   late final StringField_PG _last_name;
@@ -36,7 +30,7 @@ class _DataFields extends GenericDataFields {
 
   GenericField getCooField(_DataFields origin, String field) {
     return origin.fields
-      .firstWhere((element) => getFieldName(element) == field);
+        .firstWhere((element) => getFieldName(element) == field);
   }
 
   void _cloneField(_DataFields origin) {
@@ -67,10 +61,9 @@ class _DataFields extends GenericDataFields {
   }
 }
 
-class Actor_ORM extends PostgressORM{
+class Actor_ORM extends PostgressORM {
   static final NewRecordEvent _addRecord = NewRecordEvent();
   _DataFields get _dataFields => getRecords(this)[rowIndex] as _DataFields;
-
 
   SerialField_PG get actor_id => _dataFields._actor_id;
   StringField_PG get first_name => _dataFields._first_name;
@@ -89,17 +82,16 @@ class Actor_ORM extends PostgressORM{
     getRecords(this).add(_DataFields());
   }
 
-  Actor_ORM.fromDataset(
-      Postgres_SqlConnection sqlConnection, Dataset dataset)
+  Actor_ORM.fromDataset(Postgres_SqlConnection sqlConnection, Dataset dataset)
       : super(sqlConnection, 'public', 'actor', _addRecord) {
     _addRecord.action = _executeAddRecord;
     getRecords(this).add(_DataFields());
     if (dataset.isNotempty) {
       dataset.first();
       for (var i = 1; i <= dataset.count; i++) {
-      newRecord();
-      _dataFields.fields.forEach((element) {
-        element.loadDataFromDataset(dataset);
+        newRecord();
+        _dataFields.fields.forEach((element) {
+          element.loadDataFromDataset(dataset);
         });
         _dataFields.finalize();
         dataset.next();
@@ -107,28 +99,21 @@ class Actor_ORM extends PostgressORM{
     }
   }
 
-
-  Future<Either<ErrorSqlResult, Dataset>>
-  select(
-    {
-      Columns? columns,
+  Future<Either<ErrorSqlResult, Dataset>> select(
+      {Columns? columns,
       Where? where,
       OrderBy? orderBy,
-      int? limit, 
-      int? offset
-    }
-  ) async
-  {
+      int? limit,
+      int? offset}) async {
     var col = columns;
     col ??= Columns();
     var whe = where;
     whe ??= Where();
     var ordBy = orderBy;
     ordBy ??= OrderBy();
-    return (await sqlConnection.openQuery(
-      'select', getSelectSql(col, 
-      whe , ordBy, limit: limit, offset: offset)))
-    .fold((l) => left(l), (r) => right(r.dataset));
+    return (await sqlConnection.openQuery('select',
+            getSelectSql(col, whe, ordBy, limit: limit, offset: offset)))
+        .fold((l) => left(l), (r) => right(r.dataset));
   }
 
   Future<Either<ErrorSqlResult, Actor_ORM>> getActorWhere(
@@ -148,44 +133,46 @@ class Actor_ORM extends PostgressORM{
     return getMaterialize(
         this,
         (<GenericField>[])
-          ..add(SerialField_PG.clone(_dataFields._actor_id)
-            ..setValue(actor_id)));
+          ..add(
+              SerialField_PG.clone(_dataFields._actor_id)..setValue(actor_id)));
   }
 
   Future<Either<ErrorSqlResult, ExecuteSuccesSqlResult>> deleteRecord(
-    int actor_id) async{
+      int actor_id) async {
     return getDeleteRecord(
-         this,
-         (<GenericField>[])
-          ..add(SerialField_PG.clone(_dataFields._actor_id)
-            ..setValue(actor_id)));
+        this,
+        (<GenericField>[])
+          ..add(
+              SerialField_PG.clone(_dataFields._actor_id)..setValue(actor_id)));
   }
 
   Future<Either<ErrorSqlResult, SelectSuccesSqlResult>>
-    materializeFromProto3Json(Map<String, dynamic> proto3Json) async {
-  if (
-      (proto3Json.containsKey('actorId'))) {
-    return getMaterialize(
-        this,
-        (<GenericField>[])
-          ..add(SerialField_PG.clone(_dataFields._actor_id)
-            ..setValue(proto3Json['actorId'])));
-  } else {
+      materializeFromProto3Json(Map<String, dynamic> proto3Json) async {
+    if ((proto3Json.containsKey('actorId'))) {
+      return getMaterialize(
+          this,
+          (<GenericField>[])
+            ..add(SerialField_PG.clone(_dataFields._actor_id)
+              ..setValue(proto3Json['actorId'])));
+    } else {
       return left(ErrorSqlResult('Actor_ORM', 'materializeFromProto3Json', '',
-           ['Required fields not found']));
+          ['Required fields not found']));
+    }
   }
-  } 
 }
 
 class _FilterActorId extends IntegerFilter {
   _FilterActorId() : super('actor.actor_id');
 }
+
 class _FilterFirstName extends StringFilter {
   _FilterFirstName() : super('actor.first_name');
 }
+
 class _FilterLastName extends StringFilter {
   _FilterLastName() : super('actor.last_name');
 }
+
 class _FilterLastUpdate extends DateTimeFilter {
   _FilterLastUpdate() : super('actor.last_update');
 }
@@ -207,8 +194,8 @@ class Where extends OrmSelectWhere {
     filters.add(_last_name);
     filters.add(_last_update);
   }
-
 }
+
 class Columns implements OrmSelectableColumns {
   final _columns = <_Actor>[];
   void get actor_id => _columns.add(_Actor.actor_id);
@@ -234,18 +221,20 @@ class Columns implements OrmSelectableColumns {
   }
 }
 
-class OrderBy with GenericOrderBy{
-
-  void actor_id([ordType = OrdType.asc]){
+class OrderBy with GenericOrderBy {
+  void actor_id([ordType = OrdType.asc]) {
     add(ColumnOrdenator('actor.actor_id', ordType));
   }
-  void first_name([ordType = OrdType.asc]){
+
+  void first_name([ordType = OrdType.asc]) {
     add(ColumnOrdenator('actor.first_name', ordType));
   }
-  void last_name([ordType = OrdType.asc]){
+
+  void last_name([ordType = OrdType.asc]) {
     add(ColumnOrdenator('actor.last_name', ordType));
   }
-  void last_update([ordType = OrdType.asc]){
+
+  void last_update([ordType = OrdType.asc]) {
     add(ColumnOrdenator('actor.last_update', ordType));
   }
 }

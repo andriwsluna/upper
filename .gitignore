@@ -1,5 +1,5 @@
 # Files and directories created by pub
-example/*/.dart_tool/
+.dart_tool/
 example/*/.packages
 
 

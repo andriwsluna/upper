@@ -5,18 +5,17 @@ import 'package:postgres/postgres.dart';
 import 'package:static_postgres_orm/src/domain/orm_filter.dart';
 
 enum _Produto {
-  id
-  ,code
-  ,description
-  ,is_active
-  ,price
-  ,full_description
-  ,insert_date
-  ,update_date
+  id,
+  code,
+  description,
+  is_active,
+  price,
+  full_description,
+  insert_date,
+  update_date
 }
 
 class _DataFields extends GenericDataFields {
-
   late final IntegerField_PG _id;
   late final StringField_PG _code;
   late final StringField_PG _description;
@@ -41,14 +40,15 @@ class _DataFields extends GenericDataFields {
     _description = StringField_PG(this, 'description', false, false, 200);
     _is_active = BooleanField_PG(this, 'is_active', false, false);
     _price = NumericField_PG(this, 'price', false, false);
-    _full_description = StringField_PG(this, 'full_description', false, false, -1);
+    _full_description =
+        StringField_PG(this, 'full_description', false, false, -1);
     _insert_date = DateField_PG(this, 'insert_date', false, false);
     _update_date = DateTimeField_PG(this, 'update_date', false, false);
   }
 
   GenericField getCooField(_DataFields origin, String field) {
     return origin.fields
-      .firstWhere((element) => getFieldName(element) == field);
+        .firstWhere((element) => getFieldName(element) == field);
   }
 
   void _cloneField(_DataFields origin) {
@@ -83,10 +83,9 @@ class _DataFields extends GenericDataFields {
   }
 }
 
-class Produto_ORM extends PostgressORM{
+class Produto_ORM extends PostgressORM {
   static final NewRecordEvent _addRecord = NewRecordEvent();
   _DataFields get _dataFields => getRecords(this)[rowIndex] as _DataFields;
-
 
   IntegerField_PG get id => _dataFields._id;
   StringField_PG get code => _dataFields._code;
@@ -109,17 +108,16 @@ class Produto_ORM extends PostgressORM{
     getRecords(this).add(_DataFields());
   }
 
-  Produto_ORM.fromDataset(
-      Postgres_SqlConnection sqlConnection, Dataset dataset)
+  Produto_ORM.fromDataset(Postgres_SqlConnection sqlConnection, Dataset dataset)
       : super(sqlConnection, 'public', 'produto', _addRecord) {
     _addRecord.action = _executeAddRecord;
     getRecords(this).add(_DataFields());
     if (dataset.isNotempty) {
       dataset.first();
       for (var i = 1; i <= dataset.count; i++) {
-      newRecord();
-      _dataFields.fields.forEach((element) {
-        element.loadDataFromDataset(dataset);
+        newRecord();
+        _dataFields.fields.forEach((element) {
+          element.loadDataFromDataset(dataset);
         });
         _dataFields.finalize();
         dataset.next();
@@ -127,28 +125,21 @@ class Produto_ORM extends PostgressORM{
     }
   }
 
-
-  Future<Either<ErrorSqlResult, Dataset>>
-  select(
-    {
-      Columns? columns,
+  Future<Either<ErrorSqlResult, Dataset>> select(
+      {Columns? columns,
       Where? where,
       OrderBy? orderBy,
-      int? limit, 
-      int? offset
-    }
-  ) async
-  {
+      int? limit,
+      int? offset}) async {
     var col = columns;
     col ??= Columns();
     var whe = where;
     whe ??= Where();
     var ordBy = orderBy;
     ordBy ??= OrderBy();
-    return (await sqlConnection.openQuery(
-      'select', getSelectSql(col, 
-      whe , ordBy, limit: limit, offset: offset)))
-    .fold((l) => left(l), (r) => right(r.dataset));
+    return (await sqlConnection.openQuery('select',
+            getSelectSql(col, whe, ordBy, limit: limit, offset: offset)))
+        .fold((l) => left(l), (r) => right(r.dataset));
   }
 
   Future<Either<ErrorSqlResult, Produto_ORM>> getProdutoWhere(
@@ -168,56 +159,60 @@ class Produto_ORM extends PostgressORM{
     return getMaterialize(
         this,
         (<GenericField>[])
-          ..add(IntegerField_PG.clone(_dataFields._id)
-            ..setValue(id)));
+          ..add(IntegerField_PG.clone(_dataFields._id)..setValue(id)));
   }
 
   Future<Either<ErrorSqlResult, ExecuteSuccesSqlResult>> deleteRecord(
-    int id) async{
+      int id) async {
     return getDeleteRecord(
-         this,
-         (<GenericField>[])
-          ..add(IntegerField_PG.clone(_dataFields._id)
-            ..setValue(id)));
+        this,
+        (<GenericField>[])
+          ..add(IntegerField_PG.clone(_dataFields._id)..setValue(id)));
   }
 
   Future<Either<ErrorSqlResult, SelectSuccesSqlResult>>
-    materializeFromProto3Json(Map<String, dynamic> proto3Json) async {
-  if (
-      (proto3Json.containsKey('id'))) {
-    return getMaterialize(
-        this,
-        (<GenericField>[])
-          ..add(IntegerField_PG.clone(_dataFields._id)
-            ..setValue(proto3Json['id'])));
-  } else {
+      materializeFromProto3Json(Map<String, dynamic> proto3Json) async {
+    if ((proto3Json.containsKey('id'))) {
+      return getMaterialize(
+          this,
+          (<GenericField>[])
+            ..add(IntegerField_PG.clone(_dataFields._id)
+              ..setValue(proto3Json['id'])));
+    } else {
       return left(ErrorSqlResult('Produto_ORM', 'materializeFromProto3Json', '',
-           ['Required fields not found']));
+          ['Required fields not found']));
+    }
   }
-  } 
 }
 
 class _FilterId extends IntegerFilter {
   _FilterId() : super('produto.id');
 }
+
 class _FilterCode extends StringFilter with NullableFilter {
   _FilterCode() : super('produto.code');
 }
+
 class _FilterDescription extends StringFilter with NullableFilter {
   _FilterDescription() : super('produto.description');
 }
+
 class _FilterIsActive extends BooleanFilter with NullableFilter {
   _FilterIsActive() : super('produto.is_active');
 }
+
 class _FilterPrice extends NumericFilter with NullableFilter {
   _FilterPrice() : super('produto.price');
 }
+
 class _FilterFullDescription extends StringFilter with NullableFilter {
   _FilterFullDescription() : super('produto.full_description');
 }
+
 class _FilterInsertDate extends DateFilter with NullableFilter {
   _FilterInsertDate() : super('produto.insert_date');
 }
+
 class _FilterUpdateDate extends DateTimeFilter with NullableFilter {
   _FilterUpdateDate() : super('produto.update_date');
 }
@@ -251,8 +246,8 @@ class Where extends OrmSelectWhere {
     filters.add(_insert_date);
     filters.add(_update_date);
   }
-
 }
+
 class Columns implements OrmSelectableColumns {
   final _columns = <_Produto>[];
   void get id => _columns.add(_Produto.id);
@@ -282,30 +277,36 @@ class Columns implements OrmSelectableColumns {
   }
 }
 
-class OrderBy with GenericOrderBy{
-
-  void id([ordType = OrdType.asc]){
+class OrderBy with GenericOrderBy {
+  void id([ordType = OrdType.asc]) {
     add(ColumnOrdenator('produto.id', ordType));
   }
-  void code([ordType = OrdType.asc]){
+
+  void code([ordType = OrdType.asc]) {
     add(ColumnOrdenator('produto.code', ordType));
   }
-  void description([ordType = OrdType.asc]){
+
+  void description([ordType = OrdType.asc]) {
     add(ColumnOrdenator('produto.description', ordType));
   }
-  void is_active([ordType = OrdType.asc]){
+
+  void is_active([ordType = OrdType.asc]) {
     add(ColumnOrdenator('produto.is_active', ordType));
   }
-  void price([ordType = OrdType.asc]){
+
+  void price([ordType = OrdType.asc]) {
     add(ColumnOrdenator('produto.price', ordType));
   }
-  void full_description([ordType = OrdType.asc]){
+
+  void full_description([ordType = OrdType.asc]) {
     add(ColumnOrdenator('produto.full_description', ordType));
   }
-  void insert_date([ordType = OrdType.asc]){
+
+  void insert_date([ordType = OrdType.asc]) {
     add(ColumnOrdenator('produto.insert_date', ordType));
   }
-  void update_date([ordType = OrdType.asc]){
+
+  void update_date([ordType = OrdType.asc]) {
     add(ColumnOrdenator('produto.update_date', ordType));
   }
 }
