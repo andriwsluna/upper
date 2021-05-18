@@ -32,4 +32,4 @@ jobs:
       - name: Activate test coverage
         run: pub global activate dart_coveralls
       - name: Run test coverage
-        run: pub global run dart_coveralls report --token ${{ secrets.COVERALLS_TOKEN }} --exclude-test-files test/.test_coverage.dart
+        run: pub global run dart_coveralls report --token ${{ secrets.COVERALLS_TOKEN }} --exclude-test-files --debug --throw-on-error test/.test_coverage.dart
