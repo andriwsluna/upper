@@ -28,6 +28,8 @@ jobs:
         
       - name: setup-docker
         uses: docker-practice/actions-setup-docker@v1
+      - name: activate coverage
+        run: pub global activate coverage
         
       - name: Activate test coverage
         run: pub global activate dart_coveralls
