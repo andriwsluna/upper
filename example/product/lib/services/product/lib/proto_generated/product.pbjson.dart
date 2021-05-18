@@ -8,7 +8,6 @@
 import 'dart:core' as $core;
 import 'dart:convert' as $convert;
 import 'dart:typed_data' as $typed_data;
-
 @$core.Deprecated('Use selectableColumnsDescriptor instead')
 const SelectableColumns$json = const {
   '1': 'SelectableColumns',
@@ -26,8 +25,7 @@ const SelectableColumns$json = const {
 };
 
 /// Descriptor for `SelectableColumns`. Decode as a `google.protobuf.EnumDescriptorProto`.
-final $typed_data.Uint8List selectableColumnsDescriptor = $convert.base64Decode(
-    'ChFTZWxlY3RhYmxlQ29sdW1ucxIOCgphbGxDb2x1bW5zEAASBgoCaWQQARIICgRjb2RlEAISDwoLZGVzY3JpcHRpb24QAxIMCghpc0FjdGl2ZRAEEgkKBXByaWNlEAUSEwoPZnVsbERlc2NyaXB0aW9uEAYSDgoKaW5zZXJ0RGF0ZRAHEg4KCnVwZGF0ZURhdGUQCA==');
+final $typed_data.Uint8List selectableColumnsDescriptor = $convert.base64Decode('ChFTZWxlY3RhYmxlQ29sdW1ucxIOCgphbGxDb2x1bW5zEAASBgoCaWQQARIICgRjb2RlEAISDwoLZGVzY3JpcHRpb24QAxIMCghpc0FjdGl2ZRAEEgkKBXByaWNlEAUSEwoPZnVsbERlc2NyaXB0aW9uEAYSDgoKaW5zZXJ0RGF0ZRAHEg4KCnVwZGF0ZURhdGUQCA==');
 @$core.Deprecated('Use orderTypeDescriptor instead')
 const OrderType$json = const {
   '1': 'OrderType',
@@ -38,8 +36,7 @@ const OrderType$json = const {
 };
 
 /// Descriptor for `OrderType`. Decode as a `google.protobuf.EnumDescriptorProto`.
-final $typed_data.Uint8List orderTypeDescriptor =
-    $convert.base64Decode('CglPcmRlclR5cGUSBwoDYXNjEAASCAoEZGVzYxAB');
+final $typed_data.Uint8List orderTypeDescriptor = $convert.base64Decode('CglPcmRlclR5cGUSBwoDYXNjEAASCAoEZGVzYxAB');
 @$core.Deprecated('Use integerValueDescriptor instead')
 const IntegerValue$json = const {
   '1': 'IntegerValue',
@@ -49,8 +46,7 @@ const IntegerValue$json = const {
 };
 
 /// Descriptor for `IntegerValue`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List integerValueDescriptor =
-    $convert.base64Decode('CgxJbnRlZ2VyVmFsdWUSFAoFdmFsdWUYASABKAVSBXZhbHVl');
+final $typed_data.Uint8List integerValueDescriptor = $convert.base64Decode('CgxJbnRlZ2VyVmFsdWUSFAoFdmFsdWUYASABKAVSBXZhbHVl');
 @$core.Deprecated('Use stringValueDescriptor instead')
 const StringValue$json = const {
   '1': 'StringValue',
@@ -60,8 +56,7 @@ const StringValue$json = const {
 };
 
 /// Descriptor for `StringValue`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List stringValueDescriptor =
-    $convert.base64Decode('CgtTdHJpbmdWYWx1ZRIUCgV2YWx1ZRgBIAEoCVIFdmFsdWU=');
+final $typed_data.Uint8List stringValueDescriptor = $convert.base64Decode('CgtTdHJpbmdWYWx1ZRIUCgV2YWx1ZRgBIAEoCVIFdmFsdWU=');
 @$core.Deprecated('Use numericValueDescriptor instead')
 const NumericValue$json = const {
   '1': 'NumericValue',
@@ -71,8 +66,7 @@ const NumericValue$json = const {
 };
 
 /// Descriptor for `NumericValue`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List numericValueDescriptor =
-    $convert.base64Decode('CgxOdW1lcmljVmFsdWUSFAoFdmFsdWUYASABKAFSBXZhbHVl');
+final $typed_data.Uint8List numericValueDescriptor = $convert.base64Decode('CgxOdW1lcmljVmFsdWUSFAoFdmFsdWUYASABKAFSBXZhbHVl');
 @$core.Deprecated('Use booleanValueDescriptor instead')
 const BooleanValue$json = const {
   '1': 'BooleanValue',
@@ -82,8 +76,7 @@ const BooleanValue$json = const {
 };
 
 /// Descriptor for `BooleanValue`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List booleanValueDescriptor =
-    $convert.base64Decode('CgxCb29sZWFuVmFsdWUSFAoFdmFsdWUYASABKAhSBXZhbHVl');
+final $typed_data.Uint8List booleanValueDescriptor = $convert.base64Decode('CgxCb29sZWFuVmFsdWUSFAoFdmFsdWUYASABKAhSBXZhbHVl');
 @$core.Deprecated('Use getRequestDescriptor instead')
 const GetRequest$json = const {
   '1': 'GetRequest',
@@ -93,30 +86,14 @@ const GetRequest$json = const {
 };
 
 /// Descriptor for `GetRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List getRequestDescriptor =
-    $convert.base64Decode('CgpHZXRSZXF1ZXN0Eg4KAmlkGAEgASgFUgJpZA==');
+final $typed_data.Uint8List getRequestDescriptor = $convert.base64Decode('CgpHZXRSZXF1ZXN0Eg4KAmlkGAEgASgFUgJpZA==');
 @$core.Deprecated('Use getResponseDescriptor instead')
 const GetResponse$json = const {
   '1': 'GetResponse',
   '2': const [
     const {'1': 'result', '3': 1, '4': 1, '5': 8, '10': 'result'},
-    const {
-      '1': 'data',
-      '3': 2,
-      '4': 1,
-      '5': 11,
-      '6': '.static_grpc.product.Product',
-      '9': 0,
-      '10': 'data'
-    },
-    const {
-      '1': 'errorMessage',
-      '3': 3,
-      '4': 1,
-      '5': 9,
-      '9': 0,
-      '10': 'errorMessage'
-    },
+    const {'1': 'data', '3': 2, '4': 1, '5': 11, '6': '.static_grpc.product.Product', '9': 0, '10': 'data'},
+    const {'1': 'errorMessage', '3': 3, '4': 1, '5': 9, '9': 0, '10': 'errorMessage'},
   ],
   '8': const [
     const {'1': 'GetResponseResult'},
@@ -124,34 +101,18 @@ const GetResponse$json = const {
 };
 
 /// Descriptor for `GetResponse`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List getResponseDescriptor = $convert.base64Decode(
-    'CgtHZXRSZXNwb25zZRIWCgZyZXN1bHQYASABKAhSBnJlc3VsdBIyCgRkYXRhGAIgASgLMhwuc3RhdGljX2dycGMucHJvZHVjdC5Qcm9kdWN0SABSBGRhdGESJAoMZXJyb3JNZXNzYWdlGAMgASgJSABSDGVycm9yTWVzc2FnZUITChFHZXRSZXNwb25zZVJlc3VsdA==');
+final $typed_data.Uint8List getResponseDescriptor = $convert.base64Decode('CgtHZXRSZXNwb25zZRIWCgZyZXN1bHQYASABKAhSBnJlc3VsdBIyCgRkYXRhGAIgASgLMhwuc3RhdGljX2dycGMucHJvZHVjdC5Qcm9kdWN0SABSBGRhdGESJAoMZXJyb3JNZXNzYWdlGAMgASgJSABSDGVycm9yTWVzc2FnZUITChFHZXRSZXNwb25zZVJlc3VsdA==');
 @$core.Deprecated('Use insertRequestDescriptor instead')
 const InsertRequest$json = const {
   '1': 'InsertRequest',
   '2': const [
-    const {
-      '1': 'data',
-      '3': 1,
-      '4': 3,
-      '5': 11,
-      '6': '.static_grpc.product.ProductToInsert',
-      '10': 'data'
-    },
-    const {
-      '1': 'options',
-      '3': 2,
-      '4': 1,
-      '5': 11,
-      '6': '.static_grpc.product.InsertOptions',
-      '10': 'options'
-    },
+    const {'1': 'data', '3': 1, '4': 3, '5': 11, '6': '.static_grpc.product.ProductToInsert', '10': 'data'},
+    const {'1': 'options', '3': 2, '4': 1, '5': 11, '6': '.static_grpc.product.InsertOptions', '10': 'options'},
   ],
 };
 
 /// Descriptor for `InsertRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List insertRequestDescriptor = $convert.base64Decode(
-    'Cg1JbnNlcnRSZXF1ZXN0EjgKBGRhdGEYASADKAsyJC5zdGF0aWNfZ3JwYy5wcm9kdWN0LlByb2R1Y3RUb0luc2VydFIEZGF0YRI8CgdvcHRpb25zGAIgASgLMiIuc3RhdGljX2dycGMucHJvZHVjdC5JbnNlcnRPcHRpb25zUgdvcHRpb25z');
+final $typed_data.Uint8List insertRequestDescriptor = $convert.base64Decode('Cg1JbnNlcnRSZXF1ZXN0EjgKBGRhdGEYASADKAsyJC5zdGF0aWNfZ3JwYy5wcm9kdWN0LlByb2R1Y3RUb0luc2VydFIEZGF0YRI8CgdvcHRpb25zGAIgASgLMiIuc3RhdGljX2dycGMucHJvZHVjdC5JbnNlcnRPcHRpb25zUgdvcHRpb25z');
 @$core.Deprecated('Use insertOptionsDescriptor instead')
 const InsertOptions$json = const {
   '1': 'InsertOptions',
@@ -161,8 +122,7 @@ const InsertOptions$json = const {
 };
 
 /// Descriptor for `InsertOptions`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List insertOptionsDescriptor = $convert.base64Decode(
-    'Cg1JbnNlcnRPcHRpb25zEiQKDWluVHJhbnNhY3Rpb24YASABKAhSDWluVHJhbnNhY3Rpb24=');
+final $typed_data.Uint8List insertOptionsDescriptor = $convert.base64Decode('Cg1JbnNlcnRPcHRpb25zEiQKDWluVHJhbnNhY3Rpb24YASABKAhSDWluVHJhbnNhY3Rpb24=');
 @$core.Deprecated('Use insertResponseDescriptor instead')
 const InsertResponse$json = const {
   '1': 'InsertResponse',
@@ -175,34 +135,18 @@ const InsertResponse$json = const {
 };
 
 /// Descriptor for `InsertResponse`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List insertResponseDescriptor = $convert.base64Decode(
-    'Cg5JbnNlcnRSZXNwb25zZRIWCgZyZXN1bHQYASABKAhSBnJlc3VsdBIiCgxyb3dzVG9JbnNlcnQYAiABKAVSDHJvd3NUb0luc2VydBIiCgxyb3dzSW5zZXJ0ZWQYAyABKAVSDHJvd3NJbnNlcnRlZBIiCgxlcnJvck1lc3NhZ2UYBCADKAlSDGVycm9yTWVzc2FnZQ==');
+final $typed_data.Uint8List insertResponseDescriptor = $convert.base64Decode('Cg5JbnNlcnRSZXNwb25zZRIWCgZyZXN1bHQYASABKAhSBnJlc3VsdBIiCgxyb3dzVG9JbnNlcnQYAiABKAVSDHJvd3NUb0luc2VydBIiCgxyb3dzSW5zZXJ0ZWQYAyABKAVSDHJvd3NJbnNlcnRlZBIiCgxlcnJvck1lc3NhZ2UYBCADKAlSDGVycm9yTWVzc2FnZQ==');
 @$core.Deprecated('Use updateRequestDescriptor instead')
 const UpdateRequest$json = const {
   '1': 'UpdateRequest',
   '2': const [
-    const {
-      '1': 'data',
-      '3': 1,
-      '4': 3,
-      '5': 11,
-      '6': '.static_grpc.product.Product',
-      '10': 'data'
-    },
-    const {
-      '1': 'options',
-      '3': 2,
-      '4': 1,
-      '5': 11,
-      '6': '.static_grpc.product.UpdateOptions',
-      '10': 'options'
-    },
+    const {'1': 'data', '3': 1, '4': 3, '5': 11, '6': '.static_grpc.product.Product', '10': 'data'},
+    const {'1': 'options', '3': 2, '4': 1, '5': 11, '6': '.static_grpc.product.UpdateOptions', '10': 'options'},
   ],
 };
 
 /// Descriptor for `UpdateRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List updateRequestDescriptor = $convert.base64Decode(
-    'Cg1VcGRhdGVSZXF1ZXN0EjAKBGRhdGEYASADKAsyHC5zdGF0aWNfZ3JwYy5wcm9kdWN0LlByb2R1Y3RSBGRhdGESPAoHb3B0aW9ucxgCIAEoCzIiLnN0YXRpY19ncnBjLnByb2R1Y3QuVXBkYXRlT3B0aW9uc1IHb3B0aW9ucw==');
+final $typed_data.Uint8List updateRequestDescriptor = $convert.base64Decode('Cg1VcGRhdGVSZXF1ZXN0EjAKBGRhdGEYASADKAsyHC5zdGF0aWNfZ3JwYy5wcm9kdWN0LlByb2R1Y3RSBGRhdGESPAoHb3B0aW9ucxgCIAEoCzIiLnN0YXRpY19ncnBjLnByb2R1Y3QuVXBkYXRlT3B0aW9uc1IHb3B0aW9ucw==');
 @$core.Deprecated('Use updateOptionsDescriptor instead')
 const UpdateOptions$json = const {
   '1': 'UpdateOptions',
@@ -212,8 +156,7 @@ const UpdateOptions$json = const {
 };
 
 /// Descriptor for `UpdateOptions`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List updateOptionsDescriptor = $convert.base64Decode(
-    'Cg1VcGRhdGVPcHRpb25zEiQKDWluVHJhbnNhY3Rpb24YASABKAhSDWluVHJhbnNhY3Rpb24=');
+final $typed_data.Uint8List updateOptionsDescriptor = $convert.base64Decode('Cg1VcGRhdGVPcHRpb25zEiQKDWluVHJhbnNhY3Rpb24YASABKAhSDWluVHJhbnNhY3Rpb24=');
 @$core.Deprecated('Use updateResponseDescriptor instead')
 const UpdateResponse$json = const {
   '1': 'UpdateResponse',
@@ -226,34 +169,18 @@ const UpdateResponse$json = const {
 };
 
 /// Descriptor for `UpdateResponse`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List updateResponseDescriptor = $convert.base64Decode(
-    'Cg5VcGRhdGVSZXNwb25zZRIWCgZyZXN1bHQYASABKAhSBnJlc3VsdBIiCgxyb3dzVG9VcGRhdGUYAiABKAVSDHJvd3NUb1VwZGF0ZRIgCgtyb3dzVXBkYXRlZBgDIAEoBVILcm93c1VwZGF0ZWQSIgoMZXJyb3JNZXNzYWdlGAQgAygJUgxlcnJvck1lc3NhZ2U=');
+final $typed_data.Uint8List updateResponseDescriptor = $convert.base64Decode('Cg5VcGRhdGVSZXNwb25zZRIWCgZyZXN1bHQYASABKAhSBnJlc3VsdBIiCgxyb3dzVG9VcGRhdGUYAiABKAVSDHJvd3NUb1VwZGF0ZRIgCgtyb3dzVXBkYXRlZBgDIAEoBVILcm93c1VwZGF0ZWQSIgoMZXJyb3JNZXNzYWdlGAQgAygJUgxlcnJvck1lc3NhZ2U=');
 @$core.Deprecated('Use deleteRequestDescriptor instead')
 const DeleteRequest$json = const {
   '1': 'DeleteRequest',
   '2': const [
-    const {
-      '1': 'data',
-      '3': 1,
-      '4': 3,
-      '5': 11,
-      '6': '.static_grpc.product.ProductPk',
-      '10': 'data'
-    },
-    const {
-      '1': 'options',
-      '3': 2,
-      '4': 1,
-      '5': 11,
-      '6': '.static_grpc.product.DeleteOptions',
-      '10': 'options'
-    },
+    const {'1': 'data', '3': 1, '4': 3, '5': 11, '6': '.static_grpc.product.ProductPk', '10': 'data'},
+    const {'1': 'options', '3': 2, '4': 1, '5': 11, '6': '.static_grpc.product.DeleteOptions', '10': 'options'},
   ],
 };
 
 /// Descriptor for `DeleteRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List deleteRequestDescriptor = $convert.base64Decode(
-    'Cg1EZWxldGVSZXF1ZXN0EjIKBGRhdGEYASADKAsyHi5zdGF0aWNfZ3JwYy5wcm9kdWN0LlByb2R1Y3RQa1IEZGF0YRI8CgdvcHRpb25zGAIgASgLMiIuc3RhdGljX2dycGMucHJvZHVjdC5EZWxldGVPcHRpb25zUgdvcHRpb25z');
+final $typed_data.Uint8List deleteRequestDescriptor = $convert.base64Decode('Cg1EZWxldGVSZXF1ZXN0EjIKBGRhdGEYASADKAsyHi5zdGF0aWNfZ3JwYy5wcm9kdWN0LlByb2R1Y3RQa1IEZGF0YRI8CgdvcHRpb25zGAIgASgLMiIuc3RhdGljX2dycGMucHJvZHVjdC5EZWxldGVPcHRpb25zUgdvcHRpb25z');
 @$core.Deprecated('Use deleteOptionsDescriptor instead')
 const DeleteOptions$json = const {
   '1': 'DeleteOptions',
@@ -263,8 +190,7 @@ const DeleteOptions$json = const {
 };
 
 /// Descriptor for `DeleteOptions`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List deleteOptionsDescriptor = $convert.base64Decode(
-    'Cg1EZWxldGVPcHRpb25zEiQKDWluVHJhbnNhY3Rpb24YASABKAhSDWluVHJhbnNhY3Rpb24=');
+final $typed_data.Uint8List deleteOptionsDescriptor = $convert.base64Decode('Cg1EZWxldGVPcHRpb25zEiQKDWluVHJhbnNhY3Rpb24YASABKAhSDWluVHJhbnNhY3Rpb24=');
 @$core.Deprecated('Use deleteResponseDescriptor instead')
 const DeleteResponse$json = const {
   '1': 'DeleteResponse',
@@ -277,257 +203,90 @@ const DeleteResponse$json = const {
 };
 
 /// Descriptor for `DeleteResponse`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List deleteResponseDescriptor = $convert.base64Decode(
-    'Cg5EZWxldGVSZXNwb25zZRIWCgZyZXN1bHQYASABKAhSBnJlc3VsdBIiCgxyb3dzVG9EZWxldGUYAiABKAVSDHJvd3NUb0RlbGV0ZRIgCgtyb3dzRGVsZXRlZBgDIAEoBVILcm93c0RlbGV0ZWQSIgoMZXJyb3JNZXNzYWdlGAQgAygJUgxlcnJvck1lc3NhZ2U=');
+final $typed_data.Uint8List deleteResponseDescriptor = $convert.base64Decode('Cg5EZWxldGVSZXNwb25zZRIWCgZyZXN1bHQYASABKAhSBnJlc3VsdBIiCgxyb3dzVG9EZWxldGUYAiABKAVSDHJvd3NUb0RlbGV0ZRIgCgtyb3dzRGVsZXRlZBgDIAEoBVILcm93c0RlbGV0ZWQSIgoMZXJyb3JNZXNzYWdlGAQgAygJUgxlcnJvck1lc3NhZ2U=');
 @$core.Deprecated('Use selectRequestDescriptor instead')
 const SelectRequest$json = const {
   '1': 'SelectRequest',
   '2': const [
-    const {
-      '1': 'columns',
-      '3': 1,
-      '4': 3,
-      '5': 14,
-      '6': '.static_grpc.product.SelectableColumns',
-      '10': 'columns'
-    },
+    const {'1': 'columns', '3': 1, '4': 3, '5': 14, '6': '.static_grpc.product.SelectableColumns', '10': 'columns'},
     const {'1': 'where', '3': 2, '4': 1, '5': 9, '10': 'where'},
-    const {
-      '1': 'orderBy',
-      '3': 3,
-      '4': 3,
-      '5': 11,
-      '6': '.static_grpc.product.OrderByOperator',
-      '10': 'orderBy'
-    },
+    const {'1': 'orderBy', '3': 3, '4': 3, '5': 11, '6': '.static_grpc.product.OrderByOperator', '10': 'orderBy'},
     const {'1': 'limit', '3': 4, '4': 1, '5': 5, '10': 'limit'},
     const {'1': 'offset', '3': 5, '4': 1, '5': 5, '10': 'offset'},
   ],
 };
 
 /// Descriptor for `SelectRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List selectRequestDescriptor = $convert.base64Decode(
-    'Cg1TZWxlY3RSZXF1ZXN0EkAKB2NvbHVtbnMYASADKA4yJi5zdGF0aWNfZ3JwYy5wcm9kdWN0LlNlbGVjdGFibGVDb2x1bW5zUgdjb2x1bW5zEhQKBXdoZXJlGAIgASgJUgV3aGVyZRI+CgdvcmRlckJ5GAMgAygLMiQuc3RhdGljX2dycGMucHJvZHVjdC5PcmRlckJ5T3BlcmF0b3JSB29yZGVyQnkSFAoFbGltaXQYBCABKAVSBWxpbWl0EhYKBm9mZnNldBgFIAEoBVIGb2Zmc2V0');
+final $typed_data.Uint8List selectRequestDescriptor = $convert.base64Decode('Cg1TZWxlY3RSZXF1ZXN0EkAKB2NvbHVtbnMYASADKA4yJi5zdGF0aWNfZ3JwYy5wcm9kdWN0LlNlbGVjdGFibGVDb2x1bW5zUgdjb2x1bW5zEhQKBXdoZXJlGAIgASgJUgV3aGVyZRI+CgdvcmRlckJ5GAMgAygLMiQuc3RhdGljX2dycGMucHJvZHVjdC5PcmRlckJ5T3BlcmF0b3JSB29yZGVyQnkSFAoFbGltaXQYBCABKAVSBWxpbWl0EhYKBm9mZnNldBgFIAEoBVIGb2Zmc2V0');
 @$core.Deprecated('Use selectResponseDescriptor instead')
 const SelectResponse$json = const {
   '1': 'SelectResponse',
   '2': const [
     const {'1': 'result', '3': 1, '4': 1, '5': 8, '10': 'result'},
     const {'1': 'rowsSelected', '3': 2, '4': 1, '5': 5, '10': 'rowsSelected'},
-    const {
-      '1': 'totalRowsCount',
-      '3': 3,
-      '4': 1,
-      '5': 5,
-      '10': 'totalRowsCount'
-    },
+    const {'1': 'totalRowsCount', '3': 3, '4': 1, '5': 5, '10': 'totalRowsCount'},
     const {'1': 'limit', '3': 4, '4': 1, '5': 5, '10': 'limit'},
     const {'1': 'offset', '3': 5, '4': 1, '5': 5, '10': 'offset'},
     const {'1': 'nextOffset', '3': 6, '4': 1, '5': 5, '10': 'nextOffset'},
-    const {
-      '1': 'data',
-      '3': 7,
-      '4': 3,
-      '5': 11,
-      '6': '.static_grpc.product.Product',
-      '10': 'data'
-    },
+    const {'1': 'data', '3': 7, '4': 3, '5': 11, '6': '.static_grpc.product.Product', '10': 'data'},
     const {'1': 'errorMessage', '3': 8, '4': 3, '5': 9, '10': 'errorMessage'},
   ],
 };
 
 /// Descriptor for `SelectResponse`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List selectResponseDescriptor = $convert.base64Decode(
-    'Cg5TZWxlY3RSZXNwb25zZRIWCgZyZXN1bHQYASABKAhSBnJlc3VsdBIiCgxyb3dzU2VsZWN0ZWQYAiABKAVSDHJvd3NTZWxlY3RlZBImCg50b3RhbFJvd3NDb3VudBgDIAEoBVIOdG90YWxSb3dzQ291bnQSFAoFbGltaXQYBCABKAVSBWxpbWl0EhYKBm9mZnNldBgFIAEoBVIGb2Zmc2V0Eh4KCm5leHRPZmZzZXQYBiABKAVSCm5leHRPZmZzZXQSMAoEZGF0YRgHIAMoCzIcLnN0YXRpY19ncnBjLnByb2R1Y3QuUHJvZHVjdFIEZGF0YRIiCgxlcnJvck1lc3NhZ2UYCCADKAlSDGVycm9yTWVzc2FnZQ==');
+final $typed_data.Uint8List selectResponseDescriptor = $convert.base64Decode('Cg5TZWxlY3RSZXNwb25zZRIWCgZyZXN1bHQYASABKAhSBnJlc3VsdBIiCgxyb3dzU2VsZWN0ZWQYAiABKAVSDHJvd3NTZWxlY3RlZBImCg50b3RhbFJvd3NDb3VudBgDIAEoBVIOdG90YWxSb3dzQ291bnQSFAoFbGltaXQYBCABKAVSBWxpbWl0EhYKBm9mZnNldBgFIAEoBVIGb2Zmc2V0Eh4KCm5leHRPZmZzZXQYBiABKAVSCm5leHRPZmZzZXQSMAoEZGF0YRgHIAMoCzIcLnN0YXRpY19ncnBjLnByb2R1Y3QuUHJvZHVjdFIEZGF0YRIiCgxlcnJvck1lc3NhZ2UYCCADKAlSDGVycm9yTWVzc2FnZQ==');
 @$core.Deprecated('Use productDescriptor instead')
 const Product$json = const {
   '1': 'Product',
   '2': const [
-    const {
-      '1': 'id',
-      '3': 1,
-      '4': 1,
-      '5': 11,
-      '6': '.static_grpc.product.IntegerValue',
-      '10': 'id'
-    },
-    const {
-      '1': 'code',
-      '3': 2,
-      '4': 1,
-      '5': 11,
-      '6': '.static_grpc.product.StringValue',
-      '10': 'code'
-    },
-    const {
-      '1': 'description',
-      '3': 3,
-      '4': 1,
-      '5': 11,
-      '6': '.static_grpc.product.StringValue',
-      '10': 'description'
-    },
-    const {
-      '1': 'isActive',
-      '3': 4,
-      '4': 1,
-      '5': 11,
-      '6': '.static_grpc.product.BooleanValue',
-      '10': 'isActive'
-    },
-    const {
-      '1': 'price',
-      '3': 5,
-      '4': 1,
-      '5': 11,
-      '6': '.static_grpc.product.NumericValue',
-      '10': 'price'
-    },
-    const {
-      '1': 'fullDescription',
-      '3': 6,
-      '4': 1,
-      '5': 11,
-      '6': '.static_grpc.product.StringValue',
-      '10': 'fullDescription'
-    },
-    const {
-      '1': 'insertDate',
-      '3': 7,
-      '4': 1,
-      '5': 11,
-      '6': '.static_grpc.product.StringValue',
-      '10': 'insertDate'
-    },
-    const {
-      '1': 'updateDate',
-      '3': 8,
-      '4': 1,
-      '5': 11,
-      '6': '.static_grpc.product.StringValue',
-      '10': 'updateDate'
-    },
+    const {'1': 'id', '3': 1, '4': 1, '5': 11, '6': '.static_grpc.product.IntegerValue', '10': 'id'},
+    const {'1': 'code', '3': 2, '4': 1, '5': 11, '6': '.static_grpc.product.StringValue', '10': 'code'},
+    const {'1': 'description', '3': 3, '4': 1, '5': 11, '6': '.static_grpc.product.StringValue', '10': 'description'},
+    const {'1': 'isActive', '3': 4, '4': 1, '5': 11, '6': '.static_grpc.product.BooleanValue', '10': 'isActive'},
+    const {'1': 'price', '3': 5, '4': 1, '5': 11, '6': '.static_grpc.product.NumericValue', '10': 'price'},
+    const {'1': 'fullDescription', '3': 6, '4': 1, '5': 11, '6': '.static_grpc.product.StringValue', '10': 'fullDescription'},
+    const {'1': 'insertDate', '3': 7, '4': 1, '5': 11, '6': '.static_grpc.product.StringValue', '10': 'insertDate'},
+    const {'1': 'updateDate', '3': 8, '4': 1, '5': 11, '6': '.static_grpc.product.StringValue', '10': 'updateDate'},
   ],
 };
 
 /// Descriptor for `Product`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List productDescriptor = $convert.base64Decode(
-    'CgdQcm9kdWN0EjEKAmlkGAEgASgLMiEuc3RhdGljX2dycGMucHJvZHVjdC5JbnRlZ2VyVmFsdWVSAmlkEjQKBGNvZGUYAiABKAsyIC5zdGF0aWNfZ3JwYy5wcm9kdWN0LlN0cmluZ1ZhbHVlUgRjb2RlEkIKC2Rlc2NyaXB0aW9uGAMgASgLMiAuc3RhdGljX2dycGMucHJvZHVjdC5TdHJpbmdWYWx1ZVILZGVzY3JpcHRpb24SPQoIaXNBY3RpdmUYBCABKAsyIS5zdGF0aWNfZ3JwYy5wcm9kdWN0LkJvb2xlYW5WYWx1ZVIIaXNBY3RpdmUSNwoFcHJpY2UYBSABKAsyIS5zdGF0aWNfZ3JwYy5wcm9kdWN0Lk51bWVyaWNWYWx1ZVIFcHJpY2USSgoPZnVsbERlc2NyaXB0aW9uGAYgASgLMiAuc3RhdGljX2dycGMucHJvZHVjdC5TdHJpbmdWYWx1ZVIPZnVsbERlc2NyaXB0aW9uEkAKCmluc2VydERhdGUYByABKAsyIC5zdGF0aWNfZ3JwYy5wcm9kdWN0LlN0cmluZ1ZhbHVlUgppbnNlcnREYXRlEkAKCnVwZGF0ZURhdGUYCCABKAsyIC5zdGF0aWNfZ3JwYy5wcm9kdWN0LlN0cmluZ1ZhbHVlUgp1cGRhdGVEYXRl');
+final $typed_data.Uint8List productDescriptor = $convert.base64Decode('CgdQcm9kdWN0EjEKAmlkGAEgASgLMiEuc3RhdGljX2dycGMucHJvZHVjdC5JbnRlZ2VyVmFsdWVSAmlkEjQKBGNvZGUYAiABKAsyIC5zdGF0aWNfZ3JwYy5wcm9kdWN0LlN0cmluZ1ZhbHVlUgRjb2RlEkIKC2Rlc2NyaXB0aW9uGAMgASgLMiAuc3RhdGljX2dycGMucHJvZHVjdC5TdHJpbmdWYWx1ZVILZGVzY3JpcHRpb24SPQoIaXNBY3RpdmUYBCABKAsyIS5zdGF0aWNfZ3JwYy5wcm9kdWN0LkJvb2xlYW5WYWx1ZVIIaXNBY3RpdmUSNwoFcHJpY2UYBSABKAsyIS5zdGF0aWNfZ3JwYy5wcm9kdWN0Lk51bWVyaWNWYWx1ZVIFcHJpY2USSgoPZnVsbERlc2NyaXB0aW9uGAYgASgLMiAuc3RhdGljX2dycGMucHJvZHVjdC5TdHJpbmdWYWx1ZVIPZnVsbERlc2NyaXB0aW9uEkAKCmluc2VydERhdGUYByABKAsyIC5zdGF0aWNfZ3JwYy5wcm9kdWN0LlN0cmluZ1ZhbHVlUgppbnNlcnREYXRlEkAKCnVwZGF0ZURhdGUYCCABKAsyIC5zdGF0aWNfZ3JwYy5wcm9kdWN0LlN0cmluZ1ZhbHVlUgp1cGRhdGVEYXRl');
 @$core.Deprecated('Use productPkDescriptor instead')
 const ProductPk$json = const {
   '1': 'ProductPk',
   '2': const [
-    const {
-      '1': 'id',
-      '3': 1,
-      '4': 1,
-      '5': 11,
-      '6': '.static_grpc.product.IntegerValue',
-      '10': 'id'
-    },
+    const {'1': 'id', '3': 1, '4': 1, '5': 11, '6': '.static_grpc.product.IntegerValue', '10': 'id'},
   ],
 };
 
 /// Descriptor for `ProductPk`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List productPkDescriptor = $convert.base64Decode(
-    'CglQcm9kdWN0UGsSMQoCaWQYASABKAsyIS5zdGF0aWNfZ3JwYy5wcm9kdWN0LkludGVnZXJWYWx1ZVICaWQ=');
+final $typed_data.Uint8List productPkDescriptor = $convert.base64Decode('CglQcm9kdWN0UGsSMQoCaWQYASABKAsyIS5zdGF0aWNfZ3JwYy5wcm9kdWN0LkludGVnZXJWYWx1ZVICaWQ=');
 @$core.Deprecated('Use productToInsertDescriptor instead')
 const ProductToInsert$json = const {
   '1': 'ProductToInsert',
   '2': const [
-    const {
-      '1': 'id',
-      '3': 1,
-      '4': 1,
-      '5': 11,
-      '6': '.static_grpc.product.IntegerValue',
-      '10': 'id'
-    },
-    const {
-      '1': 'code',
-      '3': 2,
-      '4': 1,
-      '5': 11,
-      '6': '.static_grpc.product.StringValue',
-      '10': 'code'
-    },
-    const {
-      '1': 'description',
-      '3': 3,
-      '4': 1,
-      '5': 11,
-      '6': '.static_grpc.product.StringValue',
-      '10': 'description'
-    },
-    const {
-      '1': 'isActive',
-      '3': 4,
-      '4': 1,
-      '5': 11,
-      '6': '.static_grpc.product.BooleanValue',
-      '10': 'isActive'
-    },
-    const {
-      '1': 'price',
-      '3': 5,
-      '4': 1,
-      '5': 11,
-      '6': '.static_grpc.product.NumericValue',
-      '10': 'price'
-    },
-    const {
-      '1': 'fullDescription',
-      '3': 6,
-      '4': 1,
-      '5': 11,
-      '6': '.static_grpc.product.StringValue',
-      '10': 'fullDescription'
-    },
-    const {
-      '1': 'insertDate',
-      '3': 7,
-      '4': 1,
-      '5': 11,
-      '6': '.static_grpc.product.StringValue',
-      '10': 'insertDate'
-    },
-    const {
-      '1': 'updateDate',
-      '3': 8,
-      '4': 1,
-      '5': 11,
-      '6': '.static_grpc.product.StringValue',
-      '10': 'updateDate'
-    },
+    const {'1': 'id', '3': 1, '4': 1, '5': 11, '6': '.static_grpc.product.IntegerValue', '10': 'id'},
+    const {'1': 'code', '3': 2, '4': 1, '5': 11, '6': '.static_grpc.product.StringValue', '10': 'code'},
+    const {'1': 'description', '3': 3, '4': 1, '5': 11, '6': '.static_grpc.product.StringValue', '10': 'description'},
+    const {'1': 'isActive', '3': 4, '4': 1, '5': 11, '6': '.static_grpc.product.BooleanValue', '10': 'isActive'},
+    const {'1': 'price', '3': 5, '4': 1, '5': 11, '6': '.static_grpc.product.NumericValue', '10': 'price'},
+    const {'1': 'fullDescription', '3': 6, '4': 1, '5': 11, '6': '.static_grpc.product.StringValue', '10': 'fullDescription'},
+    const {'1': 'insertDate', '3': 7, '4': 1, '5': 11, '6': '.static_grpc.product.StringValue', '10': 'insertDate'},
+    const {'1': 'updateDate', '3': 8, '4': 1, '5': 11, '6': '.static_grpc.product.StringValue', '10': 'updateDate'},
   ],
 };
 
 /// Descriptor for `ProductToInsert`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List productToInsertDescriptor = $convert.base64Decode(
-    'Cg9Qcm9kdWN0VG9JbnNlcnQSMQoCaWQYASABKAsyIS5zdGF0aWNfZ3JwYy5wcm9kdWN0LkludGVnZXJWYWx1ZVICaWQSNAoEY29kZRgCIAEoCzIgLnN0YXRpY19ncnBjLnByb2R1Y3QuU3RyaW5nVmFsdWVSBGNvZGUSQgoLZGVzY3JpcHRpb24YAyABKAsyIC5zdGF0aWNfZ3JwYy5wcm9kdWN0LlN0cmluZ1ZhbHVlUgtkZXNjcmlwdGlvbhI9Cghpc0FjdGl2ZRgEIAEoCzIhLnN0YXRpY19ncnBjLnByb2R1Y3QuQm9vbGVhblZhbHVlUghpc0FjdGl2ZRI3CgVwcmljZRgFIAEoCzIhLnN0YXRpY19ncnBjLnByb2R1Y3QuTnVtZXJpY1ZhbHVlUgVwcmljZRJKCg9mdWxsRGVzY3JpcHRpb24YBiABKAsyIC5zdGF0aWNfZ3JwYy5wcm9kdWN0LlN0cmluZ1ZhbHVlUg9mdWxsRGVzY3JpcHRpb24SQAoKaW5zZXJ0RGF0ZRgHIAEoCzIgLnN0YXRpY19ncnBjLnByb2R1Y3QuU3RyaW5nVmFsdWVSCmluc2VydERhdGUSQAoKdXBkYXRlRGF0ZRgIIAEoCzIgLnN0YXRpY19ncnBjLnByb2R1Y3QuU3RyaW5nVmFsdWVSCnVwZGF0ZURhdGU=');
+final $typed_data.Uint8List productToInsertDescriptor = $convert.base64Decode('Cg9Qcm9kdWN0VG9JbnNlcnQSMQoCaWQYASABKAsyIS5zdGF0aWNfZ3JwYy5wcm9kdWN0LkludGVnZXJWYWx1ZVICaWQSNAoEY29kZRgCIAEoCzIgLnN0YXRpY19ncnBjLnByb2R1Y3QuU3RyaW5nVmFsdWVSBGNvZGUSQgoLZGVzY3JpcHRpb24YAyABKAsyIC5zdGF0aWNfZ3JwYy5wcm9kdWN0LlN0cmluZ1ZhbHVlUgtkZXNjcmlwdGlvbhI9Cghpc0FjdGl2ZRgEIAEoCzIhLnN0YXRpY19ncnBjLnByb2R1Y3QuQm9vbGVhblZhbHVlUghpc0FjdGl2ZRI3CgVwcmljZRgFIAEoCzIhLnN0YXRpY19ncnBjLnByb2R1Y3QuTnVtZXJpY1ZhbHVlUgVwcmljZRJKCg9mdWxsRGVzY3JpcHRpb24YBiABKAsyIC5zdGF0aWNfZ3JwYy5wcm9kdWN0LlN0cmluZ1ZhbHVlUg9mdWxsRGVzY3JpcHRpb24SQAoKaW5zZXJ0RGF0ZRgHIAEoCzIgLnN0YXRpY19ncnBjLnByb2R1Y3QuU3RyaW5nVmFsdWVSCmluc2VydERhdGUSQAoKdXBkYXRlRGF0ZRgIIAEoCzIgLnN0YXRpY19ncnBjLnByb2R1Y3QuU3RyaW5nVmFsdWVSCnVwZGF0ZURhdGU=');
 @$core.Deprecated('Use orderByOperatorDescriptor instead')
 const OrderByOperator$json = const {
   '1': 'OrderByOperator',
   '2': const [
-    const {
-      '1': 'column',
-      '3': 1,
-      '4': 1,
-      '5': 14,
-      '6': '.static_grpc.product.SelectableColumns',
-      '10': 'column'
-    },
-    const {
-      '1': 'orderType',
-      '3': 2,
-      '4': 1,
-      '5': 14,
-      '6': '.static_grpc.product.OrderType',
-      '10': 'orderType'
-    },
+    const {'1': 'column', '3': 1, '4': 1, '5': 14, '6': '.static_grpc.product.SelectableColumns', '10': 'column'},
+    const {'1': 'orderType', '3': 2, '4': 1, '5': 14, '6': '.static_grpc.product.OrderType', '10': 'orderType'},
   ],
 };
 
 /// Descriptor for `OrderByOperator`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List orderByOperatorDescriptor = $convert.base64Decode(
-    'Cg9PcmRlckJ5T3BlcmF0b3ISPgoGY29sdW1uGAEgASgOMiYuc3RhdGljX2dycGMucHJvZHVjdC5TZWxlY3RhYmxlQ29sdW1uc1IGY29sdW1uEjwKCW9yZGVyVHlwZRgCIAEoDjIeLnN0YXRpY19ncnBjLnByb2R1Y3QuT3JkZXJUeXBlUglvcmRlclR5cGU=');
+final $typed_data.Uint8List orderByOperatorDescriptor = $convert.base64Decode('Cg9PcmRlckJ5T3BlcmF0b3ISPgoGY29sdW1uGAEgASgOMiYuc3RhdGljX2dycGMucHJvZHVjdC5TZWxlY3RhYmxlQ29sdW1uc1IGY29sdW1uEjwKCW9yZGVyVHlwZRgCIAEoDjIeLnN0YXRpY19ncnBjLnByb2R1Y3QuT3JkZXJUeXBlUglvcmRlclR5cGU=');
