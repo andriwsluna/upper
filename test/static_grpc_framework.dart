@@ -97,7 +97,7 @@ void main() {
             '-mono',
           ]),
           true);
-    });
+    }, timeout: Timeout(Duration(minutes: 2)));
 
     test('service', () async {
       expect(
