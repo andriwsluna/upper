@@ -23,3 +23,7 @@
 ## 0.1.5-dev
 
 - more tests
+
+## 0.1.6-dev
+
+- Code coverage
