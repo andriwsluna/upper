@@ -10,17 +10,50 @@ import 'dart:core' as $core;
 import 'package:protobuf/protobuf.dart' as $pb;
 
 class SelectableColumns extends $pb.ProtobufEnum {
-  static const SelectableColumns allColumns = SelectableColumns._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'allColumns');
-  static const SelectableColumns id = SelectableColumns._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'id');
-  static const SelectableColumns code = SelectableColumns._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'code');
-  static const SelectableColumns description = SelectableColumns._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'description');
-  static const SelectableColumns isActive = SelectableColumns._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'isActive');
-  static const SelectableColumns price = SelectableColumns._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'price');
-  static const SelectableColumns fullDescription = SelectableColumns._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'fullDescription');
-  static const SelectableColumns insertDate = SelectableColumns._(7, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'insertDate');
-  static const SelectableColumns updateDate = SelectableColumns._(8, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'updateDate');
+  static const SelectableColumns allColumns = SelectableColumns._(
+      0,
+      const $core.bool.fromEnvironment('protobuf.omit_enum_names')
+          ? ''
+          : 'allColumns');
+  static const SelectableColumns id = SelectableColumns._(1,
+      const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'id');
+  static const SelectableColumns code = SelectableColumns._(
+      2,
+      const $core.bool.fromEnvironment('protobuf.omit_enum_names')
+          ? ''
+          : 'code');
+  static const SelectableColumns description = SelectableColumns._(
+      3,
+      const $core.bool.fromEnvironment('protobuf.omit_enum_names')
+          ? ''
+          : 'description');
+  static const SelectableColumns isActive = SelectableColumns._(
+      4,
+      const $core.bool.fromEnvironment('protobuf.omit_enum_names')
+          ? ''
+          : 'isActive');
+  static const SelectableColumns price = SelectableColumns._(
+      5,
+      const $core.bool.fromEnvironment('protobuf.omit_enum_names')
+          ? ''
+          : 'price');
+  static const SelectableColumns fullDescription = SelectableColumns._(
+      6,
+      const $core.bool.fromEnvironment('protobuf.omit_enum_names')
+          ? ''
+          : 'fullDescription');
+  static const SelectableColumns insertDate = SelectableColumns._(
+      7,
+      const $core.bool.fromEnvironment('protobuf.omit_enum_names')
+          ? ''
+          : 'insertDate');
+  static const SelectableColumns updateDate = SelectableColumns._(
+      8,
+      const $core.bool.fromEnvironment('protobuf.omit_enum_names')
+          ? ''
+          : 'updateDate');
 
-  static const $core.List<SelectableColumns> values = <SelectableColumns> [
+  static const $core.List<SelectableColumns> values = <SelectableColumns>[
     allColumns,
     id,
     code,
@@ -32,24 +65,33 @@ class SelectableColumns extends $pb.ProtobufEnum {
     updateDate,
   ];
 
-  static final $core.Map<$core.int, SelectableColumns> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static final $core.Map<$core.int, SelectableColumns> _byValue =
+      $pb.ProtobufEnum.initByValue(values);
   static SelectableColumns? valueOf($core.int value) => _byValue[value];
 
   const SelectableColumns._($core.int v, $core.String n) : super(v, n);
 }
 
 class OrderType extends $pb.ProtobufEnum {
-  static const OrderType asc = OrderType._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'asc');
-  static const OrderType desc = OrderType._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'desc');
+  static const OrderType asc = OrderType._(
+      0,
+      const $core.bool.fromEnvironment('protobuf.omit_enum_names')
+          ? ''
+          : 'asc');
+  static const OrderType desc = OrderType._(
+      1,
+      const $core.bool.fromEnvironment('protobuf.omit_enum_names')
+          ? ''
+          : 'desc');
 
-  static const $core.List<OrderType> values = <OrderType> [
+  static const $core.List<OrderType> values = <OrderType>[
     asc,
     desc,
   ];
 
-  static final $core.Map<$core.int, OrderType> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static final $core.Map<$core.int, OrderType> _byValue =
+      $pb.ProtobufEnum.initByValue(values);
   static OrderType? valueOf($core.int value) => _byValue[value];
 
   const OrderType._($core.int v, $core.String n) : super(v, n);
 }
-
